@@ -8,7 +8,7 @@ def long_description():
     '''
 
 setup(
-    name='hcl',
+    name='hms',
     version='1.0',
     description='HCL Management software rewritten into python.',
     long_description=long_description(),
