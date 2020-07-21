@@ -171,18 +171,20 @@ def _spell(x):
     for ch in spell:
         total += [c.unihan.lookup_char(ch).first().kRSKangXi]
     return [total, num]
-def build():
-    class entry:
-        def __init__(self, values):
-            self.values =values
-        def index_spell(self):
-            return _spell(self.values)
+def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
             p = '{}/{}'.format(path, filename)
             ext = os.path.splitext(filename)[-1]
             if ext == '.xml':
                 updatexml(p)
+def build():
+    class entry:
+        def __init__(self, values):
+            self.values =values
+        def index_spell(self):
+            return _spell(self.values)
+    update()
     results = []
     for (path, dir, files) in os.walk('./'):
         for filename in files:
