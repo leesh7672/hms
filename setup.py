@@ -14,6 +14,7 @@ setup(
     long_description=long_description(),
     author='Seho Lee',
     author_email='leesh7672@knou.ac.kr',
-    packages=find_packages('cihai'),
+    packages=find_packages(),
+    install_requires=['cihai'],
     zip_safe=True
     )
