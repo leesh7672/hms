@@ -3,9 +3,9 @@ import io
 from setuptools import find_packages, setup
 
 def long_description():
-    with io.open('README', 'r', encoding='utf-8') as f:
-        readme = f.read()
-    return readme
+    return '''
+    HCL Management software
+    '''
 
 setup(
     name='hcl',
