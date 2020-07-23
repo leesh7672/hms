@@ -76,8 +76,8 @@ def scandef(e, spell, ident):
             categories += ['度字']
         elif child.tag == 'number':
             categories += ['數字']
-        elif child.tag == 'modal':
-            categories += ['助字']
+        elif child.tag == 'adverb':
+            categories += ['修字']
         elif child.tag == 'final':
             categories += ['竟字']
         elif child.tag == 'misc':
