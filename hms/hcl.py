@@ -135,8 +135,7 @@ def updatexml(path):
                                             need = False
                                             break
                                     if need:
-                                        sub = elemTree.SubElement(definition, 'syn', {'ident':'{}'.format(ident), 'num':'{}'.format(num)})
-                                        definition.append(sub)
+                                        definition.append(elemTree.SubElement(definition, 'syn', {'ident':'{}'.format(ident), 'num':'{}'.format(num)}))
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
@@ -150,8 +149,7 @@ def updatexml(path):
                                             need = False
                                             break
                                     if need:
-                                        sub = elemTree.SubElement(definition, 'ant', {'ident':'{}'.format(ident), 'num':'{}'.format(num)})
-                                        definition.append(sub)
+                                        definition.append(elemTree.SubElement(definition, 'ant', {'ident':'{}'.format(ident), 'num':'{}'.format(num)}))
     tree.write(path, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
