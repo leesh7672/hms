@@ -128,11 +128,11 @@ def updatexml(path):
                         num0 = int(child0.attrib['num'])
                         ref = search(ident0)
                         for definition in ref.findall('def'):
-                            if('num' in definition.attrib.keys()):
-                                if(definition.attrib['num']):
+                            if 'num' in definition.attrib.keys():
+                                if int(definition.attrib['num']) == numx:
                                     need = True
                                     for child1 in definition:
-                                        if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num'] == numx)):
+                                        if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident):
                                             need = False
                                             break
                                     if need:
@@ -142,11 +142,12 @@ def updatexml(path):
                         num0 = int(child0.attrib['num'])
                         ref = search(ident0)
                         for definition in ref.findall('def'):
-                            if('num' in definition.attrib.keys()):
-                                if(definition.attrib['num']):
+                            if 'num' in definition.attrib.keys():
+                                if int(definition.attrib['num']) == numx:
                                     need = True
                                     for child1 in definition:
-                                        if (child1.tag == 'ant') and (int(child1.attrib['ident']) == ident) and (int(child1.ident['num']) == numx):
+                                        if (child1.tag == 'ant') and (int(child1.attrib['ident']) == ident):
+                                            need = False
                                             break
                                     if need:
                                         definition.append(elemTree.SubElement(definition, 'ant', {'ident':'{}'.format(ident), 'num':'{}'.format(numx)}))
