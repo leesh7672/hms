@@ -126,7 +126,7 @@ def search(ident):
                     root = tree.getroot()
                     if int(root.attrib['ident']) == ident:
                         if(root.tag == 'entry'):
-                            return (tree, file)
+                            return (tree, p)
     return None
 def updatexml(path):
     tree = elemTree.parse(path)
