@@ -102,7 +102,7 @@ def scandef(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += '\\syn{{{}}}{{{}}}',format(mspell, num0)
+            synonyms += '\\syn{{{}}}{{{}}}',format(mspell, str(num0))
         elif child.tag == 'ant':
             temp = search(int(child.attrib['ident']))
             root = temp.getroot()
@@ -113,7 +113,7 @@ def scandef(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += '\\ant{{{}}}{{{}}}',format(mspell, num0)
+            synonyms += '\\ant{{{}}}{{{}}}',format(mspell, str(num0))
     return (num, categories, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
@@ -158,7 +158,7 @@ def updatexml(path):
                                             need = False
                                             break
                                     if need:
-                                        definition.append(elemTree.SubElement(definition, 'syn', {'ident':'{}'.format(ident), 'num':'{}'.format(numx)}))
+                                        definition.append(elemTree.SubElement(definition, 'syn', {'ident': str(ident), 'num': str(numx)}))
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
@@ -172,7 +172,7 @@ def updatexml(path):
                                             need = False
                                             break
                                     if need:
-                                        definition.append(elemTree.SubElement(definition, 'ant', {'ident':'{}'.format(ident), 'num':'{}'.format(numx)}))
+                                        definition.append(elemTree.SubElement(definition, 'ant', {'ident': str(ident), 'num': str(numx)}))
     tree.write(path, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
