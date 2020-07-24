@@ -34,7 +34,7 @@ def textify(e, spell, ident):
             total += "\\textbf{{{}}}".format(spell)
         elif child.tag == 'ref':
             ident = int(child.attrib['ident'])
-            tr, f = search(ident)
+            (tr, f) = search(ident)
             root = tr.getroot()
             num = 1
             mspell = ''
@@ -93,7 +93,7 @@ def scandef(e, spell, ident):
                 source = ''
             samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident))]
         elif child.tag == 'syn':
-            temp, f = search(int(child.attrib['ident']))
+            (temp, )f = search(int(child.attrib['ident']))
             root = temp.getroot()
             num0 = 1
             mspell = ''
@@ -104,7 +104,7 @@ def scandef(e, spell, ident):
                     mspell = child0.text
             synonyms += ['\\syn{{{}}}{{{}}}'.format(mspell, str(num0))]
         elif child.tag == 'ant':
-            temp, f = search(int(child.attrib['ident']))
+            (temp, f) = search(int(child.attrib['ident']))
             root = temp.getroot()
             num0 = 1
             mspell = ''
@@ -148,7 +148,7 @@ def updatexml(path):
                     if child0.tag == 'syn':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
-                        ref, f = search(ident0)
+                        (ref, f) = search(ident0)
                         for definition in ref.findall('def'):
                             if 'num' in definition.attrib.keys():
                                 need = True
@@ -162,7 +162,7 @@ def updatexml(path):
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
-                        ref, f = search(ident0)
+                        (ref, f) = search(ident0)
                         for definition in ref.findall('def'):
                             if 'num' in definition.attrib.keys():
                                 need = True
