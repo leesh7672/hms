@@ -131,7 +131,7 @@ def updatexml(path):
                                 if(definition.attrib['num']):
                                     need = True
                                     for child1 in definition:
-                                        if (child1.tag == 'syn') and (child1.attrib['ident'] == ident):
+                                        if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num'] == num)):
                                             need = False
                                             break
                                     if need:
