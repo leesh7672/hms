@@ -93,7 +93,7 @@ def scandef(e, spell, ident):
                 source = ''
             samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident))]
         elif child.tag == 'syn':
-            (temp, )f = search(int(child.attrib['ident']))
+            (temp, f) = search(int(child.attrib['ident']))
             root = temp.getroot()
             num0 = 1
             mspell = ''
