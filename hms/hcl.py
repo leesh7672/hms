@@ -209,16 +209,16 @@ def build():
             antonym_txt = ''
             sample_txt = ''
             for category in sorted(categories):
-                category_txt = category
+                category_txt += category
 
             for synonym in synonyms:
-                synonym_txt = synonym
+                synonym_txt += synonym
 
             for antonym in antonyms:
-                antonym_txt = antonym
+                antonym_txt += antonym
 
             for sample in samples:
-                sample_txt = sample
+                sample_txt += sample
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
         tex += "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
