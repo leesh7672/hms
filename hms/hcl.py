@@ -124,9 +124,10 @@ def search(ident):
                 if ext == '.xml':
                     tree = elemTree.parse(p)
                     root = tree.getroot()
-                    if int(root.attrib['ident']) == ident:
-                        if(root.tag == 'entry'):
-                            return (tree, p)
+                    if  'ident' in root.attrib:
+                        if int(root.attrib['ident']) == ident:
+                            if(root.tag == 'entry'):
+                                return (tree, p)
     return None
 def updatexml(path):
     tree = elemTree.parse(path)
