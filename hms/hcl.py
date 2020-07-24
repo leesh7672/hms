@@ -135,7 +135,7 @@ def updatexml(path):
                                             need = False
                                             break
                                     if need:
-                                        sub = elemTree.SubElement(definition, 'syn', {'ident':'{}'.format(ident), 'num':'{}'.format(num)})\
+                                        sub = elemTree.SubElement(definition, 'syn', {'ident':'{}'.format(ident), 'num':'{}'.format(num)})
                                         definition.append(sub)
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
