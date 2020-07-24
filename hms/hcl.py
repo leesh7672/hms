@@ -209,7 +209,11 @@ def build():
             antonym_txt = ''
             sample_txt = ''
             for category in categories:
+<<<<<<< HEAD
                 category_txt += category
+=======
+                category_txt += category 
+>>>>>>> 1d630aec71c0e6d88abc842892884f0e7703da5c
 
             for synonym in synonyms:
                 synonym_txt += synonym
