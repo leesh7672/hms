@@ -79,7 +79,7 @@ def scandef(e, spell, ident):
         elif child.tag == 'adverb':
             categories += ['修字']
         elif child.tag == 'final':
-            categories += ['結字']
+            categories += ['竟字']
         elif child.tag == 'header':
             categories += ['發字']
         elif child.tag == 'misc':
