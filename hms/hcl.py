@@ -151,28 +151,30 @@ def updatexml(path):
                         (ref, f) = search(ident0)
                         for definition in ref.findall('def'):
                             if 'num' in definition.attrib.keys():
-                                need = True
-                                for child1 in definition:
-                                    if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
-                                        need = False
-                                        break
-                                if need:
-                                    definition.append(elemTree.Element('syn', {'ident': str(ident), 'num': str(numx)}))
-                                    ref.write(f, encoding='utf-8')
+                                if definition.attrib['num'] == num0:
+                                    need = True
+                                    for child1 in definition:
+                                        if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
+                                            need = False
+                                            break
+                                    if need:
+                                        definition.append(elemTree.Element('syn', {'ident': str(ident), 'num': str(numx)}))
+                                        ref.write(f, encoding='utf-8')
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
                         (ref, f) = search(ident0)
                         for definition in ref.findall('def'):
                             if 'num' in definition.attrib.keys():
-                                need = True
-                                for child1 in definition:
-                                    if (child1.tag == 'ant') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
-                                        need = False
-                                        break
-                                if need:
-                                    definition.append(elemTree.Element('ant', {'ident': str(ident), 'num': str(numx)}))
-                                    ref.write(f, encoding='utf-8')
+                                if definition.attrib['num'] == num0:
+                                    need = True
+                                    for child1 in definition:
+                                        if (child1.tag == 'ant') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
+                                            need = False
+                                            break
+                                    if need:
+                                        definition.append(elemTree.Element('ant', {'ident': str(ident), 'num': str(numx)}))
+                                        ref.write(f, encoding='utf-8')
     tree.write(path, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
