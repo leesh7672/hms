@@ -102,7 +102,7 @@ def scandef(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += '\\syn{{{}}}{{{}}}',format(mspell, str(num0))
+            synonyms += ['\\syn{{{}}}{{{}}}'.format(mspell, str(num0))]
         elif child.tag == 'ant':
             temp = search(int(child.attrib['ident']))
             root = temp.getroot()
@@ -113,7 +113,7 @@ def scandef(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += '\\ant{{{}}}{{{}}}',format(mspell, str(num0))
+            synonyms += ['\\ant{{{}}}{{{}}}'.format(mspell, str(num0))]
     return (num, categories, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
