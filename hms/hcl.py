@@ -92,6 +92,28 @@ def scandef(e, spell, ident):
             else:
                 source = ''
             samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident))]
+        elif child.tag == 'syn':
+            temp = search(int(child.attrib['ident']))
+            temp.getroot()
+            num0 = 1
+            mspell = ''
+            if 'num' in root.attrib.keys():
+                num0 = int(root.attrib['num'])
+            for child0 in root:
+                if child0.tag == 'main-spell':
+                    mspell = child0.text
+            synonyms += '\\syn{{{}}}{{{}}}',format(mspell, num0)
+        elif child.tag == 'ant':
+            temp = search(int(child.attrib['ident']))
+            temp.getroot()
+            num0 = 1
+            mspell = ''
+            if 'num' in root.attrib.keys():
+                num0 = int(root.attrib['num'])
+            for child0 in root:
+                if child0.tag == 'main-spell':
+                    mspell = child0.text
+            synonyms += '\\ant{{{}}}{{{}}}',format(mspell, num0)
     return (num, categories, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
