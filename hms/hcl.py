@@ -208,8 +208,8 @@ def build():
             synonym_txt = ''
             antonym_txt = ''
             sample_txt = ''
-            for category in sorted(categories):
-                category_txt += category
+            for category in categories:
+                category_txt += category 
 
             for synonym in synonyms:
                 synonym_txt += synonym
