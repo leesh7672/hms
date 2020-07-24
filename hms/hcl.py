@@ -94,7 +94,7 @@ def scandef(e, spell, ident):
             samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident))]
         elif child.tag == 'syn':
             temp = search(int(child.attrib['ident']))
-            temp.getroot()
+            root = temp.getroot()
             num0 = 1
             mspell = ''
             if 'num' in root.attrib.keys():
@@ -105,7 +105,7 @@ def scandef(e, spell, ident):
             synonyms += '\\syn{{{}}}{{{}}}',format(mspell, num0)
         elif child.tag == 'ant':
             temp = search(int(child.attrib['ident']))
-            temp.getroot()
+            root = temp.getroot()
             num0 = 1
             mspell = ''
             if 'num' in root.attrib.keys():
