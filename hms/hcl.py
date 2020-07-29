@@ -198,7 +198,7 @@ def _spell(x):
     (root, num, spell, ident, alternative_spells, definitions) = x
     for ch in spell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-        total += [int(kangxi[1]), int(kangxi[2])]
+        total += [int(kangxi[0]), int(kangxi[1])]
     return [total, num]
 def update():
     for (path, dir, files) in os.walk('./'):
