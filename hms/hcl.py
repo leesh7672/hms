@@ -192,7 +192,7 @@ def scanxml(tree):
             elif child.tag == 'def':
                 definitions += [scandef(child, spell, ident)]
     return (root, num, spell, ident, alternative_spells, definitions)
-def spell(x):
+def _spell(x):
     global c
     total = []
     (root, num, spell, ident, alternative_spells, definitions) = x
@@ -212,7 +212,7 @@ def build():
         def __init__(self, values):
             self.values =values
         def index_spell(self):
-            return spell(self.values)
+            return _spell(self.values)
     update()
     results = []
     for (path, dir, files) in os.walk('./'):
