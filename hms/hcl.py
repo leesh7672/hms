@@ -155,7 +155,6 @@ def updatexml(path):
                                     for child1 in definition:
                                         if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
                                             need = False
-                                            break
                                     if need:
                                         definition.append(elemTree.Element('syn', {'ident': str(ident), 'num': str(numx)}))
                                         ref.write(f, encoding='utf-8')
@@ -170,7 +169,6 @@ def updatexml(path):
                                     for child1 in definition:
                                         if (child1.tag == 'ant') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
                                             need = False
-                                            break
                                     if need:
                                         definition.append(elemTree.Element('ant', {'ident': str(ident), 'num': str(numx)}))
                                         ref.write(f, encoding='utf-8')
