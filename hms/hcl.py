@@ -137,7 +137,7 @@ def updatexml(path):
         root.set('num', '1')
         num = '1'
     else:
-        num = root.attrib['num'])
+        num = root.attrib['num']
     ident = root.attrib['ident']
     if root.tag == 'entry':
         for child in root:
