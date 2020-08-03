@@ -124,7 +124,7 @@ def search(ident):
                     root = tree.getroot()
                     if  'ident' in root.attrib:
                         if int(root.attrib['ident']) == ident:
-                            if(root.tag == 'entry'):
+                            if root.tag == 'entry':
                                 return (tree, p)
     return None
 def updatexml(path):
