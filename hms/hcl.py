@@ -66,20 +66,20 @@ def scandef(e, spell, ident):
             categories += ['稱字']
         elif child.tag == 'verb':
             categories += ['述字']
-        elif child.tag == 'modifier':
+        elif child.tag == 'modifier' or child.tag == 'adnoun':
             categories += ['冠字']
         elif child.tag == 'interjection':
             categories += ['歎字']
-        elif child.tag == 'connecter':
+        elif child.tag == 'connecter' or child.tag == 'conjunction':
             categories += ['結字']
-        elif child.tag == 'counter':
-            categories += ['度字']
-        elif child.tag == 'number':
-            categories += ['數字']
+        elif child.tag == 'counter' or child.tag == 'number':
+            categories += ['算字']
         elif child.tag == 'adverb':
             categories += ['修字']
         elif child.tag == 'final':
-            categories += ['竟字']
+            categories += ['決字']
+        elif child.tag == 'coverb':
+            categories += ['介字']
         elif child.tag == 'misc':
             categories += ['雜字']
         elif child.tag == 'exp':
