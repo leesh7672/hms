@@ -33,13 +33,13 @@ def textify(e, spell, ident):
         elif child.tag == 'self':
             total += "\\textbf{{{}}}".format(spell)
         elif child.tag == 'ref':
-            ident = int(child.attrib['ident'])
+            ident = child.attrib['ident']
             (tr, f) = search(ident)
             root = tr.getroot()
             num = 1
             mspell = ''
             if 'num' in root.attrib.keys():
-                num = int(root.attrib['num'])
+                num = root.attrib['num']
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
@@ -58,7 +58,7 @@ def scandef(e, spell, ident):
     if not('num' in e.attrib.keys()):
         num = 1
     else:
-        num = int(e.attrib['num'])
+        num = e.attrib['num']
     for child in e:
         if child.tag == 'pronoun':
             categories += ['指字']
@@ -91,27 +91,27 @@ def scandef(e, spell, ident):
                 source = ''
             samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident))]
         elif child.tag == 'syn':
-            (temp, f) = search(int(child.attrib['ident']))
+            (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
             num0 = 1
             mspell = ''
             if 'num' in root.attrib.keys():
-                num0 = int(root.attrib['num'])
+                num0 = root.attrib['num']
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += ['\\syn{{{}}}{{{}}}'.format(mspell, str(num0))]
+            synonyms += ['\\syn{{{}}}{{{}}}'.format(mspell, num0)]
         elif child.tag == 'ant':
-            (temp, f) = search(int(child.attrib['ident']))
+            (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
             num0 = 1
             mspell = ''
             if 'num' in root.attrib.keys():
-                num0 = int(root.attrib['num'])
+                num0 = root.attrib['num']
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += ['\\ant{{{}}}{{{}}}'.format(mspell, str(num0))]
+            synonyms += ['\\ant{{{}}}{{{}}}'.format(mspell, num0)]
     return (num, categories, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
@@ -135,28 +135,28 @@ def updatexml(path):
         tree.write(path)
     if not('num' in root.attrib.keys()):
         root.set('num', '1')
-        num = 1
+        num = '1'
     else:
-        num = int(root.attrib['num'])
-    ident = int(root.attrib['ident'])
+        num = root.attrib['num'])
+    ident = root.attrib['ident']
     if root.tag == 'entry':
         for child in root:
             if child.tag == 'def':
-                numx = int(child.attrib['num'])
+                numx = child.attrib['num']
                 for child0 in child:
                     if child0.tag == 'syn':
-                        ident0 = int(child0.attrib['ident'])
-                        num0 = int(child0.attrib['num'])
+                        ident0 = child0.attrib['ident']
+                        num0 = child0.attrib['num']
                         (ref, f) = search(ident0)
                         for definition in ref.findall('def'):
                             if 'num' in definition.attrib.keys():
                                 if definition.attrib['num'] == num0:
                                     need = True
                                     for child1 in definition:
-                                        if (child1.tag == 'syn') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
+                                        if (child1.tag == 'syn') and (child1.attrib['ident'] == ident) and (child1.attrib['num'] == numx):
                                             need = False
                                     if need:
-                                        definition.append(elemTree.Element('syn', {'ident': str(ident), 'num': str(numx)}))
+                                        definition.append(elemTree.Element('syn', {'ident': ident, 'num': numx}))
                                         ref.write(f, encoding='utf-8')
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
@@ -167,16 +167,16 @@ def updatexml(path):
                                 if definition.attrib['num'] == num0:
                                     need = True
                                     for child1 in definition:
-                                        if (child1.tag == 'ant') and (int(child1.attrib['ident']) == ident) and (int(child1.attrib['num']) == numx):
+                                        if (child1.tag == 'ant') and (child1.attrib['ident'] == ident) and (child1.attrib['num'] == numx):
                                             need = False
                                     if need:
-                                        definition.append(elemTree.Element('ant', {'ident': str(ident), 'num': str(numx)}))
+                                        definition.append(elemTree.Element('ant', {'ident': ident, 'num': numx}))
                                         ref.write(f, encoding='utf-8')
     tree.write(path, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
-    num = int(root.attrib['num'])
-    ident = int(root.attrib['ident'])
+    num = root.attrib['num']
+    ident = root.attrib['ident']
     alternative_spells = set()
     definitions= []
     if root.tag == 'entry':
@@ -195,7 +195,7 @@ def _spell(x):
     for ch in spell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
         total += [int(kangxi[0]), int(kangxi[1])]
-    return [total, num]
+    return [total, int(num)]
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
