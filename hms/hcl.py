@@ -60,28 +60,22 @@ def scandef(e, spell, ident):
     else:
         num = e.attrib['num']
     for child in e:
-        if child.tag == 'pronoun':
-            categories += ['指字']
-        elif child.tag == 'noun':
-            categories += ['稱字']
+        if child.tag == 'noun':
+            categories += ['指詞']
         elif child.tag == 'verb':
-            categories += ['述字']
-        elif child.tag == 'modifier' or child.tag == 'adnoun':
-            categories += ['冠字']
+            categories += ['述詞']
+        elif child.tag == 'adnoun':
+            categories += ['冠詞']
         elif child.tag == 'interjection':
-            categories += ['歎字']
-        elif child.tag == 'connecter' or child.tag == 'conjunction':
-            categories += ['結字']
-        elif child.tag == 'counter' or child.tag == 'number':
-            categories += ['算字']
+            categories += ['吟詞']
+        elif child.tag == 'connecter':
+            categories += ['束詞']
         elif child.tag == 'adverb':
-            categories += ['修字']
+            categories += ['修詞']
         elif child.tag == 'final':
-            categories += ['決字']
+            categories += ['結詞']
         elif child.tag == 'coverb':
-            categories += ['介字']
-        elif child.tag == 'misc':
-            categories += ['雜字']
+            categories += ['縛詞']
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident)
         elif child.tag == 'samp':
