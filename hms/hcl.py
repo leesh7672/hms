@@ -60,8 +60,10 @@ def scandef(e, spell, ident):
     else:
         num = e.attrib['num']
     for child in e:
-        if child.tag == 'noun':
+        if child.tag == 'pronoun':
             categories += ['指詞']
+        if child.tag == 'noun':
+            categories += ['擧詞']
         elif child.tag == 'verb':
             categories += ['述詞']
         elif child.tag == 'adnoun':
