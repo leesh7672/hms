@@ -63,7 +63,7 @@ def scandef(e, spell, ident):
         if child.tag == 'pronoun':
             categories += ['指詞']
         if child.tag == 'noun':
-            categories += ['擧詞']
+            categories += ['稱詞']
         elif child.tag == 'verb':
             categories += ['述詞']
         elif child.tag == 'adnoun':
