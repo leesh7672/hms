@@ -7,7 +7,7 @@ c = Cihai()
 
 import hms.tex as tex
 import hms.html as html
-
+import psycopg2
 latest_ident = 0
 
 def generateIdent():
