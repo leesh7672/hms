@@ -253,7 +253,7 @@ def build_db(conn):
             for sample in samples:
                 conn.execute("INSERT INTO _synonyms(_source, _sample, _exp) VALUES ({}, {});".format(sample[0], sample[1], exp_ident))
 def build():
-    result = collect(tex)
+    results = collect(tex)
     txt = ''
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions) = result.values
