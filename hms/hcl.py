@@ -219,6 +219,7 @@ def collect(code=tex):
                 if ext == '.xml':
                     result = scanxml(elemTree.parse(p))
                     results += [entry(result)]
+        print(results.len)
         return sorted(results, key=methodcaller('index_spell'))
 def build_db(conn):
     results = collect(html)
