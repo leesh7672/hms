@@ -15,6 +15,6 @@ setup(
     author='Seho Lee',
     author_email='leesh7672@knou.ac.kr',
     packages=find_packages(),
-    install_requires=['cihai', 'pycnnum'],
+    install_requires=['cihai', 'pycnnum' , 'psycopg2'],
     zip_safe=True
     )

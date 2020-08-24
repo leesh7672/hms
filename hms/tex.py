@@ -8,5 +8,8 @@ def bold(txt):
 def superscript(txt):
     return "\\textsuperscript{{{}}}".format(txt)
 
+def link(txt, dest):
+    return txt
+
 def num(n):
     return num2cn(num, traditional=True)

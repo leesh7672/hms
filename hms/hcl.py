@@ -220,7 +220,44 @@ def collect(code):
                     result = scanxml(elemTree.parse(p))
                     results += [entry(result)]
         return sorted(results, key=methodcaller('index_spell'))
-def build():
+def build_db(conn):
+    result = collect(tex)
+    conn.execute("DROP TABLE IF EXISTS _words;")
+    conn.execute("CREATE TABLE _words(_spell TEXT, _ident BIGINT);")
+    conn.execute("CREATE TABLE _alternative_spells(_spell TEXT, _ident BIGINT);")
+    conn.execute("CREATE TABLE _explanations(_class TEXT, _exp TEXT, _ident BIGINT);")
+    conn.execute("CREATE TABLE _synonyms(_ident BIGINT, _dest BIGINT);")
+    conn.execute("CREATE TABLE _antonyms(_ident BIGINT, _dest BIGINT);")
+    conn.execute("CREATE TABLE _samples(_source TEXT, _sample TEXT, _ident BIGINT);")
+    tex = ''
+    for result in results:
+        (root, num, spell, ident, alternative_spells, definitions) = result.values
+        spells = ''
+        for sp in alternative_spells:
+            spells += '\\also{{{}}}'.format(sp)
+        definition_txt = ''
+        for d in sorted(definitions, key=itemgetter(0)):
+            (numx, categories, synonyms, antonyms, samples, explanation) = d
+            category_txt = ''
+            synonym_txt = ''
+            antonym_txt = ''
+            sample_txt = ''
+            for category in categories:
+                category_txt += category
+
+            for synonym in synonyms:
+                synonym_txt += "\\syn{{{}}}{{{}}}".format(synonym[0], synonym[1])
+
+            for antonym in antonyms:
+                antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
+
+            for sample in samples:
+                sample_txt += '{}云、「{}」'.format(sample[0], sample[1])
+
+            definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
+        tex += "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
+    return tex
+def build_db():
     result = collect(tex)
     txt = ''
     for result in results:
