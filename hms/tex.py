@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import pyncnnum
+import pycnnum
 
 def bold(txt):
     return "\\textbf{{{}}}".format(txt)
