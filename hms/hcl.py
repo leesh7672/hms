@@ -203,7 +203,7 @@ def update():
             ext = os.path.splitext(filename)[-1]
             if ext == '.xml':
                 updatexml(p)
-def collect(code=tex):
+def collect_entries(code=tex):
     def build():
         class entry:
             def __init__(self, values):
@@ -222,7 +222,7 @@ def collect(code=tex):
         results.sort(key=methodcaller('index_spell'))
         return results
 def build_db(conn):
-    results = collect(html)
+    results = collect_entries(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
     conn.execute("DROP TABLE IF EXISTS _synonyms;")
     conn.execute("DROP TABLE IF EXISTS _antonyms;")
@@ -254,7 +254,7 @@ def build_db(conn):
             for sample in samples:
                 conn.execute("INSERT INTO _synonyms(_source, _sample, _exp) VALUES ({}, {});".format(sample[0], sample[1], exp_ident))
 def build():
-    results = collect(tex)
+    results = collect_entries(tex)
     txt = ''
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions) = result.values
