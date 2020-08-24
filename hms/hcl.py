@@ -254,7 +254,7 @@ def build_db(conn):
                 conn.execute("INSERT INTO _synonyms(_source, _sample, _exp) VALUES ({}, {});".format(sample[0], sample[1], exp_ident))
 def build():
     results = collect(tex)
-    tex = ''
+    txt = ''
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions) = result.values
         spells = ''
@@ -277,9 +277,8 @@ def build():
                 sample_txt += '{}云、「{}」'.format(sample[0], sample[1])
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
-        tex += definition_txt
-        tex += "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
-    return tex
+        txt+= "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
+    return txt
 def initialize():
     global latest_ident
     global c
