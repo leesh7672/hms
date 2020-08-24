@@ -54,7 +54,7 @@ def textify(e, spell, ident, coder=tex):
         total += part
     return total.strip()
 def scandef(e, spell, ident, coder=tex):
-    categories = []
+    category= ''
     synonyms = []
     antonyms = []
     samples = []
@@ -65,23 +65,23 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     for child in e:
         if child.tag == 'pronoun':
-            categories += ['指詞']
+            category = '指詞'
         if child.tag == 'noun':
-            categories += ['稱詞']
+            category = '稱詞'
         elif child.tag == 'verb':
-            categories += ['述詞']
+            category = '謂詞'
         elif child.tag == 'adnoun':
-            categories += ['冠詞']
+            category = '冠詞'
         elif child.tag == 'interjection':
-            categories += ['吟詞']
+            category = '吟詞'
         elif child.tag == 'connecter':
-            categories += ['束詞']
+            category = '束詞'
         elif child.tag == 'adverb':
-            categories += ['修詞']
+            category = '修詞'
         elif child.tag == 'final':
-            categories += ['結詞']
+            category = '結詞'
         elif child.tag == 'coverb':
-            categories += ['縛詞']
+            category = '縛詞'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
@@ -100,7 +100,7 @@ def scandef(e, spell, ident, coder=tex):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms +=  [(mspell, num0)]
+            synonyms +=  [(mspell, num0, child.attrib['ident'])]
         elif child.tag == 'ant':
             (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
@@ -111,8 +111,8 @@ def scandef(e, spell, ident, coder=tex):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            antonyms += [(mspell, num0)]
-    return (num, categories, synonyms, antonyms, samples, explanation)
+            antonyms += [(mspell, num0, child.attrib['ident'])]
+    return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
         for filename in files:
@@ -203,7 +203,7 @@ def update():
             ext = os.path.splitext(filename)[-1]
             if ext == '.xml':
                 updatexml(p)
-def collect(code):
+def collect(code=tex):
     def build():
         class entry:
             def __init__(self, values):
@@ -221,43 +221,38 @@ def collect(code):
                     results += [entry(result)]
         return sorted(results, key=methodcaller('index_spell'))
 def build_db(conn):
-    result = collect(tex)
+    result = collect(html)
+    conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
+    conn.execute("DROP TABLE IF EXISTS _synonyms;")
+    conn.execute("DROP TABLE IF EXISTS _antonyms;")
+    conn.execute("DROP TABLE IF EXISTS _samples;")
+    conn.execute("DROP TABLE IF EXISTS _explanations;")
     conn.execute("DROP TABLE IF EXISTS _words;")
     conn.execute("CREATE TABLE _words(_spell TEXT, _ident BIGINT);")
     conn.execute("CREATE TABLE _alternative_spells(_spell TEXT, _ident BIGINT);")
-    conn.execute("CREATE TABLE _explanations(_class TEXT, _exp TEXT, _ident BIGINT);")
-    conn.execute("CREATE TABLE _synonyms(_ident BIGINT, _dest BIGINT);")
-    conn.execute("CREATE TABLE _antonyms(_ident BIGINT, _dest BIGINT);")
-    conn.execute("CREATE TABLE _samples(_source TEXT, _sample TEXT, _ident BIGINT);")
-    tex = ''
+    conn.execute("CREATE TABLE _explanations(_category TEXT, _exp TEXT, _ident BIGINT, _exp_ident BIGSERIAL PRIMARY KEY);")
+    conn.execute("CREATE TABLE _synonyms(_from REFERENCES _explanations(_exp_ident), _dest BIGINT);")
+    conn.execute("CREATE TABLE _antonyms(_from REFERENCES _explanations(_exp_ident), _dest BIGINT);")
+    conn.execute("CREATE TABLE _samples(_source TEXT, _sample TEXT, _exp REFERENCES _explanations(_exp_ident));")
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions) = result.values
-        spells = ''
+        conn.execute('INSERT INTO _words(_spell, _ident) VALUES(\'{}\', {});'.format(spell, ident))
         for sp in alternative_spells:
-            spells += '\\also{{{}}}'.format(sp)
+            conn.execute("INSERT INTO _alternative_spells(_spell, _ident)  VALUES(\'{}\', {});".format(spell, ident))
+        conn.commit()
         definition_txt = ''
         for d in sorted(definitions, key=itemgetter(0)):
-            (numx, categories, synonyms, antonyms, samples, explanation) = d
-            category_txt = ''
-            synonym_txt = ''
-            antonym_txt = ''
-            sample_txt = ''
-            for category in categories:
-                category_txt += category
-
+            (numx, category, synonyms, antonyms, samples, explanation) = d
+            exp_ident = 0
+            for row in conn.execute("INSERT INTO _explanations(_exp, _category, _ident) VALUES(\'{}\', \'{}\', {}) RETURNING _exp_ident;".format(explanation, category, ident)).fetchall():
+                exp_ident = row['_ident']
             for synonym in synonyms:
-                synonym_txt += "\\syn{{{}}}{{{}}}".format(synonym[0], synonym[1])
-
+                conn.execute("INSERT INTO _synonyms(_from, _dest) VALUES ({}, {});".format(exp_ident, synonym[3]))
             for antonym in antonyms:
-                antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
-
+                conn.execute("INSERT INTO _synonyms(_from, _dest) VALUES ({}, {});".format(exp_ident, antonym[3]))
             for sample in samples:
-                sample_txt += '{}云、「{}」'.format(sample[0], sample[1])
-
-            definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
-        tex += "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
-    return tex
-def build_db():
+                conn.execute("INSERT INTO _synonyms(_source, _sample, _exp) VALUES ({}, {});".format(sample[0], sample[1], exp_ident))
+def build():
     result = collect(tex)
     txt = ''
     for result in results:
@@ -267,13 +262,10 @@ def build_db():
             spells += '\\also{{{}}}'.format(sp)
         definition_txt = ''
         for d in sorted(definitions, key=itemgetter(0)):
-            (numx, categories, synonyms, antonyms, samples, explanation) = d
-            category_txt = ''
+            (numx, category_txt, synonyms, antonyms, samples, explanation) = d
             synonym_txt = ''
             antonym_txt = ''
             sample_txt = ''
-            for category in categories:
-                category_txt += category
 
             for synonym in synonyms:
                 synonym_txt += "\\syn{{{}}}{{{}}}".format(synonym[0], synonym[1])
