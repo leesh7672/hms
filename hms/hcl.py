@@ -219,8 +219,8 @@ def collect(code=tex):
                 if ext == '.xml':
                     result = scanxml(elemTree.parse(p))
                     results += [entry(result)]
-        print(results.len)
-        return sorted(results, key=methodcaller('index_spell'))
+        results.sort(key=methodcaller('index_spell'))
+        return results
 def build_db(conn):
     results = collect(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
