@@ -5,8 +5,7 @@ from operator import methodcaller, itemgetter, mul
 from cihai.core import Cihai
 c = Cihai()
 
-import hms.tex
-import html
+import hms.tex as tex
 
 latest_ident = 0
 
