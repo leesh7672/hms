@@ -6,6 +6,7 @@ from cihai.core import Cihai
 c = Cihai()
 
 import hms.tex as tex
+import hms.html as html
 
 latest_ident = 0
 
@@ -88,7 +89,7 @@ def scandef(e, spell, ident, coder=tex):
                 source = child.attrib['src']
             else:
                 source = ''
-            samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident, coder))]
+            samples += [(source, textify(child, spell, ident, coder))]
         elif child.tag == 'syn':
             (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
@@ -202,23 +203,27 @@ def update():
             ext = os.path.splitext(filename)[-1]
             if ext == '.xml':
                 updatexml(p)
+def collect(code):
+    def build():
+        class entry:
+            def __init__(self, values):
+                self.values =values
+            def index_spell(self):
+                return _spell(self.values)
+        update()
+        results = []
+        for (path, dir, files) in os.walk('./'):
+            for filename in files:
+                p = '{}/{}'.format(path, filename)
+                ext = os.path.splitext(filename)[-1]
+                if ext == '.xml':
+                    result = scanxml(elemTree.parse(p))
+                    results += [entry(result)]
+        return sorted(results, key=methodcaller('index_spell'))
 def build():
-    class entry:
-        def __init__(self, values):
-            self.values =values
-        def index_spell(self):
-            return _spell(self.values)
-    update()
-    results = []
-    for (path, dir, files) in os.walk('./'):
-        for filename in files:
-            p = '{}/{}'.format(path, filename)
-            ext = os.path.splitext(filename)[-1]
-            if ext == '.xml':
-                result = scanxml(elemTree.parse(p))
-                results += [entry(result)]
-    tex = ''
-    for result in sorted(results, key=methodcaller('index_spell')):
+    result = collect(tex)
+    txt = ''
+    for result in results:
         (root, num, spell, ident, alternative_spells, definitions) = result.values
         spells = ''
         for sp in alternative_spells:
@@ -240,7 +245,7 @@ def build():
                 antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
 
             for sample in samples:
-                sample_txt += sample
+                sample_txt += '{}云、「{}」'.format(sample[0], sample[1])
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
         tex += "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
