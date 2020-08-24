@@ -5,7 +5,11 @@ from operator import methodcaller, itemgetter, mul
 from cihai.core import Cihai
 c = Cihai()
 
+import tex
+import html
+
 latest_ident = 0
+
 def generateIdent():
     global latest_ident
     latest_ident += 1
@@ -14,7 +18,7 @@ def generateIdent():
     file.close()
     return latest_ident
 
-def textify(e, spell, ident):
+def textify(e, spell, ident, coder=tex):
     total = ''
     part = e.text
     for child in e:
@@ -22,7 +26,7 @@ def textify(e, spell, ident):
             part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
             total += part
         if child.tag == 'quote':
-            temp = textify(child, spell, ident)
+            temp = textify(child, spell, ident, coder)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
@@ -31,7 +35,7 @@ def textify(e, spell, ident):
             elif level >= 2:
                 total += '『{}』'.format(temp)
         elif child.tag == 'self':
-            total += "\\textbf{{{}}}".format(spell)
+            total +=coder.bold(spell)
         elif child.tag == 'ref':
             ident = child.attrib['ident']
             (tr, f) = search(ident)
@@ -43,13 +47,13 @@ def textify(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            total += '\\textbf{{{}}}\\textsuperscript{{\\CJKnumber{{{}}}}}'.format(mspell, num)
+            total += coder.bold(mspell) + coder.superscript(coder.num(num))
         part = child.tail
     if part != None:
         part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
         total += part
     return total.strip()
-def scandef(e, spell, ident):
+def scandef(e, spell, ident, coder=tex):
     categories = []
     synonyms = []
     antonyms = []
@@ -79,13 +83,13 @@ def scandef(e, spell, ident):
         elif child.tag == 'coverb':
             categories += ['縛詞']
         elif child.tag == 'exp':
-            explanation = textify(child, spell, ident)
+            explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
             else:
                 source = ''
-            samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident))]
+            samples += ['《{}》云、「{}」'.format(source, textify(child, spell, ident, coder))]
         elif child.tag == 'syn':
             (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
@@ -96,7 +100,7 @@ def scandef(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += ['\\syn{{{}}}{{{}}}'.format(mspell, num0)]
+            synonyms +=  [(mspell, num0)]
         elif child.tag == 'ant':
             (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
@@ -107,7 +111,7 @@ def scandef(e, spell, ident):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            synonyms += ['\\ant{{{}}}{{{}}}'.format(mspell, num0)]
+            antonyms += [(mspell, num0)]
     return (num, categories, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
@@ -231,10 +235,10 @@ def build():
                 category_txt += category
 
             for synonym in synonyms:
-                synonym_txt += synonym
+                synonym_txt += "\\syn{{{}}}{{{}}}".format(synonym[0], synonym[1])
 
             for antonym in antonyms:
-                antonym_txt += antonym
+                antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
 
             for sample in samples:
                 sample_txt += sample
