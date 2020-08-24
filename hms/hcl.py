@@ -221,7 +221,7 @@ def collect(code=tex):
                     results += [entry(result)]
         return sorted(results, key=methodcaller('index_spell'))
 def build_db(conn):
-    result = collect(html)
+    results = collect(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
     conn.execute("DROP TABLE IF EXISTS _synonyms;")
     conn.execute("DROP TABLE IF EXISTS _antonyms;")
