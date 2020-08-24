@@ -231,9 +231,9 @@ def build_db(conn):
     conn.execute("CREATE TABLE _words(_spell TEXT, _ident BIGINT);")
     conn.execute("CREATE TABLE _alternative_spells(_spell TEXT, _ident BIGINT);")
     conn.execute("CREATE TABLE _explanations(_category TEXT, _exp TEXT, _ident BIGINT, _exp_ident BIGSERIAL PRIMARY KEY);")
-    conn.execute("CREATE TABLE _synonyms(_from REFERENCES _explanations(_exp_ident), _dest BIGINT);")
-    conn.execute("CREATE TABLE _antonyms(_from REFERENCES _explanations(_exp_ident), _dest BIGINT);")
-    conn.execute("CREATE TABLE _samples(_source TEXT, _sample TEXT, _exp REFERENCES _explanations(_exp_ident));")
+    conn.execute("CREATE TABLE _synonyms(_from BIGINT REFERENCES _explanations(_exp_ident), _dest BIGINT);")
+    conn.execute("CREATE TABLE _antonyms(_from BIGINT REFERENCES _explanations(_exp_ident), _dest BIGINT);")
+    conn.execute("CREATE TABLE _samples(_source TEXT, _sample TEXT, _exp BIGINT REFERENCES _explanations(_exp_ident));")
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions) = result.values
         conn.execute('INSERT INTO _words(_spell, _ident) VALUES(\'{}\', {});'.format(spell, ident))
