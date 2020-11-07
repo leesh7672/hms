@@ -10,7 +10,7 @@ import hms.html as html
 latest_ident = 0
 
 def generateIdent():
-    global latest_ident 
+    global latest_ident
     latest_ident += 1
     file = open('counter', 'w')
     file.write('{}'.format(latest_ident))
@@ -78,7 +78,7 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
-            if 'src' in child.attrib.keys():口
+            if 'src' in child.attrib.keys():
                 source = child.attrib['src']
             else:
                 source = ''
