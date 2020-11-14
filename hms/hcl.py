@@ -7,7 +7,6 @@ c = Cihai()
 
 import hms.tex as tex
 import hms.html as html
-import psycopg2
 latest_ident = 0
 
 def generateIdent():
@@ -64,24 +63,18 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['num']
     for child in e:
-        if child.tag == 'pronoun':
-            category = '指詞'
         if child.tag == 'noun':
-            category = '稱詞'
+            category = '名稱詞'
         elif child.tag == 'verb':
-            category = '謂詞'
-        elif child.tag == 'adnoun':
-            category = '冠詞'
+            category = '行動詞'
+        elif child.tag == 'adjective':
+            category = '被狀詞'
+        elif child.tag == 'modifier':
+            category = '冠修詞'
         elif child.tag == 'interjection':
-            category = '吟詞'
-        elif child.tag == 'connecter':
-            category = '束詞'
-        elif child.tag == 'adverb':
-            category = '修詞'
-        elif child.tag == 'final':
-            category = '結詞'
-        elif child.tag == 'coverb':
-            category = '縛詞'
+            category = '詠歎詞'
+        elif child.tag == 'particle':
+            category = '空虛詞'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
@@ -221,6 +214,7 @@ def collect_entries(code=tex):
                     results += [entry(result)]
         results.sort(key=methodcaller('index_spell'))
         return results
+    return build()
 def build_db(conn):
     results = collect_entries(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
