@@ -170,7 +170,7 @@ def scanxml(tree):
     root = tree.getroot()
     num = root.attrib['num']
     ident = root.attrib['ident']
-    alternative_spells = set()
+    alternative_spells = []
     definitions= []
     if root.tag == 'entry':
         for child in root:
