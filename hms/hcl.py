@@ -42,7 +42,7 @@ def textify(e, spell, ident, coder=tex):
             num = 1
             mspell = ''
             if 'num' in root.attrib.keys():
-                num = root.attrib['num']
+                num = int(root.attrib['num'])
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
