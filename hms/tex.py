@@ -12,4 +12,4 @@ def link(txt, dest):
     return txt
 
 def num(n):
-    return num2cn(num, traditional=True)
+    return pycnnum.num2cn(num, traditional=True)
