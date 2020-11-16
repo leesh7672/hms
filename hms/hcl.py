@@ -82,7 +82,7 @@ def scandef(e, spell, ident, coder=tex):
         if x != '':
             category = distinguish_category(child)
         elif child.tag == 'phrase':
-            category = distinguish_category(child[0]) + '詞'
+            category = distinguish_category(child[0]) + '之句'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
