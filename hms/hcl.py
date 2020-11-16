@@ -63,18 +63,26 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['num']
     for child in e:
-        if child.tag == 'noun':
-            category = '名稱詞'
-        elif child.tag == 'verb':
-            category = '行動詞'
-        elif child.tag == 'adjective':
-            category = '被狀詞'
-        elif child.tag == 'modifier':
-            category = '冠修詞'
-        elif child.tag == 'interjection':
-            category = '詠歎詞'
-        elif child.tag == 'particle':
-            category = '空虛詞'
+        def distinguish_category(child0):
+            if child0.tag == 'noun':
+                return '名稱詞'
+            elif child0.tag == 'verb':
+                return '行動詞'
+            elif child0.tag == 'adjective':
+                return '被狀詞'
+            elif child0.tag == 'modifier':
+                return '冠修詞'
+            elif child0.tag == 'interjection':
+                return '詠歎詞'
+            elif child0.tag == 'particle':
+                return '空虛詞'
+            else:
+                return ''
+        x = distinguish_category(child)
+        if x != '':
+            category = distinguish_category(child)
+        elif child.tag != 'phrase':
+            category = distinguish_category(child[0]) + '詞'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
