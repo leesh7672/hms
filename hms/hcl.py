@@ -70,8 +70,6 @@ def scandef(e, spell, ident, coder=tex):
                 return '行動'
             elif child0.tag == 'adjective':
                 return '被狀'
-            elif child0.tag == 'modifier':
-                return '冠詞'
             elif child0.tag == 'marker':
                 return '虛詞'
             else:
