@@ -73,7 +73,7 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'marker':
                 return '虛詞'
             else:
-                return '未明'
+                return ''
         x = distinguish_category(child)
         if x != '':
             category = distinguish_category(child)
