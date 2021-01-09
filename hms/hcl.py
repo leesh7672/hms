@@ -71,7 +71,7 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'adjective':
                 return '被狀'
             elif child0.tag == 'marker':
-                return '虛詞'
+                return '標識'
             else:
                 return ''
         x = distinguish_category(child)
