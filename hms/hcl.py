@@ -7,6 +7,8 @@ c = Cihai()
 
 import hms.tex as tex
 import hms.html as html
+import multiprocessing as mp
+from mp import Process, Lock, Queue
 latest_ident = 0
 
 def generateIdent():
@@ -209,13 +211,21 @@ def collect_entries(code=tex):
                 return _spell(self.values)
         update()
         results = []
+        processes = []
         for (path, dir, files) in os.walk('./'):
             for filename in files:
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    result = scanxml(elemTree.parse(p))
-                    results += [entry(result)]
+                    def work(qr, code, p):
+                        result = scanxml(elemTree.parse(p))
+                        qr.put(entry(result))
+                    qr = mp.Queue()
+                    processes += [(qr, Process(target=f, args=(qr, code, p)))]
+        for x in processes:
+            (qr, p) = x
+            p.join()
+            results += [qr.get()]
         results.sort(key=methodcaller('index_spell'))
         return results
     return build()
