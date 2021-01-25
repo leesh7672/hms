@@ -219,7 +219,7 @@ def collect_entries(code=tex):
                 if ext == '.xml':
                     def work(q, q2):
                         result = scanxml(elemTree.parse(q2.get()))
-                        q.put(entry(result))
+                        q.put(result)
                     q = mp.Queue()
                     q2 = mp.Queue()
                     proc = Process(target=work, args=(q, q2))
@@ -229,7 +229,7 @@ def collect_entries(code=tex):
         for x in processes:
             (qr, p) = x
             p.join()
-            results += [qr.get()]
+            results += [entry(qr.get())]
         results.sort(key=methodcaller('index_spell'))
         return results
     return build()
