@@ -217,13 +217,15 @@ def collect_entries(code=tex):
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    def work(qr, code, p):
-                        result = scanxml(elemTree.parse(p))
-                        qr.put(entry(result))
-                    qr = mp.Queue()
-                    proc = Process(target=work, args=(qr, code, p))
+                    def work(q, q2):
+                        result = scanxml(elemTree.parse(q2.get()))
+                        q.put(entry(result))
+                    q = mp.Queue()
+                    q2 = mp.Queue()
+                    proc = Process(target=work, args=(q, q2))
                     proc.start()
-                    processes += [(qr, proc)]
+                    q2.put(p)
+                    processes += [(q, proc)]
         for x in processes:
             (qr, p) = x
             p.join()
