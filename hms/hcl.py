@@ -221,7 +221,9 @@ def collect_entries(code=tex):
                         result = scanxml(elemTree.parse(p))
                         qr.put(entry(result))
                     qr = mp.Queue()
-                    processes += [(qr, Process(target=work, args=(qr, code, p)))]
+                    proc = Process(target=work, args=(qr, code, p))
+                    proc.start()
+                    processes += [(qr, proc)]
         for x in processes:
             (qr, p) = x
             p.join()
