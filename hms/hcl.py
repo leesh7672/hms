@@ -8,7 +8,7 @@ c = Cihai()
 import hms.tex as tex
 import hms.html as html
 import multiprocessing as mp
-from mp import Process, Lock, Queue
+from multiprocessing import Process, Lock, Queue
 latest_ident = 0
 
 def generateIdent():
