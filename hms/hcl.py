@@ -67,13 +67,13 @@ def scandef(e, spell, ident, coder=tex):
     for child in e:
         def distinguish_category(child0):
             if child0.tag == 'noun':
-                return '事物'
+                return '體詞'
             elif child0.tag == 'verb':
-                return '動態'
+                return '謂詞'
             elif child0.tag == 'mark':
-                return '標識'
-            elif child0.tag == 'phrase':
-                return '組織'
+                return '標詞'
+            elif child0.tag == 'idiom':
+                return '熟語'
             else:
                 return ''
         x = distinguish_category(child)
