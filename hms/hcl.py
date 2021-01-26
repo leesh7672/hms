@@ -66,18 +66,14 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     for child in e:
         def distinguish_category(child0):
-            if child0.tag == 'substance':
-                return '物'
-            elif child0.tag == 'place':
-                return '境'
-            elif child0.tag == 'action':
-                return '動'
-            elif child0.tag == 'station':
-                return '態'
-            elif child0.tag == 'marker':
-                return '標'
-            elif child0.tag == 'idiom':
-                return '典'
+            if child0.tag == 'noun':
+                return '事物'
+            elif child0.tag == 'verb':
+                return '動態'
+            elif child0.tag == 'mark':
+                return '標識'
+            elif child0.tag == 'phrase':
+                return '組織'
             else:
                 return ''
         x = distinguish_category(child)
