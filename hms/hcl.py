@@ -69,13 +69,15 @@ def scandef(e, spell, ident, coder=tex):
             if child0.tag == 'noun':
                 return '體詞'
             elif child0.tag == 'verb':
-                return '謂詞'
+                return '動詞'
+            elif child0.tag == 'verb':
+                return '態詞'
             elif child0.tag == 'coverb':
-                return '冠詞'
+                return '縛詞'
             elif child0.tag == 'mark':
                 return '標詞'
             elif child0.tag == 'idiom':
-                return '熟語'
+                return '熟句'
             else:
                 return ''
         x = distinguish_category(child)
