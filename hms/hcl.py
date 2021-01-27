@@ -48,7 +48,7 @@ def textify(e, spell, ident, coder=tex):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            total += coder.bold(mspell) + coder.superscript(coder.num(num))
+            total += coder.bold(mspell)
         part = child.tail
     if part != None:
         part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
@@ -70,7 +70,7 @@ def scandef(e, spell, ident, coder=tex):
                 return '體詞'
             elif child0.tag == 'verb':
                 return '動詞'
-            elif child0.tag == 'verb':
+            elif child0.tag == 'adjective':
                 return '態詞'
             elif child0.tag == 'coverb':
                 return '縛詞'

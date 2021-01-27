@@ -9,7 +9,7 @@ def long_description():
 
 setup(
     name='hms',
-    version='1.1',
+    version='1.2',
     description='HCL Management software rewritten into python.',
     long_description=long_description(),
     author='Seho Lee',
