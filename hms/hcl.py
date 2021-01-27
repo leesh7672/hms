@@ -9,15 +9,9 @@ import hms.tex as tex
 import hms.html as html
 import multiprocessing as mp
 from multiprocessing import Process, Lock, Queue
-latest_ident = 0
 
 def generateIdent():
-    global latest_ident
-    latest_ident += 1
-    file = open('counter', 'w')
-    file.write('{}'.format(latest_ident))
-    file.close()
-    return uuid.uuid4().hex
+    return str(uuid.uuid4())
 
 def textify(e, spell, ident, coder=tex):
     total = ''
@@ -77,7 +71,7 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'mark':
                 return '標詞'
             elif child0.tag == 'idiom':
-                return '熟句'
+                return '熟語'
             else:
                 return ''
         x = distinguish_category(child)
@@ -295,11 +289,7 @@ def build():
         txt+= "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
     return txt
 def initialize():
-    global latest_ident
     global c
-    file = open('counter')
-    latest_ident = int(file.read())
-    file.close()
     if not c.unihan.is_bootstrapped:
         c.unihan.bootstrap()
 initialize()
