@@ -123,6 +123,7 @@ def search(ident):
                                 return (tree, p)
     return None
 def updatexml(path):
+    print(path)
     tree = elemTree.parse(path)
     root = tree.getroot()
     if not('ident' in root.attrib.keys()):
@@ -205,7 +206,6 @@ def collect_entries(code=tex):
                 self.values =values
             def index_spell(self):
                 return _spell(self.values)
-        update()
         results = []
         processes = []
         for (path, dir, files) in os.walk('./'):
