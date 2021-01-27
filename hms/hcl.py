@@ -11,8 +11,7 @@ import multiprocessing as mp
 from multiprocessing import Process, Lock, Queue
 
 def generateIdent():
-    global latest_ident
-    return uuid.uuid4().hex
+    return str(uuid.uuid4())
 
 def textify(e, spell, ident, coder=tex):
     total = ''
