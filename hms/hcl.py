@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import xml.etree.ElementTree as elemTree
-import os
+import os, uuid
 from operator import methodcaller, itemgetter, mul
 from cihai.core import Cihai
 c = Cihai()
@@ -17,7 +17,7 @@ def generateIdent():
     file = open('counter', 'w')
     file.write('{}'.format(latest_ident))
     file.close()
-    return latest_ident
+    return uuid.uuid4().hex
 
 def textify(e, spell, ident, coder=tex):
     total = ''
@@ -70,6 +70,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '體詞'
             elif child0.tag == 'verb':
                 return '謂詞'
+            elif child0.tag == 'coverb':
+                return '冠詞'
             elif child0.tag == 'mark':
                 return '標詞'
             elif child0.tag == 'idiom':
