@@ -65,7 +65,7 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'verb':
                 return '動詞'
             elif child0.tag == 'adjective':
-                return '態詞'
+                return '狀詞'
             elif child0.tag == 'coverb':
                 return '縛詞'
             elif child0.tag == 'mark':
