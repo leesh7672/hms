@@ -68,6 +68,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '助詞'
             elif child0.tag == 'mark':
                 return '結詞'
+            elif child0.tag == 'adverb':
+                return '狀詞'
             elif child0.tag == 'noun-phrase':
                 return '體詞之節'
             elif child0.tag == 'verb-phrase':
