@@ -63,13 +63,19 @@ def scandef(e, spell, ident, coder=tex):
             if child0.tag == 'noun':
                 return '體詞'
             elif child0.tag == 'verb':
-                return '動詞'
-            elif child0.tag == 'adjective':
-                return '狀詞'
-            elif child0.tag == 'coverb':
-                return '縛詞'
+                return '謂詞'
+            elif child0.tag == 'prep':
+                return '助詞'
             elif child0.tag == 'mark':
-                return '標詞'
+                return '結詞'
+            elif child0.tag == 'noun-phrase':
+                return '體詞之節'
+            elif child0.tag == 'verb-phrase':
+                return '謂詞之節'
+            elif child0.tag == 'prep-phrase':
+                return '助詞之節'
+            elif child0.tag == 'mark-phrase':
+                return '結詞之節'
             elif child0.tag == 'idiom':
                 return '熟語'
             else:
