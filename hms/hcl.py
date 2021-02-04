@@ -29,6 +29,8 @@ def textify(e, spell, ident, coder=tex):
                 total += '『{}』'.format(temp)
             elif level >= 2:
                 total += '「{}」'.format(temp)
+        elif child.tag == 'b':
+            total +=coder.bold(textify(child, spell, ident, coder))
         elif child.tag == 'self':
             total +=coder.bold(spell)
         elif child.tag == 'ref':
@@ -66,19 +68,19 @@ def scandef(e, spell, ident, coder=tex):
                 return '謂詞'
             elif child0.tag == 'prep':
                 return '助詞'
-            elif child0.tag == 'conn':
-                return '束詞'
-            elif child0.tag == 'mark':
+            elif child0.tag == 'm':
+                return '標詞'
+            elif child0.tag == 'asp':
                 return '結詞'
-            elif child0.tag == 'adv':
-                return '狀詞'
+            elif child0.tag == 'pole':
+                return '杆詞'
             elif child0.tag == 'p-noun':
                 return '體節'
             elif child0.tag == 'p-verb':
                 return '謂節'
             elif child0.tag == 'p-prep':
                 return '助節'
-            elif child0.tag == 'clause':
+            elif child0.tag == 'p-asp':
                 return '結節'
             elif child0.tag == 'idiom':
                 return '熟語'
