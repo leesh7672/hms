@@ -73,15 +73,13 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'adv':
                 return '狀詞'
             elif child0.tag == 'noun-phr':
-                return '體詞之節'
+                return '體節'
             elif child0.tag == 'verb-phr':
-                return '謂詞之節'
+                return '謂節'
             elif child0.tag == 'prep-phr':
-                return '助詞之節'
+                return '助節'
             elif child0.tag == 'clause':
-                return '結詞之節'
-            elif child0.tag == 'idiom':
-                return '熟語'
+                return '結節'
             else:
                 return ''
         x = distinguish_category(child)
