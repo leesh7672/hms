@@ -26,9 +26,9 @@ def textify(e, spell, ident, coder=tex):
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '「{}」'.format(temp)
-            elif level >= 2:
                 total += '『{}』'.format(temp)
+            elif level >= 2:
+                total += '「{}」'.format(temp)
         elif child.tag == 'self':
             total +=coder.bold(spell)
         elif child.tag == 'ref':
@@ -78,7 +78,7 @@ def scandef(e, spell, ident, coder=tex):
                 return '謂詞之節'
             elif child0.tag == 'prep-phr':
                 return '助詞之節'
-            elif child0.tag == 'prep-phr':
+            elif child0.tag == 'clause':
                 return '結詞之節'
             elif child0.tag == 'idiom':
                 return '熟語'
@@ -293,7 +293,7 @@ def build():
                 antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
 
             for sample in samples:
-                sample_txt += '{}云、「{}」'.format(sample[0], sample[1])
+                sample_txt += '{}云『{}』'.format(sample[0], sample[1])
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
         txt+= "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
