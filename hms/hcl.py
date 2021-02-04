@@ -78,6 +78,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '體節'
             elif child0.tag == 'p-verb':
                 return '謂節'
+            elif child0.tag == 'p-pole':
+                return '杆節'
             elif child0.tag == 'p-prep':
                 return '助節'
             elif child0.tag == 'p-asp':
