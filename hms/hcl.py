@@ -80,6 +80,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '助節'
             elif child0.tag == 'clause':
                 return '結節'
+            elif child0.tag == 'idiom':
+                return '熟語'
             else:
                 return ''
         x = distinguish_category(child)
