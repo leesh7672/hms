@@ -72,11 +72,11 @@ def scandef(e, spell, ident, coder=tex):
                 return '結詞'
             elif child0.tag == 'adv':
                 return '狀詞'
-            elif child0.tag == 'noun-phr':
+            elif child0.tag == 'p-noun':
                 return '體節'
-            elif child0.tag == 'verb-phr':
+            elif child0.tag == 'p-verb':
                 return '謂節'
-            elif child0.tag == 'prep-phr':
+            elif child0.tag == 'p-prep':
                 return '助節'
             elif child0.tag == 'clause':
                 return '結節'
