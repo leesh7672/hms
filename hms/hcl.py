@@ -219,7 +219,7 @@ class entry:
     def index_spell(self):
         return _spell(self.values)
 def _work(q, v, code):
-        result = scanxml(elemTree.parse(bytes(v).decode())
+        result = scanxml(elemTree.parse(bytes(v).decode()))
         q.put(result)
 def collect_entries(code=tex):
         results = []
