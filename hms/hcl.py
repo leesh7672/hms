@@ -218,8 +218,11 @@ class entry:
         self.values =values
     def index_spell(self):
         return _spell(self.values)
-def collect_entries(code=tex):
-    def build():
+
+def work(q, q2):
+        result = scanxml(elemTree.parse(q2.get()))
+        q.put(result)
+def build(code=tex):
         results = []
         processes = []
         for (path, dir, files) in os.walk('./'):
@@ -227,9 +230,6 @@ def collect_entries(code=tex):
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    def work(q, q2):
-                        result = scanxml(elemTree.parse(q2.get()))
-                        q.put(result)
                     q = mp.Queue()
                     q2 = mp.Queue()
                     proc = Process(target=work, args=(q, q2))
@@ -242,6 +242,7 @@ def collect_entries(code=tex):
             results += [entry(qr.get())]
         results.sort(key=methodcaller('index_spell'))
         return results
+def collect_entries(code=tex):
     return build()
 def build_db(conn):
     results = collect_entries(html)
