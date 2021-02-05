@@ -219,7 +219,7 @@ class entry:
     def index_spell(self):
         return _spell(self.values)
 
-def work(q, q2):
+def _work(q, q2, code):
         result = scanxml(elemTree.parse(q2.get()))
         q.put(result)
 def build(code=tex):
@@ -232,7 +232,7 @@ def build(code=tex):
                 if ext == '.xml':
                     q = mp.Queue()
                     q2 = mp.Queue()
-                    proc = Process(target=work, args=(q, q2))
+                    proc = Process(target=_work, args=(q, q2, code))
                     proc.start()
                     q2.put(p)
                     processes += [(q, proc)]
