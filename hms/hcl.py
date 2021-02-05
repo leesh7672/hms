@@ -218,8 +218,8 @@ class entry:
         self.values =values
     def index_spell(self):
         return _spell(self.values)
-def _work(q, p, code):
-        result = scanxml(elemTree.parse(p))
+def _work(q, p):
+        result = scanxml(elemTree.parse(p, tex))
         q.put(result)
 def collect_entries(code=tex):
         results = []
