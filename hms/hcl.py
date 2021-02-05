@@ -213,13 +213,13 @@ def update():
             ext = os.path.splitext(filename)[-1]
             if ext == '.xml':
                 updatexml(p)
+class entry:
+    def __init__(self, values):
+        self.values =values
+    def index_spell(self):
+        return _spell(self.values)
 def collect_entries(code=tex):
     def build():
-        class entry:
-            def __init__(self, values):
-                self.values =values
-            def index_spell(self):
-                return _spell(self.values)
         results = []
         processes = []
         for (path, dir, files) in os.walk('./'):
