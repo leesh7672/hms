@@ -230,7 +230,7 @@ def collect_entries(code=tex):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
                     q = mp.Queue()
-                    proc = Process(target=_work, args=(q, p, code))
+                    proc = Process(target=_work, args=(q, p))
                     proc.start()
                     processes += [(q, proc)]
         for x in processes:
