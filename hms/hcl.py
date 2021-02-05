@@ -222,7 +222,7 @@ class entry:
 def _work(q, q2, code):
         result = scanxml(elemTree.parse(q2.get()))
         q.put(result)
-def build(code=tex):
+def collect_entries(code=tex):
         results = []
         processes = []
         for (path, dir, files) in os.walk('./'):
@@ -241,9 +241,6 @@ def build(code=tex):
             p.join()
             results += [entry(qr.get())]
         results.sort(key=methodcaller('index_spell'))
-        return results
-def collect_entries(code=tex):
-    return build()
 def build_db(conn):
     results = collect_entries(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
