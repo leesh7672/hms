@@ -219,7 +219,7 @@ class entry:
     def index_spell(self):
         return _spell(self.values)
 def _work(q, v, code):
-        result = scanxml(elemTree.parse(v.value()))
+        result = scanxml(elemTree.parse(bytes(v).decode())
         q.put(result)
 def collect_entries(code=tex):
         results = []
@@ -229,11 +229,10 @@ def collect_entries(code=tex):
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    v = mp.Value('s', p)
+                    v = mp.Arrau('b', p.encode())
                     q = mp.Queue()
                     proc = Process(target=_work, args=(q, v, code))
                     proc.start()
-                    v.put(p)
                     processes += [(q, proc)]
         for x in processes:
             (qr, p) = x
