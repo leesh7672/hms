@@ -229,7 +229,7 @@ def collect_entries(code=tex):
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    v = mp.Arrau('b', p.encode())
+                    v = mp.Array('b', p.encode())
                     q = mp.Queue()
                     proc = Process(target=_work, args=(q, v, code))
                     proc.start()
