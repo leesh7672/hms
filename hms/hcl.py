@@ -238,6 +238,7 @@ def collect_entries(code=tex):
             p.join()
             results += [entry(qr.get())]
         results.sort(key=methodcaller('index_spell'))
+        return results
 def build_db(conn):
     results = collect_entries(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
