@@ -72,8 +72,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '標詞'
             elif child0.tag == 'asp':
                 return '結詞'
-            elif child0.tag == 'pole':
-                return '杆詞'
+            elif child0.tag == 'adv':
+                return '冠詞'
             elif child0.tag == 'p-noun':
                 return '體節'
             elif child0.tag == 'p-verb':
