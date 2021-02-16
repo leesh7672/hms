@@ -70,7 +70,7 @@ def scandef(e, spell, ident, coder=tex):
                 return '助詞'
             elif child0.tag == 'm':
                 return '標詞'
-            elif child0.tag == 'asp':
+            elif child0.tag == 'comp':
                 return '結詞'
             elif child0.tag == 'adv':
                 return '冠詞'
@@ -82,7 +82,7 @@ def scandef(e, spell, ident, coder=tex):
                 return '杆節'
             elif child0.tag == 'p-prep':
                 return '助節'
-            elif child0.tag == 'p-asp':
+            elif child0.tag == 'p-comp':
                 return '結節'
             elif child0.tag == 'idiom':
                 return '熟語'
