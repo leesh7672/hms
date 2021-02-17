@@ -74,6 +74,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '補詞'
             elif child0.tag == 'pole':
                 return '杆詞'
+            elif child0.tag == 'tense':
+                return '刻詞'
             elif child0.tag == 'p-noun':
                 return '體節'
             elif child0.tag == 'p-verb':
