@@ -83,7 +83,7 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'p-prep':
                 return '助節'
             elif child0.tag == 'p-comp':
-                return '結節'
+                return '補節'
             elif child0.tag == 'idiom':
                 return '熟語'
             else:
