@@ -56,6 +56,7 @@ def scandef(e, spell, ident, coder=tex):
     antonyms = []
     samples = []
     explanation = ''
+    citations = ''
     if not('num' in e.attrib.keys()):
         num = 1
     else:
@@ -95,6 +96,9 @@ def scandef(e, spell, ident, coder=tex):
             category = distinguish_category(child)
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
+        elif child.tag == 'cite':
+            source = child.attrib['src']
+            citeations += coder.ref(source)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
@@ -123,7 +127,7 @@ def scandef(e, spell, ident, coder=tex):
                 if child0.tag == 'main-spell':
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])]
-    return (num, category, synonyms, antonyms, samples, explanation)
+    return (num, category, synonyms, antonyms, samples, explanation, citations)
 def search(ident):
     for (path, dir, files) in os.walk('./'):
         for filename in files:
@@ -283,7 +287,7 @@ def build():
             spells += '\\also{{{}}}'.format(sp)
         definition_txt = ''
         for d in sorted(definitions, key=itemgetter(0)):
-            (numx, category_txt, synonyms, antonyms, samples, explanation) = d
+            (numx, category_txt, synonyms, antonyms, samples, explanation, cite) = d
             synonym_txt = ''
             antonym_txt = ''
             sample_txt = ''
@@ -297,7 +301,7 @@ def build():
             for sample in samples:
                 sample_txt += '{}云『{}』'.format(sample[0], sample[1])
 
-            definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
+            definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt, cite)
         txt+= "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
     return txt
 def initialize():

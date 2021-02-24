@@ -12,4 +12,7 @@ def link(txt, dest):
     return txt
 
 def num(n):
-    return n #pycnnum.num2cn(n, traditional=True)
+    return n)
+
+def ref(ident):
+    return "\\cite{{{}}}".format(ident)
