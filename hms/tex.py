@@ -12,7 +12,7 @@ def link(txt, dest):
     return txt
 
 def num(n):
-    return n)
+    return n
 
 def ref(ident):
     return "\\cite{{{}}}".format(ident)
