@@ -287,7 +287,7 @@ def build():
             spells += '\\also{{{}}}'.format(sp)
         definition_txt = ''
         for d in sorted(definitions, key=itemgetter(0)):
-            (numx, category_txt, synonyms, antonyms, samples, explanation, cite) = d
+            (numx, category_txt, synonyms, antonyms, samples, explanation, cites) = d
             synonym_txt = ''
             antonym_txt = ''
             sample_txt = ''
@@ -301,7 +301,7 @@ def build():
             for sample in samples:
                 sample_txt += '{}云『{}』'.format(sample[0], sample[1])
 
-            definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt, cite)
+            definition_txt += "\\explain{{{}}}{{{}{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt, cites)
         txt+= "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
     return txt
 def initialize():
