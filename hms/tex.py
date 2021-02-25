@@ -15,4 +15,4 @@ def num(n):
     return n
 
 def ref(ident, page):
-    return "\\cite{}{{{}}}".format(page, ident)
+    return "\\autocite{}{{{}}}".format(page, ident)
