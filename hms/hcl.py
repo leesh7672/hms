@@ -99,7 +99,7 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'cite':
             source = child.attrib['src']
             if 'page' in child.attrib:
-                page = 'p.~{}'.format(child.attrib['page'])
+                page = '[p.~{}]'.format(child.attrib['page'])
             else:
                 page = ''
             cites += coder.ref(source, page)
@@ -230,8 +230,11 @@ class entry:
     def index_spell(self):
         return _spell(self.values)
 def _work(q, p):
-        result = scanxml(elemTree.parse(p))
-        q.put(result)
+        try:
+            result = scanxml(elemTree.parse(p))
+            q.put(result)
+        except Exception as e:
+            print('An error has been occured in {}'.format(p))
 def collect_entries(code=tex):
         results = []
         processes = []
