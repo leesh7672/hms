@@ -195,6 +195,7 @@ def scanxml(tree):
     ident = root.attrib['ident']
     alternative_spells = []
     definitions= []
+    spell = ''
     if root.tag == 'entry':
         for child in root:
             if child.tag == 'spell':
