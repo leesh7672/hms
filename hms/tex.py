@@ -13,6 +13,3 @@ def link(txt, dest):
 
 def num(n):
     return n
-
-def ref(ident, page):
-    return "\\autocite{}{{{}}}".format(page, ident)

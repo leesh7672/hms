@@ -99,10 +99,9 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'cite':
             source = child.attrib['src']
             if 'page' in child.attrib.keys():
-                page = '[{}]'.format(child.attrib['page'])
+                cites += "\\autocite[{}]{{{}}}".format(child.attrib['page'], ident)
             else:
-                page = ''
-            cites += coder.ref(source, page)
+                cites += "\\autocite{{{}}}".format(ident)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
