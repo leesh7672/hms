@@ -98,7 +98,7 @@ def scandef(e, spell, ident, coder=tex):
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'cite':
             source = child.attrib['src']
-            if 'page' in child.attrib:
+            if 'page' in child.attrib.keys():
                 page = '[{}]'.format(child.attrib['page'])
             else:
                 page = ''
