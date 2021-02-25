@@ -102,7 +102,7 @@ def scandef(e, spell, ident, coder=tex):
                 page = 'p.~{}'.format(child.attrib['page'])
             else:
                 page = ''
-            cites += coder.ref(source)
+            cites += coder.ref(source, page)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
