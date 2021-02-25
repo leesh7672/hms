@@ -98,6 +98,10 @@ def scandef(e, spell, ident, coder=tex):
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'cite':
             source = child.attrib['src']
+            if 'page' in child.attrib:
+                page = 'p.{}'.format(child.attrib['page'])
+            else:
+                page = ''
             cites += coder.ref(source)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
