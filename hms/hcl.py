@@ -99,9 +99,9 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'cite':
             source = child.attrib['src']
             if 'page' in child.attrib.keys():
-                cites += "\\cite[{}]{{{}}}".format(child.attrib['page'], source)
+                cites += "\\parencite[{}]{{{}}}".format(child.attrib['page'], source)
             else:
-                cites += "\\cite{{{}}}".format(source)
+                cites += "\\parencite{{{}}}".format(source)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
