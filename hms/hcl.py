@@ -56,7 +56,6 @@ def scandef(e, spell, ident, coder=tex):
     antonyms = []
     samples = []
     explanation = ''
-    cites = ''
     if not('num' in e.attrib.keys()):
         num = 1
     else:
@@ -124,7 +123,7 @@ def scandef(e, spell, ident, coder=tex):
                 if child0.tag == 'main-spell':
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])]
-    return (num, category, synonyms, antonyms, samples, explanation, cites)
+    return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
         for filename in files:
