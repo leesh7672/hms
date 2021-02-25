@@ -99,7 +99,7 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'cite':
             source = child.attrib['src']
             if 'page' in child.attrib:
-                page = '[p.~{}]'.format(child.attrib['page'])
+                page = '[{}]'.format(child.attrib['page'])
             else:
                 page = ''
             cites += coder.ref(source, page)
