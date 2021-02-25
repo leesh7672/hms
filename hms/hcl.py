@@ -96,12 +96,6 @@ def scandef(e, spell, ident, coder=tex):
             category = distinguish_category(child)
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
-        elif child.tag == 'cite':
-            source = child.attrib['src']
-            if 'page' in child.attrib.keys():
-                cites += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], source)
-            else:
-                cites += "\\parencite{{{}}}".format(source)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
@@ -199,6 +193,7 @@ def scanxml(tree):
     alternative_spells = []
     definitions= []
     spell = ''
+    cites = ''
     if root.tag == 'entry':
         for child in root:
             if child.tag == 'spell':
@@ -207,7 +202,13 @@ def scanxml(tree):
                 spell = child.text.strip()
             elif child.tag == 'def':
                 definitions += [scandef(child, spell, ident)]
-    return (root, num, spell, ident, alternative_spells, definitions)
+            elif child.tag == 'cite':
+                source = child.attrib['src']
+                if 'page' in child.attrib.keys():
+                    cites += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], source)
+                else:
+                    cites += "\\parencite{{{}}}".format(source)
+    return (root, num, spell, ident, alternative_spells, definitions, cites)
 def _spell(x):
     global c
     total = []
@@ -288,13 +289,13 @@ def build():
     results = collect_entries(tex)
     txt = ''
     for result in results:
-        (root, num, spell, ident, alternative_spells, definitions) = result.values
+        (root, num, spell, ident, alternative_spells, definitions, cites) = result.values
         spells = ''
         for sp in alternative_spells:
             spells += '\\also{{{}}}'.format(sp)
         definition_txt = ''
         for d in sorted(definitions, key=itemgetter(0)):
-            (numx, category_txt, synonyms, antonyms, samples, explanation, cites) = d
+            (numx, category_txt, synonyms, antonyms, samples, explanation) = d
             synonym_txt = ''
             antonym_txt = ''
             sample_txt = ''
@@ -308,8 +309,8 @@ def build():
             for sample in samples:
                 sample_txt += '{}云『{}』'.format(sample[0], sample[1])
 
-            definition_txt += "\\explain{{{}}}{{{}{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt, cites)
-        txt+= "\\entry{{{}}}{{{}}}{{{}{}}}{{{}}}".format(spell, num, spells, definition_txt, '')
+            definition_txt += "\\explain{{{}}}{{{}{}{}{}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
+        txt+= "\\entry{{{}}}{{{}}}{{{}{}{}}}{{{}}}".format(spell, num, spells, definition_txt, cites, '')
     return txt
 def initialize():
     global c
