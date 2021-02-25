@@ -14,5 +14,5 @@ def link(txt, dest):
 def num(n):
     return n
 
-def ref(ident):
-    return "\\cite{{{}}}".format(ident)
+def ref(ident, page):
+    return "\\cite[p.{}]{{{}}}".format(page, ident)
