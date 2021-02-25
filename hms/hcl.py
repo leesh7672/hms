@@ -133,7 +133,7 @@ def scandef(e, spell, ident, coder=tex):
             antonyms += [(mspell, num0, child.attrib['ident'])]
     return (num, category, synonyms, antonyms, samples, explanation, cites)
 def search(ident):
-    for (path, dir, files) in os.walk('./'):
+    for (path, dir, files) in os.walk('entries'):
         for filename in files:
             p = '{}/{}'.format(path, filename)
             if os.path.isfile(p):
@@ -238,7 +238,7 @@ def _work(q, p):
 def collect_entries(code=tex):
         results = []
         processes = []
-        for (path, dir, files) in os.walk('./'):
+        for (path, dir, files) in os.walk('entries'):
             for filename in files:
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
