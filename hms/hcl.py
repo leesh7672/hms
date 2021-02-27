@@ -47,7 +47,7 @@ def textify(e, spell, ident, coder=tex):
             total += coder.bold(mspell)
         elif child.tag == 'cite':
             source = child.attrib['src']
-             if 'page' in child.attrib.keys():
+            if 'page' in child.attrib.keys():
                 part += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], source)
             else:
                 part += "\\parencite{{{}}}".format(source)
