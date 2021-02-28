@@ -76,23 +76,21 @@ def scandef(e, spell, ident, coder=tex):
             elif child0.tag == 'mark':
                 return '標詞'
             elif child0.tag == 'comp':
-                return '補詞'
-            elif child0.tag == 'pole':
-                return '杆詞'
-            elif child0.tag == 'tense':
-                return '刻詞'
+                return '成詞'
+            elif child0.tag == 'adv':
+                return '修詞'
+            elif child0.tag == 'joint':
+                return '結詞'
             elif child0.tag == 'p-noun':
                 return '體節'
             elif child0.tag == 'p-verb':
                 return '謂節'
-            elif child0.tag == 'p-pole':
-                return '杆節'
+            elif child0.tag == 'p-v':
+                return '幹節'
             elif child0.tag == 'p-prep':
                 return '助節'
             elif child0.tag == 'p-comp':
-                return '補節'
-            elif child0.tag == 'idiom':
-                return '熟語'
+                return '成節'
             else:
                 return ''
         x = distinguish_category(child)
