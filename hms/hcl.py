@@ -60,9 +60,9 @@ def textify(e, spell, ident, coder=tex):
                     total += "{{{}}}".format(child.attrib['src'])
             else:
                 if 'page' in child.attrib.keys():
-                    total += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
+                    total += "\\parencites[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
                 else:
-                    total += "\\parencite{{{}}}".format(child.attrib['src'])
+                    total += "\\parencites{{{}}}".format(child.attrib['src'])
                 beforehand = True
         part = child.tail
     if part != None:
