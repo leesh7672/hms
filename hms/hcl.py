@@ -16,10 +16,13 @@ def generateIdent():
 def textify(e, spell, ident, coder=tex):
     total = ''
     part = e.text
+    beforehand = False
     for child in e:
         if part != None:
             part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
-            total += part
+            if part != '':
+                total += part
+                beforehand = False
         if child.tag == 'quote':
             temp = textify(child, spell, ident, coder)
             level = 1
@@ -29,10 +32,13 @@ def textify(e, spell, ident, coder=tex):
                 total += '『{}』'.format(temp)
             elif level >= 2:
                 total += '「{}」'.format(temp)
+            beforehand = False
         elif child.tag == 'b':
             total +=coder.bold(textify(child, spell, ident, coder))
+            beforehand = False
         elif child.tag == 'self':
             total +=coder.bold(spell)
+            beforehand = False
         elif child.tag == 'ref':
             ident = child.attrib['ident']
             (tr, f) = search(ident)
@@ -45,15 +51,25 @@ def textify(e, spell, ident, coder=tex):
                 if child0.tag == 'main-spell':
                     mspell = child0.text
             total += coder.bold(mspell)
+            beforehand = False
         elif child.tag == 'cite':
-            if 'page' in child.attrib.keys():
-                total += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
+            if beforehand:
+                if 'page' in child.attrib.keys():
+                    total += "[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
+                else:
+                    total += "{{{}}}".format(child.attrib['src'])
             else:
-                total += "\\parencite{{{}}}".format(child.attrib['src'])
+                if 'page' in child.attrib.keys():
+                    total += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
+                else:
+                    total += "\\parencite{{{}}}".format(child.attrib['src'])
+                beforehand = True
         part = child.tail
     if part != None:
-        part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
-        total += part
+        if part != '':
+            part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
+            total += part
+            beforehand = True
     return total.strip()
 def scandef(e, spell, ident, coder=tex):
     category= ''
