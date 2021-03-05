@@ -107,6 +107,8 @@ def scandef(e, spell, ident, coder=tex):
                 return '幹節'
             elif child0.tag == 'p-comp':
                 return '成節'
+            elif child0.tag == 'conn':
+                return '結詞'
             elif child0.tag == 'misc':
                 return '雜字'
             else:
