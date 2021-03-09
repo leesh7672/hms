@@ -87,9 +87,9 @@ def scandef(e, spell, ident, coder=tex):
                 return '指詞'
             elif child0.tag == 'verb':
                 return '謂詞'
-            elif child0.tag == 'v':
+            elif child0.tag == 'lv':
                 return '幹詞'
-            elif child0.tag == 'comp':
+            elif child0.tag == 'proc':
                 return '成詞'
             elif child0.tag == 'joint':
                 return '束詞'
@@ -97,17 +97,19 @@ def scandef(e, spell, ident, coder=tex):
                 return '助詞'
             elif child0.tag == 'adv':
                 return '冠詞'
-            elif child0.tag == 'mark':
-                return '標詞'
+            elif child0.tag == 'comp':
+                return '結詞'
+            elif child0.tag == 'p-joint':
+                return '束節'
             elif child0.tag == 'p-noun':
                 return '指節'
+            elif child0.tag == 'p-prep':
+                return '助節'
             elif child0.tag == 'p-verb':
                 return '謂節'
-            elif child0.tag == 'p-v':
+            elif child0.tag == 'p-lv':
                 return '幹節'
             elif child0.tag == 'p-comp':
-                return '成節'
-            elif child0.tag == 'conn':
                 return '結詞'
             elif child0.tag == 'misc':
                 return '雜字'
