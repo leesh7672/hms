@@ -82,43 +82,7 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['num']
     for child in e:
-        def distinguish_category(child0):
-            if child0.tag == 'noun':
-                return '指詞'
-            elif child0.tag == 'verb':
-                return '謂詞'
-            elif child0.tag == 'lv':
-                return '幹詞'
-            elif child0.tag == 'proc':
-                return '成詞'
-            elif child0.tag == 'joint':
-                return '束詞'
-            elif child0.tag == 'prep':
-                return '助詞'
-            elif child0.tag == 'adv':
-                return '冠詞'
-            elif child0.tag == 'comp':
-                return '結詞'
-            elif child0.tag == 'p-joint':
-                return '束節'
-            elif child0.tag == 'p-noun':
-                return '指節'
-            elif child0.tag == 'p-prep':
-                return '助節'
-            elif child0.tag == 'p-verb':
-                return '謂節'
-            elif child0.tag == 'p-lv':
-                return '幹節'
-            elif child0.tag == 'p-comp':
-                return '結詞'
-            elif child0.tag == 'misc':
-                return '雜字'
-            else:
-                return ''
-        x = distinguish_category(child)
-        if x != '':
-            category = distinguish_category(child)
-        elif child.tag == 'exp':
+        if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
