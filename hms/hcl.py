@@ -72,7 +72,6 @@ def textify(e, spell, ident, coder=tex):
             beforehand = True
     return total.strip()
 def scandef(e, spell, ident, coder=tex):
-    category= ''
     synonyms = []
     antonyms = []
     samples = []
@@ -81,6 +80,10 @@ def scandef(e, spell, ident, coder=tex):
         num = 1
     else:
         num = e.attrib['num']
+    if not('category' in e.attrib.keys()):
+        category = ''
+    else:
+        category = e.attrib['category']
     for child in e:
         if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
