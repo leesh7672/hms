@@ -74,7 +74,7 @@ def scandef(e, spell, ident, coder=tex):
     category = ""
     for child in e:
         if child.tag in catergories.keys():
-            category += categories.get(child.tag)
+            category += categories[child.tag]
         if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
