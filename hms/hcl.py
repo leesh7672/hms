@@ -59,7 +59,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成詞", 'infl':"助詞", 'adv':"狀詞", 'lv':"態詞", 'verb': "謂詞", 'prep': "縛詞", 'co': "結詞", 'det': "指詞", 'adj': "質詞", 'noun': "體詞", 'cl': "量詞", 'calc': "算詞", 'num': "算詞"}
+categories = {'comp':"成", 'infl':"助", 'adv':"狀", 'lv':"態", 'verb': "謂", 'prep': "縛", 'co': "結", 'det': "指", 'adj': "質", 'noun': "體", 'cl': "量", 'calc': "算", 'num': "數"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -71,8 +71,18 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     category = ""
     for child in e:
+        if category != '':
+            category += '・'
         if child.tag in categories.keys():
             category += categories[child.tag]
+            if 'unit' in child.attrib.keys():
+                unit = child.attrib['unit']
+            else:
+                unit = 'word'
+            if unit == 'word':
+                category = '詞'
+            if unit == 'phrase':
+                category = '詞組'
         if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
