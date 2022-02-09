@@ -71,9 +71,9 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     category = ""
     for child in e:
-        if category != '':
-            category += '・'
         if child.tag in categories.keys():
+            if category != '':
+                category += '・'
             category += categories[child.tag]
             if 'unit' in child.attrib.keys():
                 unit = child.attrib['unit']
@@ -83,7 +83,7 @@ def scandef(e, spell, ident, coder=tex):
                 category = '詞'
             if unit == 'phrase':
                 category = '詞組'
-        if child.tag == 'exp':
+        elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
             if 'src' in child.attrib.keys():
