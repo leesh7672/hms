@@ -192,8 +192,7 @@ def scanxml(tree):
 def _spell(x):
     global c
     total = []
-    (root, num, spell, ident, alternative_spells, definitions, cites) = x
-    for ch in spell:
+    for ch in x:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
         total += [int(kangxi[0]), int(kangxi[1])]
     return [total, int(num)]
