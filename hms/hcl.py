@@ -213,26 +213,17 @@ class entry:
         return _spell(self.values)
 def _work(q, p):
         try:
-            result = scanxml(etree.parse(p))
             q.put(result)
         except Exception as e:
             print('An error has been occured in {}'.format(p))
 def collect_entries(code=tex):
         results = []
-        processes = []
         for (path, dir, files) in os.walk('entries'):
             for filename in files:
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    q = mp.Queue()
-                    proc = Process(target=_work, args=(q, p))
-                    proc.start()
-                    processes += [(q, proc)]
-        for x in processes:
-            (qr, p) = x
-            p.join()
-            results += [entry(qr.get())]
+                    result += [scanxml(etree.parse(p))]
         results.sort(key=methodcaller('index_spell'))
         return results
 def build_db(conn):
