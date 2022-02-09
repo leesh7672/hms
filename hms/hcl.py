@@ -167,7 +167,7 @@ def updatexml(path):
                                     if need:
                                         definition.append(etree.Element('ant', {'ident': ident, 'num': numx}))
                                         ref.write(f, pretty_print=True,  encoding='utf-8')
-    etree.ElementTree(tree,getroot()).write(path, pretty_print=True, encoding='utf-8')
+    etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
     num = root.attrib['num']
