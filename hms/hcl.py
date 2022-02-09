@@ -123,7 +123,6 @@ def search(ident):
 
 def updatexml(path):
     print(path)
-    parser = etree.XMLParser(remove_blank_text=True,strip_cdata=False)
     tree = etree.parse(path, parser)
     root = tree.getroot()
     if not('ident' in root.attrib.keys()):
