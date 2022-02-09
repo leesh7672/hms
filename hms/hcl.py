@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import xml.etree.ElementTree as elemTree
+from lxml import etree
 import os, uuid
 from operator import methodcaller, itemgetter, mul
 from cihai.core import Cihai
@@ -111,31 +111,17 @@ def search(ident):
             if os.path.isfile(p):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    tree = elemTree.parse(p)
+                    tree = etree.parse(p)
                     root = tree.getroot()
                     if  'ident' in root.attrib:
                         if root.attrib['ident'] == ident:
                             if root.tag == 'entry':
                                 return (tree, p)
     return None
-def apply_indent(elem, level = 0):
-    # tab = space * 2
-    indent = "\n" + level * "  "
-    if len(elem):
-        if not elem.text or not elem.text.strip():
-            elem.text = indent + "  "
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = indent
-        for elem in elem:
-            apply_indent(elem, level+1)
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = indent
-    else:
-        if level and (not elem.tail or not elem.tail.strip()):
-            elem.tail = indent
+
 def updatexml(path):
     print(path)
-    tree = elemTree.parse(path)
+    tree = etree.parse(path)
     root = tree.getroot()
     if not('ident' in root.attrib.keys()):
         root.set('ident', '{}'.format(generateIdent()))
@@ -163,8 +149,8 @@ def updatexml(path):
                                         if (child1.tag == 'syn') and (child1.attrib['ident'] == ident) and (child1.attrib['num'] == numx):
                                             need = False
                                     if need:
-                                        definition.append(elemTree.Element('syn', {'ident': ident, 'num': numx}))
-                                        ref.write(f, encoding='utf-8')
+                                        definition.append(etree.Element('syn', {'ident': ident, 'num': numx}))
+                                        ref.write(f, pretty_print=True, , encoding='utf-8')
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
@@ -177,10 +163,9 @@ def updatexml(path):
                                         if (child1.tag == 'ant') and (child1.attrib['ident'] == ident) and (child1.attrib['num'] == numx):
                                             need = False
                                     if need:
-                                        definition.append(elemTree.Element('ant', {'ident': ident, 'num': numx}))
-                                        ref.write(f, encoding='utf-8')
-    apply_indent(tree)
-    tree.write(path, encoding='utf-8')
+                                        definition.append(etree.Element('ant', {'ident': ident, 'num': numx}))
+                                        ref.write(f, pretty_print=True, , encoding='utf-8')
+    tree.write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
     num = root.attrib['num']
@@ -226,7 +211,7 @@ class entry:
         return _spell(self.values)
 def _work(q, p):
         try:
-            result = scanxml(elemTree.parse(p))
+            result = scanxml(etree.parse(p))
             q.put(result)
         except Exception as e:
             print('An error has been occured in {}'.format(p))
