@@ -277,7 +277,7 @@ def build():
                 antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
 
             for sample in samples:
-                sample_txt += '{}云『{}』'.format(sample[0], sample[1])
+                sample_txt += '{}曰『{}』。'.format(sample[0], sample[1])
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
         txt+= "\\entry{{{}}}{{{}}}{{{}{}{}}}{{{}}}".format(spell, num, spells, definition_txt, cites, '')
