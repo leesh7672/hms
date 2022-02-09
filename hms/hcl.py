@@ -7,8 +7,6 @@ c = Cihai()
 
 import hms.tex as tex
 import hms.html as html
-import multiprocessing as mp
-from multiprocessing import Process, Lock, Queue, Value
 
 parser = etree.XMLParser(remove_blank_text=True,strip_cdata=False)
 
@@ -223,7 +221,7 @@ def collect_entries(code=tex):
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    result += [scanxml(etree.parse(p))]
+                    results += [scanxml(etree.parse(p))]
         results.sort(key=methodcaller('index_spell'))
         return results
 def build_db(conn):
