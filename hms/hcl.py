@@ -73,7 +73,7 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     category = ""
     for child in e:
-        if child.tag in catergories.keys():
+        if child.tag in categories.keys():
             category += categories[child.tag]
         if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
