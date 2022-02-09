@@ -10,6 +10,8 @@ import hms.html as html
 import multiprocessing as mp
 from multiprocessing import Process, Lock, Queue, Value
 
+parser = etree.XMLParser(remove_blank_text=True,strip_cdata=False)
+
 def generateIdent():
     return str(uuid.uuid4())
 
@@ -111,7 +113,7 @@ def search(ident):
             if os.path.isfile(p):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    tree = etree.parse(p)
+                    tree = etree.parse(p, parser)
                     root = tree.getroot()
                     if  'ident' in root.attrib:
                         if root.attrib['ident'] == ident:
@@ -121,7 +123,8 @@ def search(ident):
 
 def updatexml(path):
     print(path)
-    tree = etree.parse(path)
+    parser = etree.XMLParser(remove_blank_text=True,strip_cdata=False)
+    tree = etree.parse(path, parser)
     root = tree.getroot()
     if not('ident' in root.attrib.keys()):
         root.set('ident', '{}'.format(generateIdent()))
