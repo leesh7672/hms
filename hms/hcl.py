@@ -189,7 +189,7 @@ def scanxml(tree):
                 else:
                     cites += "\\parencite{{{}}}".format(source)
     return (root, num, spell, ident, alternative_spells, definitions, cites)
-def _spell(x):
+def _spell(x, num):
     global c
     total = []
     for ch in x:
@@ -221,7 +221,7 @@ def collect_entries(code=tex):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
                     results += [scanxml(etree.parse(p))]
-        results.sort(key=lambda x: _spell(x[2]))
+        results.sort(key=lambda x: _spell(x[2], x[1]))
         return results
 def build_db(conn):
     results = collect_entries(html)
