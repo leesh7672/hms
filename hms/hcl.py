@@ -150,7 +150,7 @@ def updatexml(path):
                                             need = False
                                     if need:
                                         definition.append(etree.Element('syn', {'ident': ident, 'num': numx}))
-                                        ref.write(f, pretty_print=True, encoding='utf-8')
+                                        etree.ElementTree(ref.getroot()).write(f, pretty_print=True, encoding='utf-8')
                     elif child0.tag == 'ant':
                         ident0 = int(child0.attrib['ident'])
                         num0 = int(child0.attrib['num'])
@@ -164,7 +164,7 @@ def updatexml(path):
                                             need = False
                                     if need:
                                         definition.append(etree.Element('ant', {'ident': ident, 'num': numx}))
-                                        ref.write(f, pretty_print=True,  encoding='utf-8')
+                                        etree.ElementTree(ref.getroot()).write(f, pretty_print=True,  encoding='utf-8')
     etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
