@@ -50,20 +50,8 @@ def textify(e, spell, ident, coder=tex):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            total += coder.bold(mspell)
+            total += coder.bold(mspell) + coder.superscript(ident)
             beforehand = False
-        elif child.tag == 'cite':
-            if beforehand:
-                if 'page' in child.attrib.keys():
-                    total += "[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
-                else:
-                    total += "{{{}}}".format(child.attrib['src'])
-            else:
-                if 'page' in child.attrib.keys():
-                    total += "\\parencites[][{}]{{{}}}".format(child.attrib['page'], child.attrib['src'])
-                else:
-                    total += "\\parencites{{{}}}".format(child.attrib['src'])
-                beforehand = True
         part = child.tail
     if part != None:
         if part != '':
@@ -71,6 +59,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
+categories = {'comp':"成詞", 'infl':"助詞", 'adv':"狀詞", 'lv':"態詞", 'verb': "謂詞", 'prep': "縛詞", 'co': "結詞", 'det': "指詞", 'adj': "質詞", 'noun': "體詞", 'cl': "量詞", 'calc': "算詞", 'num': "算詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -80,11 +69,10 @@ def scandef(e, spell, ident, coder=tex):
         num = 1
     else:
         num = e.attrib['num']
-    if not('category' in e.attrib.keys()):
-        category = ''
-    else:
-        category = e.attrib['category']
+    category = ""
     for child in e:
+        if child.tag in catergories.keys():
+            category += categories.get(child.tag)
         if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
@@ -130,6 +118,21 @@ def search(ident):
                             if root.tag == 'entry':
                                 return (tree, p)
     return None
+def apply_indent(elem, level = 0):
+    # tab = space * 2
+    indent = "\n" + level * "  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = indent + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = indent
+        for elem in elem:
+            apply_indent(elem, level+1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = indent
+    else:
+        if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = indent
 def updatexml(path):
     print(path)
     tree = elemTree.parse(path)
@@ -176,6 +179,7 @@ def updatexml(path):
                                     if need:
                                         definition.append(elemTree.Element('ant', {'ident': ident, 'num': numx}))
                                         ref.write(f, encoding='utf-8')
+    apply_indent(tree)
     tree.write(path, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
