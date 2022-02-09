@@ -260,7 +260,7 @@ def build():
     results = collect_entries(tex)
     txt = ''
     for result in results:
-        (root, num, spell, ident, alternative_spells, definitions, cites) = result.values
+        (root, num, spell, ident, alternative_spells, definitions, cites) = result
         spells = ''
         for sp in alternative_spells:
             spells += '\\also{{{}}}'.format(sp)
