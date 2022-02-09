@@ -8,7 +8,7 @@ c = Cihai()
 import hms.tex as tex
 import hms.html as html
 
-parser = etree.XMLParser(remove_blank_text=True,strip_cdata=False)
+parser = etree.XMLParser(remove_blank_text=True)
 
 def generateIdent():
     return str(uuid.uuid4())
