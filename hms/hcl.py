@@ -201,10 +201,17 @@ def scanxml(tree):
     return (root, num, spell, ident, alternative_spells, definitions, cites)
 def _spell(x, num):
     global c
+    skip = False
     total = []
     for ch in x:
-        kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-        total += [int(kangxi[0]), int(kangxi[1])]
+        if ch == '(':
+            skip = True
+        if skip:
+            kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
+            total += [int(kangxi[0]), int(kangxi[1])]
+        if ch == ')':
+            skip = False
+        skip + True
     return [total, int(num)]
 def update():
     for (path, dir, files) in os.walk('./'):
