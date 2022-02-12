@@ -59,7 +59,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成", 'infl':"助", 'adv':"狀", 'lv':"態", 'verb': "謂", 'prep': "縛", 'co': "結", 'det': "指", 'adj': "質", 'noun': "體", 'cl': "量", 'calc': "算", 'num': "數"}
+categories = {'comp':"成", 'infl':"助", 'adv':"狀", 'lv':"態", 'verb': "謂", 'prep': "縛", 'co': "結", 'det': "指", 'adj': "定", 'noun': "體", 'cl': "量", 'calc': "算", 'num': "數"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
