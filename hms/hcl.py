@@ -78,13 +78,11 @@ def scandef(e, spell, ident, coder=tex):
             if 'unit' in child.attrib.keys():
                 unit = child.attrib['unit']
             else:
-                unit = 'voca'
-            if unit == 'voca':
+                unit = 'word'
+            if unit == 'word':
                 category += '詞'
             elif unit == 'phrase':
                 category += '詞組'
-            elif unit == 'const':
-                category += '詞短語'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
