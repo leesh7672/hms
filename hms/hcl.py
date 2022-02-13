@@ -113,10 +113,8 @@ def scandef(e, spell, ident, coder=tex):
                 if child0.tag == 'main-spell':
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])]
-    if category:
-                if category != '':
-                    category += '・'
-                categories = '雜字'
+    if category != '':
+        categories = '雜字'
     return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
