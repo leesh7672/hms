@@ -19,7 +19,7 @@ def textify(e, spell, ident, coder=tex):
     beforehand = False
     for child in e:
         if part != None:
-            part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
+            part = part.replace('.', '。').replace(',', '、').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
             if part != '':
                 total += part
                 beforehand = False
@@ -55,7 +55,7 @@ def textify(e, spell, ident, coder=tex):
         part = child.tail
     if part != None:
         if part != '':
-            part = part.replace('.', '。').replace(',', '，').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
+            part = part.replace('.', '。').replace(',', '、').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
             total += part
             beforehand = True
     return total.strip()
