@@ -75,16 +75,6 @@ def scandef(e, spell, ident, coder=tex):
             if category != '':
                 category += '・'
             category += categories[child.tag]
-            if 'unit' in child.attrib.keys():
-                unit = child.attrib['unit']
-            else:
-                unit = 'word'
-            if unit == 'word':
-                pass
-            elif unit == 'phrase':
-                category += '組熟語'
-            elif unit == 'abbrev':
-                category += '組之略'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
