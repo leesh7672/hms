@@ -82,7 +82,7 @@ def scandef(e, spell, ident, coder=tex):
             if unit == 'word':
                 pass
             elif unit == 'phrase':
-                category += '組'
+                category += '組熟語'
             elif unit == 'abbrev':
                 category += '組之略'
         elif child.tag == 'exp':
