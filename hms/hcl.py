@@ -115,7 +115,7 @@ def scandef(e, spell, ident, coder=tex):
                 if child0.tag == 'main-spell':
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])]
-    if category != '':
+    if category == '':
         category = '雜詞'
     return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
