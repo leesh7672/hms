@@ -81,8 +81,10 @@ def scandef(e, spell, ident, coder=tex):
                 unit = 'word'
             if unit == 'word':
                 pass
-            elif unit == 'idiom':
-                category += '熟語'
+            elif unit == 'phrase':
+                category += '組'
+            elif unit == 'abbrev':
+                category += '組之略'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
