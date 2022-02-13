@@ -114,7 +114,7 @@ def scandef(e, spell, ident, coder=tex):
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])]
     if category != '':
-        categories = '雜詞'
+        category = '雜詞'
     return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
