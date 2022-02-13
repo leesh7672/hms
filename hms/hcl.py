@@ -59,7 +59,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成", 'infl':"助", 'adv':"副", 'lv': "輕動", 'verb': "動", 'prep': "結", 'co': "連", 'det': "指", 'adj': "定", 'noun': "名", 'cl': "量", 'num': "數"}
+categories = {'comp':"首詞", 'infl':"助詞", 'adv':"副詞", 'lv': "輕動詞", 'verb': "動詞", 'prep': "介詞", 'co': "連詞", 'det': "指詞", 'adj': "定詞", 'noun': "名詞", 'cl': "量詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -80,9 +80,9 @@ def scandef(e, spell, ident, coder=tex):
             else:
                 unit = 'word'
             if unit == 'word':
-                category += '詞'
-            elif unit == 'phrase':
-                category += '詞短語'
+                pass
+            elif unit == 'idiom':
+                category += '熟語'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
@@ -114,7 +114,7 @@ def scandef(e, spell, ident, coder=tex):
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])]
     if category != '':
-        categories = '雜字'
+        categories = '雜詞'
     return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
