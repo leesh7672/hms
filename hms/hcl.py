@@ -196,17 +196,21 @@ def scanxml(tree):
 def _spell(x, num):
     global c
     skip = False
-    total = []
+    respell = ''
     for ch in x:
         if ch == '（':
             skip = True
-        if skip:
-            kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-            total += [(int(kangxi[0]), int(kangxi[1]))]
+        if not skip:
+            respell = x + respell
         if ch == '）':
             skip = False
-        skip + True
-    return (total, int(num))
+    total = num
+    counter = 500
+    for ch in respell:
+        kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
+        total += (int(kangxi[0]) * 1000 + int(kangxi[1])))*counter
+        counter* = 2000000
+    return total
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
