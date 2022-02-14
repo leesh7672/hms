@@ -204,7 +204,7 @@ def _spell(x, num):
             respell = x + respell
         if ch == '）':
             skip = False
-    total = num
+    total = int(num)
     counter = 500
     for ch in respell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
