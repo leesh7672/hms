@@ -208,7 +208,7 @@ def _spell(x, num):
     counter = 500
     for ch in respell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-        total += (int(kangxi[0]) * 1000 + int(kangxi[1])))*counter
+        total += (int(kangxi[0]) * 1000 + int(kangxi[1]))*counter
         counter* = 2000000
     return total
 def update():
