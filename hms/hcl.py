@@ -202,11 +202,11 @@ def _spell(x, num):
             skip = True
         if skip:
             kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-            total += [int(kangxi[0]), int(kangxi[1])]
+            total += [(int(kangxi[0]), int(kangxi[1]))]
         if ch == '）':
             skip = False
         skip + True
-    return [total, int(num)]
+    return (total, int(num))
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
@@ -291,7 +291,7 @@ def build():
                 sample_txt += '{}曰『{}』。'.format(sample[0], sample[1])
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
-        txt+= "\\entry{{{}}}{{{}}}{{{}{}{}}}{{{}}}".format(spell.replace('（', "\\textit{").replace('）', '}'), num, spells, definition_txt, cites, '')
+        txt+= "\\entry{{{}}}{{{}}}{{{}{}{}}}{{{}}}".format(spell.replace('（', "").replace('）', ''), num, spells, definition_txt, cites, '')
     return txt
 def initialize():
     global c
