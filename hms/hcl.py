@@ -201,7 +201,7 @@ def _spell(x, num):
         if ch == '（':
             skip = True
         if not skip:
-            respell = x + respell
+            respell  += x
         if ch == '）':
             skip = False
     total = 0
