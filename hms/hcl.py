@@ -205,12 +205,12 @@ def _spell(x, num):
         if ch == '）':
             skip = False
     total = 0
-    counter = 100
+    counter = 1
     for ch in respell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-        total += (int(kangxi[0]) * 1000 + int(kangxi[1]))*counter
+        total += (counter-(int(kangxi[0]) * 1000 + int(kangxi[1])))*counter
         counter*= 2000000
-    return float(total)*1000000000000000000000000000000000000000000000000000000 + int(num)
+    return 1000000000000000000000000000000000000000000000000000000 / float(total) + int(num)
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
