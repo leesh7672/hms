@@ -209,7 +209,7 @@ def _spell(x, num):
     for ch in respell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
         total += (int(kangxi[0]) * 1000 + int(kangxi[1]))*counter
-        counter*= 20000000
+        counter*= 2000000
     return total
 def update():
     for (path, dir, files) in os.walk('./'):
@@ -236,8 +236,7 @@ def collect_entries(code=tex):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
                     results += [scanxml(etree.parse(p))]
-        results.sort(key=lambda x: _spell(x[2], x[1]))
-        return results
+        return results.sort(key=lambda x: _spell(x[2], x[1]))
 def build_db(conn):
     results = collect_entries(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
