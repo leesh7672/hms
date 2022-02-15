@@ -236,7 +236,7 @@ def collect_entries(code=tex):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
                     results += [scanxml(etree.parse(p))]
-        results.sort(key=lambda x: _spell(x[2], x[1]))
+        results.sort(key=lambda x: _spell(x[3], x[2]))
         return results
 def build_db(conn):
     results = collect_entries(html)
