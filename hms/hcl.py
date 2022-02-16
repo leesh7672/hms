@@ -210,7 +210,7 @@ def _spell(x, num):
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
         total += 1000000000000000000000000000000000000000000000000000000*(int(kangxi[0]) * 1000 + int(kangxi[1]))/counter
         counter*= 10000000
-    return total*1000  + int(num)
+    return total*1000 - int(num)
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
