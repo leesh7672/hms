@@ -78,14 +78,6 @@ def scandef(e, spell, ident, coder=tex):
             if category != '':
                 category += '・'
             category += categories[child.tag]
-            if len(child) > 0:
-                category += '（既懷'
-                add_spot = False
-                for acceptable in child:
-                    if add_spot:
-                        category += '・'
-                    category += categories[acceptable.tag]
-                category += '）'
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
