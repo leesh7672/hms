@@ -50,7 +50,7 @@ def textify(e, spell, ident, coder=tex):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            total += coder.bold(mspell) + coder.superscript(ident)
+            total += coder.bold(mspell) + coder.superscript(num)
             beforehand = False
         part = child.tail
     if part != None:
