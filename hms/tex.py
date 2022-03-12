@@ -3,7 +3,7 @@
 import pycnnum
 
 def bold(txt):
-    return "\\textcolor{{gold}}{{{}}}".format(txt)
+    return "\\textcolor{{deepgold}}{{{}}}".format(txt)
 
 def superscript(txt):
     return "\\textsuperscript{{{}}}".format(txt)
