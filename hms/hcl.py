@@ -60,7 +60,7 @@ def textify(e, spell, ident, coder=tex):
             beforehand = True
     return total.strip()
 categories = {'op':"結詞", 'comp':"成詞", 'infl':"助詞", 'adv':"副詞",
-    'verb': "動詞", 'prep': "介詞",
+    'lv': "輕動詞", 'verb': "動詞", 'prep': "介詞",
     'co': "連詞", 'det': "指詞", 'adj': "性詞", 'noun': "名詞",
     'cl': "量詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
