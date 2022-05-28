@@ -81,11 +81,11 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
-            if 'src' in child.attrib.keys():
-                source = child.attrib['src']
+            if 'category' in child.attrib.keys():
+                _sample_category = categories[child.attrib['category']]
             else:
-                source = ''
-            samples += [(source, textify(child, spell, ident, coder))]
+                _sample_category = ''
+            samples += [(_sample_category, textify(child, spell, ident, coder))]
         elif child.tag == 'syn':
             (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
