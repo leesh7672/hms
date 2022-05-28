@@ -59,7 +59,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成字", 'infl':"助字", 'adv':"冠字",
+categories = {'comp':"成字", 'infl':"助字", 'adv':"冠字", 'pol':"極字",
     'lv': "述字", 'verb': "樣字", 'prep': "介字",
     'co': "連字", 'det': "指字", 'adj': "性字", 'noun': "名字",
     'cl': "量字", 'num': "數字"}
