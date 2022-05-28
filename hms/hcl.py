@@ -82,7 +82,7 @@ def scandef(e, spell, ident, coder=tex):
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
             if 'category' in child.attrib.keys():
-                _sample_category = categories[child.attrib['category']]
+                _sample_category = categories[child.attrib['category']] + "短語"
             else:
                 _sample_category = ''
             samples += [(_sample_category, textify(child, spell, ident, coder))]
