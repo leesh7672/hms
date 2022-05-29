@@ -209,9 +209,9 @@ def _spell(x, num):
             skip = False
     total = []
     for ch in respell:
-        kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
-        total += [int(kangxi[0]), int(kangxi[1])]
-    return total + [-10, int(num)]
+        kangxi =  c.unihan.lookup_char(ch).first().kRSUnicode.split('.')
+        total += [0, int(kangxi[0]), int(kangxi[1])]
+    return total + [-1, 0, int(num)]
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
