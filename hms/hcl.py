@@ -209,7 +209,7 @@ def _spell(x, num):
             skip = False
     total = []
     for ch in respell:
-        kangxi =  c.unihan.lookup_char(ch).first().kIRGKangXi.split('.')
+        kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.-')
         total += [int(kangxi[0]), int(kangxi[1])]
     return total + [-1, int(num)]
 def update():
