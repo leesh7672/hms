@@ -59,10 +59,8 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成詞", 'infl':"助詞", 'adv':"副詞",
-    'lv': "輕動詞", 'verb': "動詞", 'prep': "介詞",
-    'co': "連詞", 'det': "指詞", 'adj': "性詞", 'noun': "名詞",
-    'cl': "量詞", 'num': "數詞"}
+categories = {'comp':"成詞", 'infl':"助詞", 'adv':"副詞", 'verb': "動詞", 'prep': "介詞",
+    'det': "指詞", 'noun': "名詞", 'cl': "量詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -81,11 +79,11 @@ def scandef(e, spell, ident, coder=tex):
         elif child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
-            if 'category' in child.attrib.keys():
-                _sample_category = categories[child.attrib['category']] + "短語"
+            if 'source' in child.attrib.keys():
+                _source = child.attrib[source]
             else:
-                _sample_category = ''
-            samples += [(_sample_category, textify(child, spell, ident, coder))]
+                _source = ''
+            samples += [(_source, textify(child, spell, ident, coder))]
         elif child.tag == 'syn':
             (temp, f) = search(child.attrib['ident'])
             root = temp.getroot()
