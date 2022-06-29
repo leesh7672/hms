@@ -105,7 +105,7 @@ def scandef(e, spell, ident, coder=tex):
             if 'num' in root.attrib.keys():
                 num0 = root.attrib['num']
             for child0 in root:
-                if child0.tag == 'main-spell':
+                if child0.tag == 'spell':
                     mspell = child0.text
             synonyms +=  [(mspell, num0, child.attrib['ident'])]
         elif child.tag == 'ant':
@@ -116,7 +116,7 @@ def scandef(e, spell, ident, coder=tex):
             if 'num' in root.attrib.keys():
                 num0 = root.attrib['num']
             for child0 in root:
-                if child0.tag == 'main-spell':
+                if child0.tag == 'spell':
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])
         '''
