@@ -23,15 +23,22 @@ def textify(e, spell, ident, coder=tex):
             if part != '':
                 total += part
                 beforehand = False
+        if child.tag == 'samp':
+            if 'src' in child.attrib.keys():
+                source = child.attrib['src']
+            else:
+                source = ''
+            total += '{}曰：“{}”'.format(source, textify(child, spell, ident, coder))
+            beforehand = False
         if child.tag == 'quote':
             temp = textify(child, spell, ident, coder)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '『{}』'.format(temp)
+                total += '“”'.format(temp)
             elif level >= 2:
-                total += '「{}」'.format(temp)
+                total += '‘{}’'.format(temp)
             beforehand = False
         elif child.tag == 'b':
             total +=coder.bold(textify(child, spell, ident, coder))
@@ -48,7 +55,7 @@ def textify(e, spell, ident, coder=tex):
             if 'num' in root.attrib.keys():
                 num = int(root.attrib['num'])
             for child0 in root:
-                if child0.tag == 'main-spell':
+                if child0.tag == 'spell':
                     mspell = child0.text
             total += coder.bold(mspell) + coder.superscript(num)
             beforehand = False
