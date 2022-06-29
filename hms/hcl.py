@@ -80,7 +80,7 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-    else
+    else:
         category = '雜詞'
     if 'supp' in e.attrib.keys():
         if '+' in e.attrib['supp']:
