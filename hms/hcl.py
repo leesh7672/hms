@@ -85,19 +85,19 @@ def scandef(e, spell, ident, coder=tex):
             temp = '時'
         else:
             temp = '常'
-        category = '，'+ temp + '取' + categories[e.attrib['supp'].replace('+', '')]
+        category += '，'+ temp + '取' + categories[e.attrib['supp'].replace('+', '')]
     if 'spec' in e.attrib.keys():
         if '+' in e.attrib['spec']:
             temp = '時'
         else:
             temp = '常'
-        category = '，' + temp + '戴' + categories[e.attrib['spec'].replace('+', '')]
+        category += '，' + temp + '戴' + categories[e.attrib['spec'].replace('+', '')]
     if 'epp' in e.attrib.keys():
         if '+' in e.attrib['epp']:
             temp = '時'
         else:
             temp = '常'
-        category = '，' + temp +'引' + categories[e.attrib['epp'].replace('+', '')]
+        category += '，' + temp +'引' + categories[e.attrib['epp'].replace('+', '')]
     explanation=textify(e, spell, ident)
     '''
     for child in e:
