@@ -100,7 +100,7 @@ def scandef(e, spell, ident, coder=tex):
         else:
             temp = '常'
         category = '，' + temp +'引' + categories[e.attrib['epp'].replace('+', '')]
-    textify(e)
+    textify(e, spell, ident)
     '''
     for child in e:
         if child.tag == 'exp':
