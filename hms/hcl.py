@@ -66,7 +66,9 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成詞", 'infl':"助詞", 'adv':"副詞", 'lv': "外動詞", 'verb': "動詞", 'prep': "介詞", 'det': "外名詞", 'noun': "名詞", 'num': "數詞"}
+categories = {'comp':"成詞", 'infl':"助詞",
+'adv':"副詞", 'lv': "外動詞", 'verb': "動詞", 'prep': "介詞",
+'det': "外名詞", 'noun': "名詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -81,11 +83,23 @@ def scandef(e, spell, ident, coder=tex):
     else
         category = '雜詞'
     if 'supp' in e.attrib.keys():
-        category = '，取' + categories[e.attrib['supp']]
+        if '+' in e.attrib['supp']:
+            temp = '時'
+        else:
+            temp = '常'
+        category = '，'+ temp + '取' + categories[e.attrib['supp'].replace('+', '')]
     if 'spec' in e.attrib.keys():
-        category = '，戴' + categories[e.attrib['spec']]
+        if '+' in e.attrib['spec']:
+            temp = '時'
+        else:
+            temp = '常'
+        category = '，' + temp + '戴' + categories[e.attrib['spec'].replace('+', '')]
     if 'epp' in e.attrib.keys():
-        category = '，引' + categories[e.attrib['epp']]
+        if '+' in e.attrib['epp']:
+            temp = '時'
+        else:
+            temp = '常'
+        category = '，' + temp +'引' + categories[e.attrib['epp'].replace('+', '')]
     textify(e)
     '''
     for child in e:
