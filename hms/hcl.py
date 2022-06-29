@@ -174,7 +174,7 @@ def scanxml(tree):
     cites = ''
     if root.tag == 'entry':
         for child in root:
-            elif child.tag == 'spell':
+            if child.tag == 'spell':
                 spell = child.text.strip()
             elif child.tag == 'def':
                 definitions += [scandef(child, spell, ident)]
