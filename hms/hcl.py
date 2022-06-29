@@ -69,17 +69,24 @@ def scandef(e, spell, ident, coder=tex):
         num = 1
     else:
         num = e.attrib['num']
-    category = ""
+    if 'category' in e.attrib.keys():
+        category = categories[e.attrib['category']]
+    else
+        category = '雜詞'
+    if 'supp' in e.attrib.keys():
+        category = '，取' + categories[e.attrib['supp']]
+    if 'spec' in e.attrib.keys():
+        category = '，戴' + categories[e.attrib['spec']]
+    if 'epp' in e.attrib.keys():
+        category = '，引' + categories[e.attrib['epp']]
+    textify(e)
+    '''
     for child in e:
-        if child.tag in categories.keys():
-            if category != '':
-                category += '・'
-            category += categories[child.tag]
-        elif child.tag == 'exp':
+        if child.tag == 'exp':
             explanation = textify(child, spell, ident, coder)
         elif child.tag == 'samp':
             if 'source' in child.attrib.keys():
-                _source = child.attrib[source]
+                _source = child.attrib['source']
             else:
                 _source = ''
             samples += [(_source, textify(child, spell, ident, coder))]
@@ -104,9 +111,8 @@ def scandef(e, spell, ident, coder=tex):
             for child0 in root:
                 if child0.tag == 'main-spell':
                     mspell = child0.text
-            antonyms += [(mspell, num0, child.attrib['ident'])]
-    if category == '':
-        category = '雜詞'
+            antonyms += [(mspell, num0, child.attrib['ident'])
+        '''
     return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
@@ -180,18 +186,10 @@ def scanxml(tree):
     cites = ''
     if root.tag == 'entry':
         for child in root:
-            if child.tag == 'spell':
-                alternative_spells += [child.text.strip()]
-            elif child.tag == 'main-spell':
+            elif child.tag == 'spell':
                 spell = child.text.strip()
             elif child.tag == 'def':
                 definitions += [scandef(child, spell, ident)]
-            elif child.tag == 'cite':
-                source = child.attrib['src']
-                if 'page' in child.attrib.keys():
-                    cites += "\\parencite[][{}]{{{}}}".format(child.attrib['page'], source)
-                else:
-                    cites += "\\parencite{{{}}}".format(source)
     return (root, num, spell, ident, alternative_spells, definitions, cites)
 def _spell(x, num):
     global c
