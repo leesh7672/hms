@@ -163,39 +163,6 @@ def updatexml(path):
     else:
         num = root.attrib['num']
     ident = root.attrib['ident']
-    if root.tag == 'entry':
-        for child in root:
-            if child.tag == 'def':
-                numx = child.attrib['num']
-                for child0 in child:
-                    if child0.tag == 'syn':
-                        ident0 = child0.attrib['ident']
-                        num0 = child0.attrib['num']
-                        (ref, f) = search(ident0)
-                        for definition in ref.findall('def'):
-                            if 'num' in definition.attrib.keys():
-                                if definition.attrib['num'] == num0:
-                                    need = True
-                                    for child1 in definition:
-                                        if (child1.tag == 'syn') and (child1.attrib['ident'] == ident) and (child1.attrib['num'] == numx):
-                                            need = False
-                                    if need:
-                                        definition.append(etree.Element('syn', {'ident': ident, 'num': numx}))
-                                        etree.ElementTree(ref.getroot()).write(f, pretty_print=True, encoding='utf-8')
-                    elif child0.tag == 'ant':
-                        ident0 = int(child0.attrib['ident'])
-                        num0 = int(child0.attrib['num'])
-                        (ref, f) = search(ident0)
-                        for definition in ref.findall('def'):
-                            if 'num' in definition.attrib.keys():
-                                if definition.attrib['num'] == num0:
-                                    need = True
-                                    for child1 in definition:
-                                        if (child1.tag == 'ant') and (child1.attrib['ident'] == ident) and (child1.attrib['num'] == numx):
-                                            need = False
-                                    if need:
-                                        definition.append(etree.Element('ant', {'ident': ident, 'num': numx}))
-                                        etree.ElementTree(ref.getroot()).write(f, pretty_print=True,  encoding='utf-8')
     etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
