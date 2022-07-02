@@ -80,7 +80,7 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-        sp = '，而成'
+        sp = '，乃爲'
     else:
         category = ''
         sp = ''
