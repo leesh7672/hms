@@ -180,7 +180,7 @@ def scanxml(tree):
             if child.tag == 'notation':
                 notation = child.text.strip()
             elif child.tag == 'def':
-                definitions += [scandef(child, spell, ident)]
+                definitions += [scandef(child, notation, ident)]
     return (root, num, spell, ident, notation, definitions, cites)
 def _spell(x, num):
     global c
