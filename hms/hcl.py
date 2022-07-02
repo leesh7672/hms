@@ -90,9 +90,9 @@ def scandef(e, spell, ident, coder=tex):
                 if feature.attrib['option'] == "yes":
                     temp = '時'
                 elif feature.attrib['option'] == "no":
-                    temp = '常'
+                    temp = '必'
             else:
-                temp = '常'
+                temp = '必'
             category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'epp':
@@ -100,9 +100,9 @@ def scandef(e, spell, ident, coder=tex):
                 if feature.attrib['option'] == "yes":
                     temp = '時'
                 elif feature.attrib['option'] == "no":
-                    temp = '常'
+                    temp = '必'
             else:
-                temp = '常'
+                temp = '必'
             if 'proj' in feature.attrib.keys():
                 if feature.attrib['proj'] == "max":
                     temp = ''
@@ -117,9 +117,9 @@ def scandef(e, spell, ident, coder=tex):
                 if feature.attrib['option'] == "yes":
                     temp = '時'
                 elif feature.attrib['option'] == "no":
-                    temp = '常'
+                    temp = '必'
             else:
-                temp = '常'
+                temp = '必'
             category = temp + '戴' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
@@ -127,11 +127,11 @@ def scandef(e, spell, ident, coder=tex):
                 if feature.attrib['option'] == "yes":
                     temp = '時'
                 elif feature.attrib['option'] == "no":
-                    temp = '常'
+                    temp = '必'
             else:
-                temp = '常'
+                temp = '必'
             category = temp +'在' + categories[feature.attrib['category'].replace('+', '')] + "積" + sp + category
-            sp = '，'
+            sp = '，而'
     explanation=textify(e, spell, ident)
     '''
     for child in e:
