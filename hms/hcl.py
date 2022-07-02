@@ -36,7 +36,7 @@ def textify(e, spell, ident, coder=tex):
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '“”'.format(temp)
+                total += '“{}”'.format(temp)
             elif level >= 2:
                 total += '‘{}’'.format(temp)
             beforehand = False
