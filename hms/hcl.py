@@ -254,6 +254,7 @@ def collect_entries(code=tex):
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
+                    print(p)
                     results += [scanxml(etree.parse(p))]
         return sorted(results, key=lambda x: _spell(x[4], x[1]))
 def build_db(conn):
