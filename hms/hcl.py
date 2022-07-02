@@ -80,38 +80,39 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['num']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-        sp = '，'
+        sp = '，而成'
     else:
         category = ''
         sp = ''
-    if 'supp' in e.attrib.keys():
-        if '+' in e.attrib['supp']:
-            temp = '時'
-        else:
-            temp = '常'
-        category += sp+ temp + '取' + categories[e.attrib['supp'].replace('+', '')]
-        sp = '，'
-    if 'spec' in e.attrib.keys():
-        if '+' in e.attrib['spec']:
-            temp = '時'
-        else:
-            temp = '常'
-        category += sp + temp + '戴' + categories[e.attrib['spec'].replace('+', '')]
-        sp = '，'
-    if 'epp' in e.attrib.keys():
-        if '+' in e.attrib['epp']:
-            temp = '時'
-        else:
-            temp = '常'
-        category += sp + temp +'引' + categories[e.attrib['epp'].replace('+', '')]
-        sp = '，'
-    if 'on' in e.attrib.keys():
-        if '+' in e.attrib['on']:
-            temp = '時'
-        else:
-            temp = '常'
-        category += sp+ temp +'爲' + categories[e.attrib['on'].replace('+', '')] + "積"
-        sp = '，'
+    for feature in e:
+        if feature.tag = 'supp':
+            if '+' in e.attrib['category']:
+                temp = '時'
+            else:
+                temp = '常'
+            category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
+            sp = '，'
+        if feature.tag = 'epp':
+            if '+' in e.attrib['epp']:
+                temp = '時'
+            else:
+                temp = '常'
+            category = temp +'引' + categories[e.attrib['category'].replace('+', '')] + sp + category
+            sp = '，'
+        if feature.tag == 'spec':
+            if '+' in feature.attrib['category']:
+                temp = '時'
+            else:
+                temp = '常'
+            category = temp + '戴' + categories[e.attrib['category'].replace('+', '')] + sp + category
+            sp = '，'
+        if feature.tag == 'on':
+            if '+' in feature.attrib['category']:
+                temp = '時'
+            else:
+                temp = '常'
+            category = temp +'爲' + categories[feature.attrib['category'].replace('+', '')] + "積" + sp + category
+            sp = '，'
     explanation=textify(e, spell, ident)
     '''
     for child in e:
