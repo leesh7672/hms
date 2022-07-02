@@ -92,7 +92,7 @@ def scandef(e, spell, ident, coder=tex):
                 elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
-                temp = '必'
+                temp = ''
             category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'epp':
@@ -105,11 +105,11 @@ def scandef(e, spell, ident, coder=tex):
                 temp = '必'
             if 'proj' in feature.attrib.keys():
                 if feature.attrib['proj'] == "max":
-                    temp = ''
+                    proj = ''
                 elif feature.attrib['proj'] == "min":
-                    temp = '核'
+                    proj = '核'
             else:
-                temp = ''
+                proj = ''
             category = temp +'引' + categories[e.attrib['category'].replace('+', '')]  + proj + sp + category
             sp = '，'
         if feature.tag == 'spec':
@@ -119,7 +119,7 @@ def scandef(e, spell, ident, coder=tex):
                 elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
-                temp = '必'
+                temp = ''
             category = temp + '戴' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
@@ -129,7 +129,7 @@ def scandef(e, spell, ident, coder=tex):
                 elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
-                temp = '必'
+                temp = ''
             category = temp +'在' + categories[feature.attrib['category'].replace('+', '')] + "積" + sp + category
             sp = '，而'
     explanation=textify(e, spell, ident)
