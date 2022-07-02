@@ -262,8 +262,6 @@ def build():
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions, cites) = result
         spells = ''
-        for sp in alternative_spells:
-            spells += '\\also{{{}}}'.format(sp)
         definition_txt = ''
         for d in sorted(definitions, key=itemgetter(0)):
             (numx, category_txt, synonyms, antonyms, samples, explanation) = d
