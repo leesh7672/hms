@@ -100,6 +100,12 @@ def scandef(e, spell, ident, coder=tex):
         else:
             temp = '常'
         category += '，' + temp +'引' + categories[e.attrib['epp'].replace('+', '')]
+    if 'c-command' in e.attrib.keys():
+        if '+' in e.attrib['c-command']:
+            temp = '時'
+        else:
+            temp = '常'
+        category += '，' + temp +'爲' + categories[e.attrib['epp'].replace('+', '')] + "制"
     explanation=textify(e, spell, ident)
     '''
     for child in e:
