@@ -85,7 +85,7 @@ def scandef(e, spell, ident, coder=tex):
         category = ''
         sp = ''
     for feature in e:
-        if feature.tag = 'supp':
+        if feature.tag == 'supp':
             if 'option' in feature.attrib.keys():
                 if feature.attrib['option'] == "yes":
                     temp = '時'
@@ -95,7 +95,7 @@ def scandef(e, spell, ident, coder=tex):
                 temp = '常'
             category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
-        if feature.tag = 'epp':
+        if feature.tag == 'epp':
             if 'option' in feature.attrib.keys():
                 if feature.attrib['option'] == "yes":
                     temp = '時'
@@ -105,11 +105,11 @@ def scandef(e, spell, ident, coder=tex):
                 temp = '常'
             if 'proj' in feature.attrib.keys():
                 if feature.attrib['proj'] == "max":
-                    temp = '全'
+                    temp = ''
                 elif feature.attrib['proj'] == "min"::
                     temp = '核'
             else:
-                temp = '全'
+                temp = ''
             category = temp +'引' + categories[e.attrib['category'].replace('+', '')]  + proj + sp + category
             sp = '，'
         if feature.tag == 'spec':
