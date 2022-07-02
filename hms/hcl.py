@@ -123,7 +123,7 @@ def scandef(e, spell, ident, coder=tex):
             category = temp + '戴' + categories[feature.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
-            if 'freq in feature.attrib.keys():
+            if 'freq' in feature.attrib.keys():
                 if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
                 elif feature.attrib['freq'] == 'always':
