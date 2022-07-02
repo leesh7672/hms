@@ -56,7 +56,7 @@ def textify(e, spell, ident, coder=tex):
                 num = int(root.attrib['num'])
             for child0 in root:
                 if child0.tag == 'notation':
-                    notation = coder.bold(child0.text)
+                    notation = coder.bold(child0.text) + coder.superscript(num)
                 if child0.tag == 'spell':
                     notation = coder.bold(child0.text) + coder.superscript(num)
             total += notation
