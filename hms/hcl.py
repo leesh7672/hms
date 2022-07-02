@@ -83,7 +83,7 @@ def scandef(e, spell, ident, coder=tex):
         sp = '，'
     else:
         category = ''
-        sp = '' 
+        sp = ''
     if 'supp' in e.attrib.keys():
         if '+' in e.attrib['supp']:
             temp = '時'
@@ -110,7 +110,7 @@ def scandef(e, spell, ident, coder=tex):
             temp = '時'
         else:
             temp = '常'
-        category += sp+ temp +'爲' + categories[e.attrib['epp'].replace('+', '')] + "積"
+        category += sp+ temp +'爲' + categories[e.attrib['on'].replace('+', '')] + "積"
         sp = '，'
     explanation=textify(e, spell, ident)
     '''
