@@ -99,14 +99,14 @@ def scandef(e, spell, ident, coder=tex):
             if 'option' in feature.attrib.keys():
                 if feature.attrib['option'] == "yes":
                     temp = '時'
-                elif feature.attrib['option'] == "no"::
+                elif feature.attrib['option'] == "no":
                     temp = '常'
             else:
                 temp = '常'
             if 'proj' in feature.attrib.keys():
                 if feature.attrib['proj'] == "max":
                     temp = ''
-                elif feature.attrib['proj'] == "min"::
+                elif feature.attrib['proj'] == "min":
                     temp = '核'
             else:
                 temp = ''
@@ -116,7 +116,7 @@ def scandef(e, spell, ident, coder=tex):
             if 'option' in feature.attrib.keys():
                 if feature.attrib['option'] == "yes":
                     temp = '時'
-                elif feature.attrib['option'] == "no"::
+                elif feature.attrib['option'] == "no":
                     temp = '常'
             else:
                 temp = '常'
