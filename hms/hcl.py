@@ -86,20 +86,20 @@ def scandef(e, spell, ident, coder=tex):
         sp = ''
     for feature in e:
         if feature.tag == 'supp':
-            if 'option' in feature.attrib.keys():
-                if feature.attrib['option'] == "yes":
+            if 'freq' in feature.attrib.keys():
+                if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
-                elif feature.attrib['option'] == "no":
+                elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
                 temp = '必'
             category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'epp':
-            if 'option' in feature.attrib.keys():
-                if feature.attrib['option'] == "yes":
+            if 'freq' in feature.attrib.keys():
+                if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
-                elif feature.attrib['option'] == "no":
+                elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
                 temp = '必'
@@ -113,20 +113,20 @@ def scandef(e, spell, ident, coder=tex):
             category = temp +'引' + categories[e.attrib['category'].replace('+', '')]  + proj + sp + category
             sp = '，'
         if feature.tag == 'spec':
-            if 'option' in feature.attrib.keys():
-                if feature.attrib['option'] == "yes":
+            if 'freq' in feature.attrib.keys():
+                if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
-                elif feature.attrib['option'] == "no":
+                elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
                 temp = '必'
             category = temp + '戴' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
-            if 'option' in feature.attrib.keys():
-                if feature.attrib['option'] == "yes":
+            if 'freq' in feature.attrib.keys():
+                if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
-                elif feature.attrib['option'] == "no":
+                elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
                 temp = '必'
