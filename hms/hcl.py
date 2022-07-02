@@ -19,7 +19,7 @@ def textify(e, spell, ident, coder=tex):
     beforehand = False
     for child in e:
         if part != None:
-            part = part.replace('.', '。').replace(',', '、').replace(' ', '').replace('\t', '').replace('\n', '').replace(' ', '')
+            part = part.replace('.', '。').replace(',', '、').strip()
             if part != '':
                 total += part
                 beforehand = False
