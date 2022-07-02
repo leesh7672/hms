@@ -51,13 +51,15 @@ def textify(e, spell, ident, coder=tex):
             (tr, f) = search(ident)
             root = tr.getroot()
             num = 1
-            mspell = ''
+            notation = ''
             if 'num' in root.attrib.keys():
                 num = int(root.attrib['num'])
             for child0 in root:
+                if child0.tag == 'notation':
+                    notation = coder.bold(child0.text)
                 if child0.tag == 'spell':
-                    mspell = child0.text
-            total += coder.bold(mspell) + coder.superscript(num)
+                    notation = coder.bold(child0.text) + coder.superscript(num)
+            total += notation
             beforehand = False
         part = child.tail
     if part != None:
@@ -166,17 +168,20 @@ def scanxml(tree):
     root = tree.getroot()
     num = root.attrib['num']
     ident = root.attrib['ident']
-    alternative_spells = []
+    notation = []
     definitions= []
     spell = ''
     cites = ''
     if root.tag == 'entry':
         for child in root:
             if child.tag == 'spell':
-                spell = child.text.strip()
+                notation= child.text.strip()
+                spell = "（" + notation + " ）"
+            if child.tag == 'notation':
+                notation = child.text.strip()
             elif child.tag == 'def':
                 definitions += [scandef(child, spell, ident)]
-    return (root, num, spell, ident, alternative_spells, definitions, cites)
+    return (root, num, spell, ident, notation, definitions, cites)
 def _spell(x, num):
     global c
     skip = False
@@ -218,7 +223,7 @@ def collect_entries(code=tex):
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
                     results += [scanxml(etree.parse(p))]
-        return sorted(results, key=lambda x: _spell(x[2], x[1]))
+        return sorted(results, key=lambda x: _spell(x[4], x[1]))
 def build_db(conn):
     results = collect_entries(html)
     conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
