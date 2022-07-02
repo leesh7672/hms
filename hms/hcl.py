@@ -68,7 +68,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成詞", 'infl':"助詞", 'adv':"副詞", 'lv': "外動詞", 'acc':"賓詞", 'verb': "動詞", 'prep': "介詞", 'det': "外名詞", 'noun': "名詞", 'num': "數詞"}
+categories = {'comp':"成詞", 'infl':"助詞", 'adv':"副詞", 'lv': "外動詞", 'verb': "動詞", 'prep': "介詞", 'det': "外名詞", 'noun': "名詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -86,32 +86,51 @@ def scandef(e, spell, ident, coder=tex):
         sp = ''
     for feature in e:
         if feature.tag = 'supp':
-            if '+' in e.attrib['category']:
-                temp = '時'
+            if 'option' in feature.attrib.keys():
+                if feature.attrib['option'] == "yes":
+                    temp = '時'
+                elif feature.attrib['option'] == "no"::
+                    temp = '常'
             else:
                 temp = '常'
             category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag = 'epp':
-            if '+' in e.attrib['epp']:
-                temp = '時'
+            if 'option' in feature.attrib.keys():
+                if feature.attrib['option'] == "yes":
+                    temp = '時'
+                elif feature.attrib['option'] == "no"::
+                    temp = '常'
             else:
                 temp = '常'
-            category = temp +'引' + categories[e.attrib['category'].replace('+', '')] + sp + category
+            if 'proj' in feature.attrib.keys():
+                if feature.attrib['proj'] == "max":
+                    temp = '全'
+                elif feature.attrib['proj'] == "min"::
+                    temp = '核'
+            else:
+                temp = '全'
+            category = temp +'引' + categories[e.attrib['category'].replace('+', '')]  + proj + sp + category
             sp = '，'
         if feature.tag == 'spec':
-            if '+' in feature.attrib['category']:
-                temp = '時'
+            if 'option' in feature.attrib.keys():
+                if feature.attrib['option'] == "yes":
+                    temp = '時'
+                elif feature.attrib['option'] == "no"::
+                    temp = '常'
             else:
                 temp = '常'
             category = temp + '戴' + categories[e.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
-            if '+' in feature.attrib['category']:
-                temp = '時'
+            if 'option' in feature.attrib.keys():
+                if feature.attrib['option'] == "yes":
+                    temp = '時'
+                elif feature.attrib['option'] == "no"::
+                    temp = '常'
             else:
                 temp = '常'
-            category = temp +'爲' + categories[feature.attrib['category'].replace('+', '')] + "積" + sp + category
+            category = temp +'在' + categories[feature.attrib['category'].replace('+', '')] + "積" + sp + category
             sp = '，'
     explanation=textify(e, spell, ident)
     '''
