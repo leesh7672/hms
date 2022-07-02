@@ -93,7 +93,7 @@ def scandef(e, spell, ident, coder=tex):
                     temp = '必'
             else:
                 temp = ''
-            category = temp + '取' + categories[e.attrib['category'].replace('+', '')] + sp + category
+            category = temp + '取' + categories[feature.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'epp':
             if 'freq' in feature.attrib.keys():
@@ -110,7 +110,7 @@ def scandef(e, spell, ident, coder=tex):
                     proj = '核'
             else:
                 proj = ''
-            category = temp +'引' + categories[e.attrib['category'].replace('+', '')]  + proj + sp + category
+            category = temp +'引' + categories[feature.attrib['category'].replace('+', '')]  + proj + sp + category
             sp = '，'
         if feature.tag == 'spec':
             if 'freq' in feature.attrib.keys():
@@ -120,7 +120,7 @@ def scandef(e, spell, ident, coder=tex):
                     temp = '必'
             else:
                 temp = ''
-            category = temp + '戴' + categories[e.attrib['category'].replace('+', '')] + sp + category
+            category = temp + '戴' + categories[feature.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
             if 'freq' in feature.attrib.keys():
