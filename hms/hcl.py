@@ -102,7 +102,7 @@ def scandef(e, spell, ident, coder=tex):
                 elif feature.attrib['freq'] == 'always':
                     temp = '必'
             else:
-                temp = '必'
+                temp = ''
             if 'proj' in feature.attrib.keys():
                 if feature.attrib['proj'] == "max":
                     proj = ''
@@ -113,7 +113,7 @@ def scandef(e, spell, ident, coder=tex):
             category = temp +'引' + categories[feature.attrib['category'].replace('+', '')]  + proj + sp + category
             sp = '，'
         if feature.tag == 'spec':
-            if 'category' in feature.attrib.keys():
+            if 'freq' in feature.attrib.keys():
                 if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
                 elif feature.attrib['freq'] == 'always':
@@ -123,7 +123,7 @@ def scandef(e, spell, ident, coder=tex):
             category = temp + '戴' + categories[feature.attrib['category'].replace('+', '')] + sp + category
             sp = '，'
         if feature.tag == 'on':
-            if 'category' in feature.attrib.keys():
+            if 'freq in feature.attrib.keys():
                 if feature.attrib['freq'] == 'sometimes':
                     temp = '時'
                 elif feature.attrib['freq'] == 'always':
