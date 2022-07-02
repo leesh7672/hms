@@ -19,7 +19,7 @@ def textify(e, spell, ident, coder=tex):
     beforehand = False
     for child in e:
         if part != None:
-            part = part.replace('\n', '').replace('\t', '').replace(' ', '')
+            part = part.replace('\n', '').replace('\t', '').replace(' ', '').replace('、', '・').replace('：', '，')
             if part != '':
                 total += part
                 beforehand = False
@@ -28,7 +28,7 @@ def textify(e, spell, ident, coder=tex):
                 source = child.attrib['src']
             else:
                 source = ''
-            total += '{}曰：「{}」。'.format(source, textify(child, spell, ident, coder))
+            total += '{}曰，「{}」。'.format(source, textify(child, spell, ident, coder))
             beforehand = False
         if child.tag == 'quote':
             temp = textify(child, spell, ident, coder)
