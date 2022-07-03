@@ -172,7 +172,7 @@ def scandef(e, spell, ident, coder=tex):
             antonyms += [(mspell, num0, child.attrib['ident'])
         '''
     if counter > 1:
-        category = category.replace('PRIM', ''先')
+        category = category.replace('PRIM', '先')
     return (num, category.replace("PRIM", ''), synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
