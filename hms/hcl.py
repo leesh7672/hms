@@ -23,22 +23,15 @@ def textify(e, spell, ident, coder=tex):
             if part != '':
                 total += part
                 beforehand = False
-        if child.tag == 'samp':
-            if 'src' in child.attrib.keys():
-                source = child.attrib['src']
-            else:
-                source = ''
-            total += '{}曰，「{}」。'.format(source, textify(child, spell, ident, coder))
-            beforehand = False
         if child.tag == 'quote':
             temp = textify(child, spell, ident, coder)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '「{}」'.format(temp)
+                total += '“{}”'.format(temp)
             elif level >= 2:
-                total += '『{}』'.format(temp)
+                total += '‘{}’'.format(temp)
             beforehand = False
         elif child.tag == 'b':
             total +=coder.bold(textify(child, spell, ident, coder))
@@ -138,6 +131,12 @@ def scandef(e, spell, ident, coder=tex):
                     sp = '，然後'
         if child.tag == 'semantics':
             explanation=textify(e, spell, ident)
+        if child.tag == 'samp':
+            if 'src' in child.attrib.keys():
+                source = child.attrib['src']
+            else:
+                source = ''
+            total += '{}曰，“{}”'.format(source, textify(child, spell, ident, coder))
     '''
     for child in e:
         if child.tag == 'exp':
