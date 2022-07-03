@@ -40,13 +40,13 @@ def textify(e, spell, ident, coder=tex):
             total +=coder.bold(spell)
             beforehand = False
         elif child.tag == 'ref':
-            ident = child.attrib['ident']
+            ident = child.attrib['identifier']
             (tr, f) = search(ident)
             root = tr.getroot()
             num = 1
             notation = ''
-            if 'num' in root.attrib.keys():
-                num = int(root.attrib['num'])
+            if 'index' in root.attrib.keys():
+                num = int(root.attrib['index'])
             for child0 in root:
                 if child0.tag == 'notation':
                     notation = coder.bold(child0.text) + coder.superscript(num)
@@ -61,16 +61,16 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"氣字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "大名字", 'noun': "名字", 'num': "數字"}
+categories = {'comp':"氣字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "大名字", 'noun': "名字", 'index': "數字"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
     samples = []
     explanation = ''
-    if not('num' in e.attrib.keys()):
+    if not('index' in e.attrib.keys()):
         num = 1
     else:
-        num = e.attrib['num']
+        num = e.attrib['index']
     if 'category' in e.attrib.keys():
         category = sp + categories[e.attrib['category']]
         sp = '，PRIM'
@@ -151,27 +151,27 @@ def scandef(e, spell, ident, coder=tex):
                 _source = ''
             samples += [(_source, textify(child, spell, ident, coder))]
         elif child.tag == 'syn':
-            (temp, f) = search(child.attrib['ident'])
+            (temp, f) = search(child.attrib['identifier'])
             root = temp.getroot()
             num0 = 1
             mspell = ''
-            if 'num' in root.attrib.keys():
-                num0 = root.attrib['num']
+            if 'index' in root.attrib.keys():
+                num0 = root.attrib['index']
             for child0 in root:
                 if child0.tag == 'spell':
                     mspell = child0.text
-            synonyms +=  [(mspell, num0, child.attrib['ident'])]
+            synonyms +=  [(mspell, num0, child.attrib['identifier'])]
         elif child.tag == 'ant':
-            (temp, f) = search(child.attrib['ident'])
+            (temp, f) = search(child.attrib['identifier'])
             root = temp.getroot()
             num0 = 1
             mspell = ''
-            if 'num' in root.attrib.keys():
-                num0 = root.attrib['num']
+            if 'index' in root.attrib.keys():
+                num0 = root.attrib['index']
             for child0 in root:
                 if child0.tag == 'spell':
                     mspell = child0.text
-            antonyms += [(mspell, num0, child.attrib['ident'])
+            antonyms += [(mspell, num0, child.attrib['identifier'])
         '''
     if counter > 1:
         category = category.replace('PRIM', '先')
@@ -185,8 +185,8 @@ def search(ident):
                 if ext == '.xml':
                     tree = etree.parse(p, parser)
                     root = tree.getroot()
-                    if  'ident' in root.attrib:
-                        if root.attrib['ident'] == ident:
+                    if  'identifier' in root.attrib:
+                        if root.attrib['identifier'] == ident:
                             if root.tag == 'entry':
                                 return (tree, p)
     return None
@@ -195,20 +195,20 @@ def updatexml(path):
     print(path)
     tree = etree.parse(path, parser)
     root = tree.getroot()
-    if not('ident' in root.attrib.keys()):
-        root.set('ident', '{}'.format(generateIdent()))
+    if not('identifier' in root.attrib.keys()):
+        root.set('identifier', '{}'.format(generateIdent()))
         tree.write(path)
-    if not('num' in root.attrib.keys()):
-        root.set('num', '1')
+    if not('index' in root.attrib.keys()):
+        root.set('index', '1')
         num = '1'
     else:
-        num = root.attrib['num']
-    ident = root.attrib['ident']
+        num = root.attrib['index']
+    ident = root.attrib['identifier']
     etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
-    num = root.attrib['num']
-    ident = root.attrib['ident']
+    num = root.attrib['index']
+    ident = root.attrib['identifier']
     notation = []
     definitions= []
     spell = ''
@@ -220,7 +220,7 @@ def scanxml(tree):
                 spell = "（" + notation + " ）"
             if child.tag == 'notation':
                 notation = child.text.strip()
-            elif child.tag == 'def':
+            elif child.tag == 'usage':
                 definitions += [scandef(child, notation, ident)]
     return (root, num, spell, ident, notation, definitions, cites)
 def _spell(x, num):
