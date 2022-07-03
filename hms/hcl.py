@@ -87,9 +87,9 @@ def scandef(e, spell, ident, coder=tex):
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
                         elif feature.attrib['frequency'] == 'always':
-                            temp = '必'
+                            temp = '常'
                     else:
-                        temp = ''
+                        temp = '常'
                     category += sp + temp + '友' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'epp':
@@ -98,9 +98,9 @@ def scandef(e, spell, ident, coder=tex):
                         if feature.attrib['freqeuncy'] == 'sometimes':
                             temp = '時'
                         elif feature.attrib['frequency'] == 'always':
-                            temp = '必'
+                            temp = '常'
                     else:
-                        temp = ''
+                        temp = '常'
                     if 'projection' in feature.attrib.keys():
                         if feature.attrib['projection'] == "max":
                             proj = '節'
@@ -116,9 +116,9 @@ def scandef(e, spell, ident, coder=tex):
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
                         elif feature.attrib['frequency'] == 'always':
-                            temp = '必'
+                            temp = '常'
                     else:
-                        temp = ''
+                        temp = '常'
                     category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'on':
@@ -127,9 +127,9 @@ def scandef(e, spell, ident, coder=tex):
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
                         elif feature.attrib['frequency'] == 'always':
-                            temp = '必'
+                            temp = '常'
                     else:
-                        temp = ''
+                        temp = '常'
                     category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "前"
                     sp = '，然後'
         if child.tag == 'semantics':
