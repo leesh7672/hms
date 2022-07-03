@@ -81,6 +81,17 @@ def scandef(e, spell, ident, coder=tex):
     for child in e:
         if child.tag == 'syntactics':
             for feature in child:
+                if feature.tag == 'merge':
+                    counter += 1
+                    if 'frequency' in feature.attrib.keys():
+                        if feature.attrib['frequency'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '常'
+                    else:
+                        temp = '常'
+                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
+                    sp = '，然後'
                 if feature.tag == 'supplement':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
@@ -90,7 +101,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '匹' + categories[feature.attrib['category'].replace('+', '')]
+                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'epp':
                     counter += 1
@@ -108,7 +119,7 @@ def scandef(e, spell, ident, coder=tex):
                             proj = '核'
                     else:
                         proj = ''
-                    category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
+                    category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'specifier':
                     counter += 1
@@ -119,9 +130,9 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')]
+                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
-                if feature.tag == 'on':
+                if feature.tag == 'before':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
