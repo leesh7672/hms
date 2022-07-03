@@ -110,7 +110,7 @@ def scandef(e, spell, ident, coder=tex):
                         proj = '節'
                     category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
-                if feature.tag == 'spec':
+                if feature.tag == 'specifier':
                     counter += 1
                     if'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
