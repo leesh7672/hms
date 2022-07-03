@@ -61,7 +61,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"氣字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "大名字", 'noun': "名字", 'index': "數字"}
+categories = {'comp':"氣字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "外名字", 'noun': "名字", 'index': "數字"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -103,11 +103,11 @@ def scandef(e, spell, ident, coder=tex):
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
                         if feature.attrib['projection'] == "max":
-                            proj = '節'
+                            proj = '體'
                         elif feature.attrib['projection'] == "min":
                             proj = '核'
                     else:
-                        proj = '節'
+                        proj = '體'
                     category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'specifier':
