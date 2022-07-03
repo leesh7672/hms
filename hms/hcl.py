@@ -72,7 +72,7 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
-        category = sp + categories[e.attrib['category']]
+        category = categories[e.attrib['category']]
         sp = '，PRIM'
     else:
         category = ''
