@@ -116,7 +116,7 @@ def scandef(e, spell, ident, coder=tex):
                         proj = '句'
                     category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
-                if feature.tag == 'after':
+                if feature.tag == 'spec':
                     if'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
