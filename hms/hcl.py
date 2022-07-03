@@ -81,8 +81,8 @@ def scandef(e, spell, ident, coder=tex):
         if child.tag == 'syntactics':
             counter = 0
             for feature in child:
-                counter += 1
                 if feature.tag == 'supplement':
+                    counter += 1
                     if 'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
@@ -93,6 +93,7 @@ def scandef(e, spell, ident, coder=tex):
                     category += sp + temp + '友' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'epp':
+                    counter += 1
                     if 'frequency' in feature.attrib.keys():
                         if feature.attrib['freqeuncy'] == 'sometimes':
                             temp = '時'
@@ -110,6 +111,7 @@ def scandef(e, spell, ident, coder=tex):
                     category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'spec':
+                    counter += 1
                     if'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
@@ -120,6 +122,7 @@ def scandef(e, spell, ident, coder=tex):
                     category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'on':
+                    counter += 1
                     if 'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
