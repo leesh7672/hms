@@ -61,7 +61,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"氣字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "外名字", 'noun': "名字", 'index': "數字"}
+categories = {'comp':"成字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "外名字", 'noun': "名字", 'index': "數字"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -90,7 +90,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '友' + categories[feature.attrib['category'].replace('+', '')] + "節"
+                    category += sp + temp + '匹' + categories[feature.attrib['category'].replace('+', '')] + "節"
                     sp = '，然後'
                 if feature.tag == 'epp':
                     counter += 1
