@@ -145,9 +145,9 @@ def scandef(e, spell, ident, coder=tex):
                     sp = '，然後'
         if child.tag == 'semantics':
             explanation=textify(child, spell, ident)
-        if child.tag == 'samp':
-            if 'src' in child.attrib.keys():
-                source = child.attrib['src']
+        if child.tag == 'sample':
+            if 'source' in child.attrib.keys():
+                source = child.attrib['source']
             else:
                 source = ''
             total += '{}曰，“{}。”'.format(source, textify(child, spell, ident, coder))
