@@ -203,6 +203,9 @@ def updatexml(path):
         num = '1'
     else:
         num = root.attrib['index']
+    for child in root:
+        if not ('index' in child.attrib,keys()):
+            child.set('index', '1')
     ident = root.attrib['identifier']
     etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
