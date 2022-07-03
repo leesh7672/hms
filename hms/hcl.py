@@ -90,7 +90,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
+                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')] + '組'
                     sp = '，然後'
                 if feature.tag == 'delete':
                     counter += 1
@@ -103,11 +103,11 @@ def scandef(e, spell, ident, coder=tex):
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
                         if feature.attrib['projection'] == "max":
-                            proj = ''
+                            proj = '組'
                         elif feature.attrib['projection'] == "min":
-                            proj = '核'
+                            proj = ''
                     else:
-                        proj = ''
+                        proj = '組'
                     category += sp + temp +'刪' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'epp':
@@ -121,11 +121,11 @@ def scandef(e, spell, ident, coder=tex):
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
                         if feature.attrib['projection'] == "max":
-                            proj = ''
+                            proj = '組'
                         elif feature.attrib['projection'] == "min":
-                            proj = '核'
+                            proj = ''
                     else:
-                        proj = ''
+                        proj = '組'
                     category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'before':
@@ -137,7 +137,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "前"
+                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "組前"
                     sp = '，然後'
         if child.tag == 'semantics':
             explanation=textify(child, spell, ident)
