@@ -68,7 +68,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成詞", 'infl':"助詞", 'adv':"副詞", 'lv': "外動詞", 'verb': "動詞", 'prep': "介詞", 'det': "外名詞", 'noun': "名詞", 'num': "數詞"}
+categories = {'comp':"氣字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "大名字", 'noun': "名字", 'num': "數字"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -79,60 +79,65 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['num']
     if 'category' in e.attrib.keys():
-        category = categories[e.attrib['category']]
-        sp = '，乃爲'
+        category = sp + categories[e.attrib['category']]
+        sp = '，PRIM'
     else:
         category = ''
-        sp = ''
-    for feature in e:
-        if feature.tag == 'supp':
-            if 'freq' in feature.attrib.keys():
-                if feature.attrib['freq'] == 'sometimes':
-                    temp = '時'
-                elif feature.attrib['freq'] == 'always':
-                    temp = '必'
-            else:
-                temp = ''
-            category = temp + '取' + categories[feature.attrib['category'].replace('+', '')] + sp + category
-            sp = '，'
-        if feature.tag == 'epp':
-            if 'freq' in feature.attrib.keys():
-                if feature.attrib['freq'] == 'sometimes':
-                    temp = '時'
-                elif feature.attrib['freq'] == 'always':
-                    temp = '必'
-            else:
-                temp = ''
-            if 'proj' in feature.attrib.keys():
-                if feature.attrib['proj'] == "max":
-                    proj = ''
-                elif feature.attrib['proj'] == "min":
-                    proj = '核'
-            else:
-                proj = ''
-            category = temp +'引' + categories[feature.attrib['category'].replace('+', '')]  + proj + sp + category
-            sp = '，'
-        if feature.tag == 'spec':
-            if 'freq' in feature.attrib.keys():
-                if feature.attrib['freq'] == 'sometimes':
-                    temp = '時'
-                elif feature.attrib['freq'] == 'always':
-                    temp = '必'
-            else:
-                temp = ''
-            category = temp + '戴' + categories[feature.attrib['category'].replace('+', '')] + sp + category
-            sp = '，'
-        if feature.tag == 'on':
-            if 'freq' in feature.attrib.keys():
-                if feature.attrib['freq'] == 'sometimes':
-                    temp = '時'
-                elif feature.attrib['freq'] == 'always':
-                    temp = '必'
-            else:
-                temp = ''
-            category = temp +'在' + categories[feature.attrib['category'].replace('+', '')] + "積" + sp + category
-            sp = '，而'
-    explanation=textify(e, spell, ident)
+        sp = 'PRIM'
+    for child in e:
+        if child.tag == 'syntactics':
+            counter = 0
+            for feature in child:
+                counter += 1
+                if feature.tag == 'supplement':
+                    if 'frequency' in feature.attrib.keys():
+                        if feature.attrib['frequency'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '必'
+                    else:
+                        temp = ''
+                    category += sp + temp + '友' + categories[feature.attrib['category'].replace('+', '')]
+                    sp = '，然後'
+                if feature.tag == 'epp':
+                    if 'frequency' in feature.attrib.keys():
+                        if feature.attrib['freqeuncy'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '必'
+                    else:
+                        temp = ''
+                    if 'projection' in feature.attrib.keys():
+                        if feature.attrib['projection'] == "max":
+                            proj = '句'
+                        elif feature.attrib['projection'] == "min":
+                            proj = '核'
+                    else:
+                        proj = '句'
+                    category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
+                    sp = '，然後'
+                if feature.tag == 'after':
+                    if'frequency' in feature.attrib.keys():
+                        if feature.attrib['frequency'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '必'
+                    else:
+                        temp = ''
+                    category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')]
+                    sp = '，然後'
+                if feature.tag == 'on':
+                    if 'frequency' in feature.attrib.keys():
+                        if feature.attrib['frequency'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '必'
+                    else:
+                        temp = ''
+                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "前"
+                    sp = '，然後'
+        if child.tag == 'semantics':
+            explanation=textify(e, spell, ident)
     '''
     for child in e:
         if child.tag == 'exp':
@@ -166,7 +171,9 @@ def scandef(e, spell, ident, coder=tex):
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['ident'])
         '''
-    return (num, category, synonyms, antonyms, samples, explanation)
+    if counter > 1:
+        category = category.replace('PRIM', ''先')
+    return (num, category.replace("PRIM", ''), synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
         for filename in files:
