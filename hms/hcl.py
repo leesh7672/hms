@@ -61,7 +61,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-categories = {'comp':"成字", 'infl':"時字", 'lv': "外動字", 'verb': "動字", 'prep': "介字", 'det': "外名字", 'noun': "名字", 'index': "數字"}
+categories = {'comp':"成詞", 'infl':"助詞", 'lv': "外動詞", 'verb': "動詞", 'prep': "介詞", 'det': "指詞", 'noun': "名詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -90,7 +90,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '匹' + categories[feature.attrib['category'].replace('+', '')] + "節"
+                    category += sp + temp + '匹' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'epp':
                     counter += 1
@@ -103,11 +103,11 @@ def scandef(e, spell, ident, coder=tex):
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
                         if feature.attrib['projection'] == "max":
-                            proj = '節'
+                            proj = ''
                         elif feature.attrib['projection'] == "min":
                             proj = '核'
                     else:
-                        proj = '節'
+                        proj = ''
                     category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'specifier':
@@ -119,7 +119,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')] + "節"
+                    category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'on':
                     counter += 1
@@ -130,7 +130,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "節前"
+                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "前"
                     sp = '，然後'
         if child.tag == 'semantics':
             explanation=textify(child, spell, ident)
