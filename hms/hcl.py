@@ -103,11 +103,11 @@ def scandef(e, spell, ident, coder=tex):
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
                         if feature.attrib['projection'] == "max":
-                            proj = '體'
+                            proj = '節'
                         elif feature.attrib['projection'] == "min":
                             proj = '核'
                     else:
-                        proj = '體'
+                        proj = '節'
                     category += sp + temp +'取戴' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
                 if feature.tag == 'specifier':
