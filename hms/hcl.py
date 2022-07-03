@@ -95,7 +95,7 @@ def scandef(e, spell, ident, coder=tex):
                 if feature.tag == 'epp':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['freqeuncy'] == 'sometimes':
+                        if feature.attrib['frequency'] == 'sometimes':
                             temp = '時'
                         elif feature.attrib['frequency'] == 'always':
                             temp = '常'
