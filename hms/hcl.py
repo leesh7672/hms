@@ -133,7 +133,7 @@ def scandef(e, spell, ident, coder=tex):
                     category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "節前"
                     sp = '，然後'
         if child.tag == 'semantics':
-            explanation=textify(e, spell, ident)
+            explanation=textify(child, spell, ident)
         if child.tag == 'samp':
             if 'src' in child.attrib.keys():
                 source = child.attrib['src']
