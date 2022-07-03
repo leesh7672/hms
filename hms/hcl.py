@@ -332,7 +332,7 @@ def build():
                 antonym_txt += "\\ant{{{}}}{{{}}}".format(antonym[0], antonym[1])
 
             for sample in samples:
-                sample_txt += samples
+                sample_txt += sample
 
             definition_txt += "\\explain{{{}}}{{{}{}{}{}}}".format(category_txt, explanation, synonym_txt, antonym_txt, sample_txt)
         txt+= "\\entry{{{}}}{{{}}}{{{}{}{}}}{{{}}}".format(spell.replace('（', "").replace('）', ''), num, spells, definition_txt, cites, '')
