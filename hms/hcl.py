@@ -92,17 +92,6 @@ def scandef(e, spell, ident, coder=tex):
                         temp = '常'
                     category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
-                if feature.tag == 'supplement':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
-                    else:
-                        temp = '常'
-                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
-                    sp = '，然後'
                 if feature.tag == 'delete':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
@@ -138,17 +127,6 @@ def scandef(e, spell, ident, coder=tex):
                     else:
                         proj = ''
                     category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
-                    sp = '，然後'
-                if feature.tag == 'specifier':
-                    counter += 1
-                    if'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
-                    else:
-                        temp = '常'
-                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')]
                     sp = '，然後'
                 if feature.tag == 'before':
                     counter += 1
