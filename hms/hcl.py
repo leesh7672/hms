@@ -77,9 +77,9 @@ def scandef(e, spell, ident, coder=tex):
     else:
         category = ''
         sp = 'PRIM'
+    counter = 0
     for child in e:
         if child.tag == 'syntactics':
-            counter = 0
             for feature in child:
                 if feature.tag == 'supplement':
                     counter += 1
