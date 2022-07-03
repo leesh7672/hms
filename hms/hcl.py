@@ -150,7 +150,7 @@ def scandef(e, spell, ident, coder=tex):
                 source = child.attrib['source']
             else:
                 source = ''
-            total += '{}曰，“{}。”'.format(source, textify(child, spell, ident, coder))
+            samples += ['{}曰，“{}。”'.format(source, textify(child, spell, ident, coder))]
     '''
     for child in e:
         if child.tag == 'exp':
