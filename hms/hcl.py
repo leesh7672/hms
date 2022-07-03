@@ -90,7 +90,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '友' + categories[feature.attrib['category'].replace('+', '')]
+                    category += sp + temp + '友' + categories[feature.attrib['category'].replace('+', '')] + "節"
                     sp = '，然後'
                 if feature.tag == 'epp':
                     counter += 1
@@ -119,7 +119,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')]
+                    category += sp + temp + '戴' + categories[feature.attrib['category'].replace('+', '')] + "節"
                     sp = '，然後'
                 if feature.tag == 'on':
                     counter += 1
@@ -130,7 +130,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "前"
+                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "節前"
                     sp = '，然後'
         if child.tag == 'semantics':
             explanation=textify(e, spell, ident)
