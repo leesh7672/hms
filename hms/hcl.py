@@ -25,6 +25,10 @@ def textify(e, spell, ident, coder=tex):
                 beforehand = False
         if child.tag == 'quote':
             temp = textify(child, spell, ident, coder)
+            total += '（又曰，）'.format(temp)
+            beforehand = False
+        if child.tag == 'quote':
+            temp = textify(child, spell, ident, coder)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
@@ -101,6 +105,24 @@ def scandef(e, spell, ident, coder=tex):
                         else:
                             order = '戴'
                     category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
+                    sp = '，'
+                if feature.tag == 'replace':
+                    counter += 1
+                    if 'frequency' in feature.attrib.keys():
+                        if feature.attrib['frequency'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '常'
+                    else:
+                        temp = '常'
+                    if 'projection' in feature.attrib.keys():
+                        if feature.attrib['projection'] == "max":
+                            proj = '組'
+                        elif feature.attrib['projection'] == "min":
+                            proj = ''
+                    else:
+                        proj = '組'
+                    category += sp + temp +'奪代以' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，'
                 if feature.tag == 'move':
                     counter += 1
@@ -190,8 +212,6 @@ def scandef(e, spell, ident, coder=tex):
                     mspell = child0.text
             antonyms += [(mspell, num0, child.attrib['identifier'])
         '''
-    if counter > 1:
-        category = category.replace('PRIM', '先')
     return (num, category.replace("PRIM", ''), synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
