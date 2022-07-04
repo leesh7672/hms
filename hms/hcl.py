@@ -89,8 +89,18 @@ def scandef(e, spell, ident, coder=tex):
                         elif feature.attrib['frequency'] == 'always':
                             temp = '常'
                     else:
-                        temp = '常'
-                    category += sp + temp + '緣' + categories[feature.attrib['category'].replace('+', '')] + '組'
+                        temp = ''
+                    if 'word-order' in feature.attrib.keys():
+                        if feature.attrib['word-order'] == 'beforehand':
+                            order = '戴'
+                        elif feature.attrib['word-order'] == 'aftermath':
+                            order = '負'
+                    else:
+                        if counter == 1:
+                            order = '負'
+                        else:
+                            order = '戴'
+                    category += '{}{}{}以{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')] + '組')
                     sp = '，然後'
                 if feature.tag == 'delete':
                     counter += 1
@@ -110,24 +120,6 @@ def scandef(e, spell, ident, coder=tex):
                         proj = '組'
                     category += sp + temp +'刪' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，然後'
-                if feature.tag == 'epp':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
-                    else:
-                        temp = '常'
-                    if 'projection' in feature.attrib.keys():
-                        if feature.attrib['projection'] == "max":
-                            proj = '組'
-                        elif feature.attrib['projection'] == "min":
-                            proj = ''
-                    else:
-                        proj = '組'
-                    category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
-                    sp = '，然後'
                 if feature.tag == 'before':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
@@ -137,7 +129,7 @@ def scandef(e, spell, ident, coder=tex):
                             temp = '常'
                     else:
                         temp = '常'
-                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "組前"
+                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "組上"
                     sp = '，然後'
         if child.tag == 'semantics':
             explanation=textify(child, spell, ident)
