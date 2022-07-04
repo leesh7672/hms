@@ -65,6 +65,7 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
+frequencies = {'always': '常', 'often': '頻', 'sometimes': '時', 'rarely': '罕'}
 categories = {'comp':"成詞", 'infl':"助詞", 'lv': "外動詞", 'adv':"副詞", 'verb': "動詞", 'prep': "介詞", 'det': "指詞", 'noun': "名詞", 'num': "數詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
@@ -85,13 +86,13 @@ def scandef(e, spell, ident, coder=tex):
     for child in e:
         if child.tag == 'syntactics':
             for feature in child:
-                if feature.tag == 'merge':
+                if feature.tag == 'omittable':
+                    counter += 1
+                    category += '可以省'
+                elif feature.tag == 'merge':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
+                        temp = frequencies[feature.attrib['frequency']]
                     else:
                         temp = ''
                     if 'word-order' in feature.attrib.keys():
@@ -106,13 +107,10 @@ def scandef(e, spell, ident, coder=tex):
                             order = '戴'
                     category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
                     sp = '，'
-                if feature.tag == 'replace':
+                elif feature.tag == 'replace':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
+                        temp = frequencies[feature.attrib['frequency']]
                     else:
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
@@ -124,13 +122,10 @@ def scandef(e, spell, ident, coder=tex):
                         proj = '組'
                     category += sp + temp +'奪代以' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，'
-                if feature.tag == 'move':
+                elif feature.tag == 'move':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
+                        temp = frequencies[feature.attrib['frequency']]
                     else:
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
@@ -142,13 +137,10 @@ def scandef(e, spell, ident, coder=tex):
                         proj = '組'
                     category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，'
-                if feature.tag == 'delete':
+                elif feature.tag == 'delete':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
+                        temp = frequencies[feature.attrib['frequency']]
                     else:
                         temp = '常'
                     if 'projection' in feature.attrib.keys():
@@ -160,7 +152,7 @@ def scandef(e, spell, ident, coder=tex):
                         proj = '組'
                     category += sp + temp +'刪' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，'
-                if feature.tag == 'before':
+                elif feature.tag == 'before':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
                         if feature.attrib['frequency'] == 'sometimes':
