@@ -102,6 +102,24 @@ def scandef(e, spell, ident, coder=tex):
                             order = '戴'
                     category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
                     sp = '，'
+                if feature.tag == 'move':
+                    counter += 1
+                    if 'frequency' in feature.attrib.keys():
+                        if feature.attrib['frequency'] == 'sometimes':
+                            temp = '時'
+                        elif feature.attrib['frequency'] == 'always':
+                            temp = '常'
+                    else:
+                        temp = '常'
+                    if 'projection' in feature.attrib.keys():
+                        if feature.attrib['projection'] == "max":
+                            proj = '組'
+                        elif feature.attrib['projection'] == "min":
+                            proj = ''
+                    else:
+                        proj = '組'
+                    category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
+                    sp = '，'
                 if feature.tag == 'delete':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
