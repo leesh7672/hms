@@ -97,14 +97,14 @@ def scandef(e, spell, ident, coder=tex):
                         temp = ''
                     if 'word-order' in feature.attrib.keys():
                         if feature.attrib['word-order'] == 'beforehand':
-                            order = '戴'
+                            order = '戴以'
                         elif feature.attrib['word-order'] == 'aftermath':
-                            order = '負'
+                            order = '履以'
                     else:
                         if counter == 1:
-                            order = '負'
+                            order = '履以'
                         else:
-                            order = '戴'
+                            order = '戴以'
                     category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
                     sp = '，'
                 elif feature.tag == 'replace':
@@ -120,7 +120,7 @@ def scandef(e, spell, ident, coder=tex):
                             proj = ''
                     else:
                         proj = '組'
-                    category += sp + temp +'奪代以' + categories[feature.attrib['category'].replace('+', '')]  + proj
+                    category += sp + temp +'代以' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，'
                 elif feature.tag == 'move':
                     counter += 1
@@ -135,7 +135,7 @@ def scandef(e, spell, ident, coder=tex):
                             proj = ''
                     else:
                         proj = '組'
-                    category += sp + temp +'奪' + categories[feature.attrib['category'].replace('+', '')]  + proj
+                    category += sp + temp +'奪戴以' + categories[feature.attrib['category'].replace('+', '')]  + proj
                     sp = '，'
                 elif feature.tag == 'delete':
                     counter += 1
