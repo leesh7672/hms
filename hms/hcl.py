@@ -73,10 +73,10 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-        sp = '，PRIM'
+        sp = '，'
     else:
         category = ''
-        sp = 'PRIM'
+        sp = ''
     counter = 0
     for child in e:
         if child.tag == 'syntactics':
@@ -101,7 +101,7 @@ def scandef(e, spell, ident, coder=tex):
                         else:
                             order = '戴'
                     category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
-                    sp = '，然後'
+                    sp = '，'
                 if feature.tag == 'delete':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
@@ -119,7 +119,7 @@ def scandef(e, spell, ident, coder=tex):
                     else:
                         proj = '組'
                     category += sp + temp +'刪' + categories[feature.attrib['category'].replace('+', '')]  + proj
-                    sp = '，然後'
+                    sp = '，'
                 if feature.tag == 'before':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
@@ -130,7 +130,7 @@ def scandef(e, spell, ident, coder=tex):
                     else:
                         temp = '常'
                     category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "組上"
-                    sp = '，然後'
+                    sp = '，'
         if child.tag == 'semantics':
             explanation=textify(child, spell, ident)
         if child.tag == 'sample':
