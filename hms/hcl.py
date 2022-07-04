@@ -100,7 +100,7 @@ def scandef(e, spell, ident, coder=tex):
                             order = '負'
                         else:
                             order = '戴'
-                    category += '{}{}{}以{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
+                    category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
                     sp = '，然後'
                 if feature.tag == 'delete':
                     counter += 1
