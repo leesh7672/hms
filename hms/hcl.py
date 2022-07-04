@@ -23,7 +23,7 @@ def textify(e, spell, ident, coder=tex):
             if part != '':
                 total += part
                 beforehand = False
-        if child.tag == 'quote':
+        if child.tag == 'also':
             temp = textify(child, spell, ident, coder)
             total += '（又曰，）'.format(temp)
             beforehand = False
