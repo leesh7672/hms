@@ -88,7 +88,7 @@ def scandef(e, spell, ident, coder=tex):
             for feature in child:
                 if feature.tag == 'omittable':
                     counter += 1
-                    category += '可以省'
+                    category += sp + '可以省'
                 elif feature.tag == 'merge':
                     counter += 1
                     if 'frequency' in feature.attrib.keys():
