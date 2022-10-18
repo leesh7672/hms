@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pycnnum
-
 def bold(txt):
     return "\\textcolor{{deepgold}}{{{}}}".format(txt)
 
@@ -12,4 +10,4 @@ def link(txt, dest):
     return txt
 
 def num(n):
-    return n
+    return "\\zhnumber{{{}}}".format(n)
