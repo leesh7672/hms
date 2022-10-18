@@ -15,6 +15,6 @@ setup(
     author='Seho Lee',
     author_email='leesh7672@knou.ac.kr',
     packages=find_packages(),
-    install_requires=['cihai', 'pycnnum', 'lxml'],
+    install_requires=['cihai', 'lxml'],
     zip_safe=True
     )
