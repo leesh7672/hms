@@ -23,11 +23,15 @@ def textify(e, spell, ident, coder=tex):
             if part != '':
                 total += part
                 beforehand = False
-        if child.tag == 'also':
+        if child.tag == 'sample':
             temp = textify(child, spell, ident, coder)
-            total += '（又曰，）'.format(temp)
+            total += '例曰，“{}”'.format(temp)
             beforehand = False
-        if child.tag == 'quote':
+        elif child.tag == 'also':
+            temp = textify(child, spell, ident, coder)
+            total += '（又曰，{}）'.format(temp)
+            beforehand = False
+        elif child.tag == 'quote':
             temp = textify(child, spell, ident, coder)
             level = 1
             if 'level' in child.attrib:
