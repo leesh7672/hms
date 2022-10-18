@@ -84,86 +84,7 @@ def scandef(e, spell, ident, coder=tex):
         sp = ''
     counter = 0
     for child in e:
-        if child.tag == 'syntactics':
-            for feature in child:
-                if feature.tag == 'omittable':
-                    counter += 1
-                    category += sp + '可以省'
-                elif feature.tag == 'merge':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        temp = frequencies[feature.attrib['frequency']]
-                    else:
-                        temp = ''
-                    if 'word-order' in feature.attrib.keys():
-                        if feature.attrib['word-order'] == 'beforehand':
-                            order = '戴以'
-                        elif feature.attrib['word-order'] == 'aftermath':
-                            order = '履以'
-                    else:
-                        if counter == 1:
-                            order = '履以'
-                        else:
-                            order = '戴以'
-                    category += '{}{}{}{}組'.format(sp, temp, order, categories[feature.attrib['category'].replace('+', '')])
-                    sp = '，'
-                elif feature.tag == 'replace':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        temp = frequencies[feature.attrib['frequency']]
-                    else:
-                        temp = '常'
-                    if 'projection' in feature.attrib.keys():
-                        if feature.attrib['projection'] == "max":
-                            proj = '組'
-                        elif feature.attrib['projection'] == "min":
-                            proj = ''
-                    else:
-                        proj = '組'
-                    category += sp + temp +'代以' + categories[feature.attrib['category'].replace('+', '')]  + proj
-                    sp = '，'
-                elif feature.tag == 'move':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        temp = frequencies[feature.attrib['frequency']]
-                    else:
-                        temp = '常'
-                    if 'projection' in feature.attrib.keys():
-                        if feature.attrib['projection'] == "max":
-                            proj = '組'
-                        elif feature.attrib['projection'] == "min":
-                            proj = ''
-                    else:
-                        proj = '組'
-                    category += sp + temp +'奪戴以' + categories[feature.attrib['category'].replace('+', '')]  + proj
-                    sp = '，'
-                elif feature.tag == 'delete':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        temp = frequencies[feature.attrib['frequency']]
-                    else:
-                        temp = '常'
-                    if 'projection' in feature.attrib.keys():
-                        if feature.attrib['projection'] == "max":
-                            proj = '組'
-                        elif feature.attrib['projection'] == "min":
-                            proj = ''
-                    else:
-                        proj = '組'
-                    category += sp + temp +'刪' + categories[feature.attrib['category'].replace('+', '')]  + proj
-                    sp = '，'
-                elif feature.tag == 'before':
-                    counter += 1
-                    if 'frequency' in feature.attrib.keys():
-                        if feature.attrib['frequency'] == 'sometimes':
-                            temp = '時'
-                        elif feature.attrib['frequency'] == 'always':
-                            temp = '常'
-                    else:
-                        temp = '常'
-                    category += sp + temp + '在' + categories[feature.attrib['category'].replace('+', '')] + "組上"
-                    sp = '，'
-        if child.tag == 'semantics':
+        if child.tag == 'explanation':
             explanation=textify(child, spell, ident)
         if child.tag == 'sample':
             if 'source' in child.attrib.keys():
@@ -287,7 +208,7 @@ def _work(q, p):
         try:
             q.put(result)
         except Exception as e:
-            print('An error has been occured in {}'.format(p))
+            print('An error has been occurred in {}'.format(p))
 def collect_entries(code=tex):
         results = []
         for (path, dir, files) in os.walk('entries'):
