@@ -25,7 +25,7 @@ def textify(e, spell, ident, coder=tex):
                 beforehand = False
         if child.tag == 'sample':
             temp = textify(child, spell, ident, coder)
-            total += '例曰，“{}”'.format(temp)
+            total += '例曰，“{}。”'.format(temp)
             beforehand = False
         elif child.tag == 'also':
             temp = textify(child, spell, ident, coder)
