@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-import pycnnum
-
 def bold(txt):
     return "<span>{}</span>".format(txt)
 
