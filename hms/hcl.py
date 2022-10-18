@@ -66,7 +66,7 @@ def textify(e, spell, ident, coder=tex):
             beforehand = True
     return total.strip()
 frequencies = {'always': '常', 'often': '頻', 'sometimes': '時', 'rarely': '罕'}
-categories = {'comp':"成詞", 'infl':"助詞", 'lv': "外動詞", 'adv':"副詞", 'verb': "動詞", 'prep': "介詞", 'det': "指詞", 'noun': "名詞", 'num': "數詞"}
+categories = {'int':'歎詞', 'infl':"助詞", 'adv':"副詞", 'verb': "述詞", 'prep': "介詞", 'det': "指詞", 'cl':'量詞', 'noun':"名詞", 'num': "數詞", 'conj': "連詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -83,48 +83,7 @@ def scandef(e, spell, ident, coder=tex):
         category = ''
         sp = ''
     counter = 0
-    for child in e:
-        if child.tag == 'explanation':
-            explanation=textify(child, spell, ident)
-        if child.tag == 'sample':
-            if 'source' in child.attrib.keys():
-                source = child.attrib['source']
-            else:
-                source = ''
-            samples += ['{}曰，“{}。”'.format(source, textify(child, spell, ident, coder))]
-    '''
-    for child in e:
-        if child.tag == 'exp':
-            explanation = textify(child, spell, ident, coder)
-        elif child.tag == 'samp':
-            if 'source' in child.attrib.keys():
-                _source = child.attrib['source']
-            else:
-                _source = ''
-            samples += [(_source, textify(child, spell, ident, coder))]
-        elif child.tag == 'syn':
-            (temp, f) = search(child.attrib['identifier'])
-            root = temp.getroot()
-            num0 = 1
-            mspell = ''
-            if 'index' in root.attrib.keys():
-                num0 = root.attrib['index']
-            for child0 in root:
-                if child0.tag == 'spell':
-                    mspell = child0.text
-            synonyms +=  [(mspell, num0, child.attrib['identifier'])]
-        elif child.tag == 'ant':
-            (temp, f) = search(child.attrib['identifier'])
-            root = temp.getroot()
-            num0 = 1
-            mspell = ''
-            if 'index' in root.attrib.keys():
-                num0 = root.attrib['index']
-            for child0 in root:
-                if child0.tag == 'spell':
-                    mspell = child0.text
-            antonyms += [(mspell, num0, child.attrib['identifier'])
-        '''
+    explanation=textify(e, spell, ident)
     return (num, category.replace("PRIM", ''), synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
