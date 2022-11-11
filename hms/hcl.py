@@ -35,7 +35,7 @@ def xp(e):
                     grandchildren += [xp(grandchild)]
                 elif grandchild.tag == "xp-text":
                     xp_text = textify(child)
-                    children += [(grandchild.attrib['category'], xp_text, f"[{categories[category]}組 [{xp_text}, roof]]")]
+                    grandchildren += [(grandchild.attrib['category'], xp_text, f"[{categories[category]}組 [{xp_text}, roof]]")]
                 elif grandchild.tag == "x-text":
                     spell = textify(grandchild)
                     grandchildren += [(category, spell, f"[{category} [{spell}]]")]
