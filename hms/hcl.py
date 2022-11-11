@@ -67,7 +67,7 @@ def textify(e, coder=tex):
             beforehand = False
         elif child.tag == 'also':
             temp = textify(child, coder)
-            total += '（又曰、‘{}’）'.format(temp)
+            total += '（又曰、{}）'.format(temp)
             beforehand = False
         elif child.tag == 'xp':
             total += "\\begin{{forest}}for tree={{if n children=0{{font=\itshape,tier=terminal,}}{{}},}}{}\\end{{forest}}".format(xp(child)[2])
