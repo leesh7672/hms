@@ -96,7 +96,8 @@ def textify(e):
                 spell = int(root.attrib['spell'])
             notation = "\\textbf{{{}}}\\textsuperscript{{\\rotatebox{{90}}{{{}}}}}".format(spell, num)
             total += notation
-        total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
+        if child.tail is not None:
+            total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     return total.strip()
 
 def scandef(e, spell, ident, coder=tex):
