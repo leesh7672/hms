@@ -13,7 +13,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字",'noun':"名字", 'num': "數字"}
+categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字", 'noun':"名字", 'num': "數字"}
 
 def textify(e, spell, ident, coder=tex):
     total = ''
