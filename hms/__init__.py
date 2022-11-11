@@ -5,4 +5,4 @@ HCL Management Software rewritten into python
 import hms.hcl as hms
 
 __all__ = ['hcl']
-__version__='3.1'
+__version__='3.2'
