@@ -110,7 +110,7 @@ def textify(e, coder=tex):
                     notation = coder.bold(child0.text) + coder.superscript(num)
             total += notation
             beforehand = False
-        part = child.tail
+        part += child.tail
     if part != None:
         if part != '':
             part = part.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
@@ -129,7 +129,7 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-        sp = '，'
+        sp = '・'
     else:
         category = ''
         sp = ''
