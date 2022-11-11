@@ -17,26 +17,78 @@ def generateIdent():
 
 categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字", 'noun':"名字", 'num': "數字"}
 
-def textify(e, spell, ident, coder=tex):
+class Spell:
+    def __init__(self, e):
+        self.spell = e.text
+        self.category = e.attr["category"]
+    def text(self):
+        return self.spell
+    def head(self):
+        return self.spell
+    def format(self):
+        return f"[.{categories[self.category]} {self.spell}]"
+
+def xp(e):
+    category = e.attr['category']
+    children = []
+    for child in e:
+        if child.tag == "xp":
+            children += [xp(child)]
+        if child.tag == "xp-text":
+            xp_text = textify(child)
+            children += [(child.attr['category'], xp_text, f"[{categories[category]}組 [{xp_text}]]")]
+        elif child.tag == "xbar":
+            grandchildren = []
+            xbar_text = ""
+            xbar_formula = f"[{categories[category]}小組"
+            for grandchild in child:
+                if grandchild.tag == "xp":
+                    grandchildren += [xp(grandchild)]
+                elif grandchild.tag == "xp-text":
+                    xp_text = textify(child)
+                    children += [(grandchild.attr['category'], xp_text, f"[{categories[category]}組 [{xp_text}]]")]
+                elif grandchild.tag == "x":
+                    spell = textify(grandchild)
+                    grandchildren += [(category, spell, f"[{category} [{spell}]]")]
+            for grandchild in grandchildren:
+                (_, x_spell, x_formula) = grandchild
+                xbar_text += x_spell
+                xbar_formula += " " + x_formula
+            children += [(category, xbar_text, xbar_formula+"]")]
+    text = ""
+    formula =  f"[.{categories[category]}組"
+    for child in children:
+        (_, child_text, child_formula) = child
+        text += child_text
+        formula += child_formula
+    formula += "]"
+    if "roof" in e.attr:
+        if e.attr["roof"] == "true":
+            formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
+
+def textify(e, coder=tex):
     total = ''
     part = e.text
     beforehand = False
     for child in e:
         if part != None:
-            part = part.replace('\n', '').replace('\t', '').replace(' ', '').replace('、', '・').replace('：', '，')
+            part = part.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
             if part != '':
                 total += part
                 beforehand = False
         if child.tag == 'sample':
-            temp = textify(child, spell, ident, coder)
-            total += '例曰，“{}。”'.format(temp)
+            temp = textify(child, coder)
+            total += '例曰、{}。'.format(temp)
             beforehand = False
         elif child.tag == 'also':
-            temp = textify(child, spell, ident, coder)
-            total += '（又曰，‘{}’）'.format(temp)
+            temp = textify(child, coder)
+            total += '（又曰、‘{}’）'.format(temp)
+            beforehand = False
+        elif child.tag == 'xp':
+            total += "\\begin{{forest}}for tree={{if n children=0{{font=\itshape,tier=terminal,}}{{}},}}{}\\end{{forest}}".format(xp(child))
             beforehand = False
         elif child.tag == 'quote':
-            temp = textify(child, spell, ident, coder)
+            temp = textify(child, coder)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
@@ -46,10 +98,10 @@ def textify(e, spell, ident, coder=tex):
                 total += '‘{}’'.format(temp)
             beforehand = False
         elif child.tag == 'b':
-            total +=coder.bold(textify(child, spell, ident, coder))
+            total +=coder.bold(textify(child, coder))
             beforehand = False
         elif child.tag == 'self':
-            total +=coder.bold(spell)
+            total +=coder.bold()
             beforehand = False
         elif child.tag == 'ref':
             ident = child.attrib['identifier']
@@ -128,7 +180,6 @@ def scanxml(tree):
     num = root.attrib['index']
     ident = root.attrib['identifier']
     notation = []
-    definitions= []
     spell = ''
     cites = ''
     if root.tag == 'entry':
@@ -138,8 +189,7 @@ def scanxml(tree):
                 spell = "（" + notation + " ）"
             if child.tag == 'notation':
                 notation = child.text.strip()
-            elif child.tag == 'usage':
-                definitions += [scandef(child, notation, ident)]
+    definitions = [scandef(root, notation, ident)]
     return (root, num, spell, ident, notation, definitions, cites)
 def _spell(x, num):
     global c
