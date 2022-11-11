@@ -134,7 +134,7 @@ def scandef(e, spell, ident, coder=tex):
         category = ''
         sp = ''
     counter = 0
-    explanation=textify(e, spell, ident)
+    explanation=textify(e)
     return (num, category.replace("PRIM", ''), synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
