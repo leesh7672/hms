@@ -13,7 +13,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'noun':"名字", 'num': "數字"}
+categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字",'noun':"名字", 'num': "數字"}
 
 def textify(e, spell, ident, coder=tex):
     total = ''
@@ -182,38 +182,7 @@ def collect_entries(code=tex):
                     print(p)
                     results += [scanxml(etree.parse(p))]
         return sorted(results, key=lambda x: _spell(x[4], x[1]))
-def build_db(conn):
-    results = collect_entries(html)
-    conn.execute("DROP TABLE IF EXISTS _alternative_spells;")
-    conn.execute("DROP TABLE IF EXISTS _synonyms;")
-    conn.execute("DROP TABLE IF EXISTS _antonyms;")
-    conn.execute("DROP TABLE IF EXISTS _samples;")
-    conn.execute("DROP TABLE IF EXISTS _explanations;")
-    conn.execute("DROP TABLE IF EXISTS _words;")
-    conn.execute("CREATE TABLE _words(_spell TEXT, _ident BIGINT);")
-    conn.execute("CREATE TABLE _alternative_spells(_spell TEXT, _ident BIGINT);")
-    conn.execute("CREATE TABLE _explanations(_category TEXT, _exp TEXT, _ident BIGINT, _exp_ident BIGSERIAL PRIMARY KEY);")
-    conn.execute("CREATE TABLE _synonyms(_from BIGINT REFERENCES _explanations(_exp_ident), _dest BIGINT);")
-    conn.execute("CREATE TABLE _antonyms(_from BIGINT REFERENCES _explanations(_exp_ident), _dest BIGINT);")
-    conn.execute("CREATE TABLE _samples(_source TEXT, _sample TEXT, _exp BIGINT REFERENCES _explanations(_exp_ident));")
-    for result in results:
-        (root, num, spell, ident, alternative_spells, definitions) = result.values
-        conn.execute('INSERT INTO _words(_spell, _ident) VALUES(\'{}\', {});'.format(spell, ident))
-        for sp in alternative_spells:
-            conn.execute("INSERT INTO _alternative_spells(_spell, _ident)  VALUES(\'{}\', {});".format(spell, ident))
-        conn.commit()
-        definition_txt = ''
-        for d in sorted(definitions, key=itemgetter(0)):
-            (numx, category, synonyms, antonyms, samples, explanation) = d
-            exp_ident = 0
-            for row in conn.execute("INSERT INTO _explanations(_exp, _category, _ident) VALUES(\'{}\', \'{}\', {}) RETURNING _exp_ident;".format(explanation, category, ident)).fetchall():
-                exp_ident = row['_ident']
-            for synonym in synonyms:
-                conn.execute("INSERT INTO _synonyms(_from, _dest) VALUES ({}, {});".format(exp_ident, synonym[3]))
-            for antonym in antonyms:
-                conn.execute("INSERT INTO _synonyms(_from, _dest) VALUES ({}, {});".format(exp_ident, antonym[3]))
-            for sample in samples:
-                conn.execute("INSERT INTO _synonyms(_source, _sample, _exp) VALUES ({}, {});".format(sample[0], sample[1], exp_ident))
+
 def build():
     results = collect_entries(tex)
     txt = ''
