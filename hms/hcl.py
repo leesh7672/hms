@@ -18,7 +18,7 @@ def generateIdent():
 categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字", 'noun':"名字", 'num': "數字"}
 
 def xp(e):
-    category = e.attr['category']
+    category = e.attrib['category']
     children = []
     for child in e:
         if child.tag == "xp":
@@ -54,8 +54,8 @@ def xp(e):
         text += child_text
         formula += child_formula
     formula += "]"
-    if "roof" in e.attr:
-        if e.attr["roof"] == "true":
+    if "roof" in e.attrib:
+        if e.attrib["roof"] == "true":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
 
 def textify(e, coder=tex):
@@ -176,7 +176,7 @@ def scanxml(tree):
     spell = ''
     cites = ''
     if root.tag == 'entry':
-        spell = root.attr["spell"]
+        spell = root.attrib["spell"]
         definitions = [scandef(root, spell, ident)]
     return (root, num, spell, ident, notation, definitions, cites)
 def _spell(x, num):
