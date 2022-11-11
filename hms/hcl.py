@@ -29,7 +29,7 @@ def xp(e):
         elif child.tag == "xbar":
             grandchildren = []
             xbar_text = ""
-            xbar_formula = f"[{categories[category]}小組"
+            xbar_formula = f"[{categories[category]}小組 ["
             for grandchild in child:
                 if grandchild.tag == "xp":
                     grandchildren += [xp(grandchild)]
@@ -46,7 +46,7 @@ def xp(e):
                 (_, x_spell, x_formula) = grandchild
                 xbar_text += x_spell
                 xbar_formula += " " + x_formula
-            children += [(category, xbar_text, xbar_formula+"]")]
+            children += [(category, xbar_text, xbar_formula+"]]")]
     text = ""
     formula =  f"[.{categories[category]}組"
     for child in children:
