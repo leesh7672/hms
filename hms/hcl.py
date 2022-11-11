@@ -70,7 +70,7 @@ def textify(e, coder=tex):
             total += '（又曰、{}）'.format(temp)
             beforehand = False
         elif child.tag == 'xp':
-            total += "\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
+            total += "\\\\\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
             beforehand = False
         elif child.tag == 'quote':
             temp = textify(child, coder)
