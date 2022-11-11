@@ -4,7 +4,7 @@ def cancel(txt):
     return "\\cancel{{{}}}".format(txt)
 
 def bold(txt):
-    return "\\textcolor{{deepgold}}{{{}}}".format(txt)
+    return "\\textbf{{{}}}".format(txt)
 
 def superscript(txt):
     return "\\textsuperscript{{\\rotatebox{{90}}{{{}}}}}".format(txt)
