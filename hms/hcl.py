@@ -63,7 +63,7 @@ def textify(e, coder=tex):
     beforehand = False
     for child in e:
         if child.tag == 'sample':
-            total += '例曰、{}。'.format(textify(child))
+            total += '例曰、{}'.format(textify(child))
             beforehand = False
         elif child.tag == 'also':
             temp = textify(child, coder)
