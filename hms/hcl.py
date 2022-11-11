@@ -62,10 +62,7 @@ def xp(e, default_mode="auto"):
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
     return category, text, formula
 def textify(e, coder=tex):
-    if e.text == None:
-        total = ""
-    else:
-        total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
+    total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     for child in e:
         if child.tag == 'xp':
             total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
@@ -79,9 +76,9 @@ def textify(e, coder=tex):
             elif level >= 2:
                 total += '「{}」'.format(temp)
         elif child.tag == 'bold':
-            total +=coder.bold(textify(child, coder))
+            total +=coder.bold(textify(child))
         elif child.tag == 'cancel':
-            total +=coder.cancel(textify(child, coder))
+            total +=coder.cancel(textify(child))
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'ref':
