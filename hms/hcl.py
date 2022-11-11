@@ -8,7 +8,6 @@ from lxml import etree
 
 c = Cihai()
 
-import hms.html as html
 import hms.tex as tex
 
 parser = etree.XMLParser(remove_blank_text=False)
