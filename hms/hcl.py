@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'v': "動字", 'cov': "介字", 'det': "指字", 'noun':"名字", 'cl': "量字", 'num':"數字"}
+categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'lv': "小動字", 'v': "動字", 'cov': "介字", 'det': "指字", 'noun':"名字", 'cl': "量字", 'num':"數字"}
 
 def xp(e):
     category = e.attrib['category']
@@ -26,14 +26,12 @@ def xp(e):
         elif child.tag == "xbar":
             grandchildren = []
             xbar_text = ""
-            xbar_formula = f"[{categories[category]}小組 "
+            xbar_formula = f"[{categories[category]}片組 "
             for grandchild in child:
                 if grandchild.tag == "xp":
                     grandchildren += [xp(grandchild)]
                 elif grandchild.tag == "x":
                     spell = textify(grandchild)
-                    grandchildren += [(category, spell, f"[{categories[category]} [{spell}]]")]
-                elif grandchild.tag == "x":
                     grandchildren += [(category, spell, f"[{categories[category]} [{spell}]]")]
             for grandchild in grandchildren:
                 (_, x_spell, x_formula) = grandchild
@@ -48,7 +46,7 @@ def xp(e):
         formula += child_formula
     formula += "]"
     if "roof" in e.attrib:
-        if e.attrib["roof"] == "true":
+        if e.attrib["roof"] == "yes":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
     return category, text, formula
 def textify(e, coder=tex):
