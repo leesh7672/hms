@@ -70,7 +70,7 @@ def textify(e):
         if child.tag == 'xp':
             total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
-            temp = textify(child, coder)
+            temp = textify(child)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
