@@ -57,7 +57,7 @@ def xp(e):
     if "roof" in e.attrib:
         if e.attrib["roof"] == "true":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
-
+    return category, text, formula
 def textify(e, coder=tex):
     total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     beforehand = False
