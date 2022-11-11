@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字", 'noun':"名字", 'num': "數字"}
+categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'v': "動字", 'cov': "介字", 'det': "指字", 'noun':"名字", 'cl': "量字", 'num':"數字"}
 
 def xp(e):
     category = e.attrib['category']
@@ -23,7 +23,7 @@ def xp(e):
     for child in e:
         if child.tag == "xp":
             children += [xp(child)]
-        if child.tag == "xp-text":
+        elif child.tag == "xp-text":
             xp_text = textify(child)
             children += [(child.attrib['category'], xp_text, f"[{categories[child.attrib['category']]}組 [{xp_text}, roof]]")]
         elif child.tag == "xbar":
@@ -62,7 +62,7 @@ def textify(e, coder=tex):
     total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     for child in e:
         if child.tag == 'xp':
-            total += "\\\\\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
+            total += "\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
             temp = textify(child, coder)
             level = 1
