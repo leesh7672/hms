@@ -48,7 +48,7 @@ def xp(e):
                 xbar_formula += " " + x_formula
             children += [(category, xbar_text, xbar_formula+"]]")]
     text = ""
-    formula =  f"[.{categories[category]}組"
+    formula =  f"[{categories[category]}組"
     for child in children:
         (_, child_text, child_formula) = child
         text += child_text
