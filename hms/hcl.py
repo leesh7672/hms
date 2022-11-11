@@ -17,17 +17,6 @@ def generateIdent():
 
 categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'det': "指字", 'noun':"名字", 'num': "數字"}
 
-class Spell:
-    def __init__(self, e):
-        self.spell = e.text
-        self.category = e.attr["category"]
-    def text(self):
-        return self.spell
-    def head(self):
-        return self.spell
-    def format(self):
-        return f"[.{categories[self.category]} {self.spell}]"
-
 def xp(e):
     category = e.attr['category']
     children = []
@@ -125,6 +114,7 @@ def textify(e, coder=tex):
             total += part
             beforehand = True
     return total.strip()
+
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
@@ -183,13 +173,8 @@ def scanxml(tree):
     spell = ''
     cites = ''
     if root.tag == 'entry':
-        for child in root:
-            if child.tag == 'spell':
-                notation= child.text.strip()
-                spell = "（" + notation + " ）"
-            if child.tag == 'notation':
-                notation = child.text.strip()
-    definitions = [scandef(root, notation, ident)]
+        spell = root.attr["spell"]
+        definitions = [scandef(root, spell, ident)]
     return (root, num, spell, ident, notation, definitions, cites)
 def _spell(x, num):
     global c
