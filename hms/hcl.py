@@ -61,7 +61,7 @@ def xp(e, default_mode="auto"):
         if mode == "autoroof":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
     return category, text, formula
-def textify(e, coder=tex):
+def textify(e):
     total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     for child in e:
         if child.tag == 'xp':
@@ -89,11 +89,9 @@ def textify(e, coder=tex):
             notation = ''
             if 'index' in root.attrib.keys():
                 num = int(root.attrib['index'])
-            for child0 in root:
-                if child0.tag == 'notation':
-                    notation = coder.bold(child0.text) + coder.superscript(num)
-                if child0.tag == 'spell':
-                    notation = coder.bold(child0.text) + coder.superscript(num)
+            if 'ispell' in root.attrib.keys():
+                spell = int(root.attrib['spell'])
+            notation = "\\textbf{{{}}}\\textsuperscript{{\\rotatebox{{90}}{{{}}}}}".format(spell, num)
             total += notation
         total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     return total.strip()
