@@ -13,6 +13,8 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
+categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'verb': "動字", 'prep': "介字", 'noun':"名字", 'num': "數字"}
+
 def textify(e, spell, ident, coder=tex):
     total = ''
     part = e.text
@@ -69,8 +71,6 @@ def textify(e, spell, ident, coder=tex):
             total += part
             beforehand = True
     return total.strip()
-frequencies = {'always': '常', 'often': '頻', 'sometimes': '時', 'rarely': '罕'}
-categories = {'int':'歎詞', 'infl':"助詞", 'adv':"副詞", 'verb': "述詞", 'prep': "介詞", 'det': "指詞", 'cl':'量詞', 'noun':"名詞", 'num': "數詞", 'conj': "連詞"}
 def scandef(e, spell, ident, coder=tex):
     synonyms = []
     antonyms = []
