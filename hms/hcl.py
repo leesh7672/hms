@@ -17,13 +17,13 @@ def generateIdent():
 
 categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'lv': "小動字", 'v': "動字", 'cov': "介字", 'det': "指字", 'noun':"名字", 'cl': "量字", 'num':"數字"}
 
-def xp(e):
+def xp(e, default_mode="auto"):
     category = e.attrib['category']
     children = []
     if "mode" in e.attrib:
         mode = e.attrib["mode"]
     else:
-        mode = "auto"
+        mode = default_mode
     if mode == "roof":
         text = textify(e)
         if text == "":
@@ -32,14 +32,14 @@ def xp(e):
     elif mode == "auto" or mode=="autoroof":
         for child in e:
             if child.tag == "xp":
-                children += [xp(child)]
+                children += [xp(child, "roof")]
             elif child.tag == "xbar":
                 grandchildren = []
                 xbar_text = ""
                 xbar_formula = f"[{categories[category]}片組 "
                 for grandchild in child:
                     if grandchild.tag == "xp":
-                        grandchildren += [xp(grandchild)]
+                        grandchildren += [xp(grandchild, "roof")]
                     elif grandchild.tag == "x":
                         spell = textify(grandchild)
                         grandchildren += [(category, spell, f"[{categories[category]} [{spell}]]")]
