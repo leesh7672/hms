@@ -59,15 +59,9 @@ def xp(e):
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
 
 def textify(e, coder=tex):
-    total = ''
-    part = e.text
+    total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     beforehand = False
     for child in e:
-        if part != None:
-            part = part.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
-            if part != '':
-                total += part
-                beforehand = False
         if child.tag == 'sample':
             temp = textify(child, coder)
             total += '例曰、{}。'.format(temp)
@@ -110,12 +104,7 @@ def textify(e, coder=tex):
                     notation = coder.bold(child0.text) + coder.superscript(num)
             total += notation
             beforehand = False
-        part += child.tail
-    if part != None:
-        if part != '':
-            part = part.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
-            total += part
-            beforehand = True
+        total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     return total.strip()
 
 def scandef(e, spell, ident, coder=tex):
