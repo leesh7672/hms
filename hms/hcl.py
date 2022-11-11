@@ -55,7 +55,7 @@ def textify(e, coder=tex):
     total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     for child in e:
         if child.tag == 'xp':
-            total += "\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
+            total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
             temp = textify(child, coder)
             level = 1
