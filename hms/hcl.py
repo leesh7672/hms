@@ -45,6 +45,8 @@ def xp(e):
         text += child_text
         formula += child_formula
     formula += "]"
+    if len(children) == 0:
+        return "[{} [……, roof]]".format(categories[category] + "組")
     if "roof" in e.attrib:
         if e.attrib["roof"] == "yes":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
