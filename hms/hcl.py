@@ -60,34 +60,22 @@ def xp(e):
     return category, text, formula
 def textify(e, coder=tex):
     total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
-    beforehand = False
     for child in e:
-        if child.tag == 'sample':
-            total += '例曰、{}'.format(textify(child))
-            beforehand = False
-        elif child.tag == 'also':
-            temp = textify(child, coder)
-            total += '（又曰、{}）'.format(temp)
-            beforehand = False
-        elif child.tag == 'xp':
+        if child.tag == 'xp':
             total += "\\\\\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
-            beforehand = False
         elif child.tag == 'quote':
             temp = textify(child, coder)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '“{}”'.format(temp)
+                total += '『{}』”'.format(temp)
             elif level >= 2:
-                total += '‘{}’'.format(temp)
-            beforehand = False
+                total += '「{}」'.format(temp)
         elif child.tag == 'bold':
             total +=coder.bold(textify(child, coder))
-            beforehand = False
         elif child.tag == 'cancel':
             total +=coder.cancel(textify(child, coder))
-            beforehand = False
         elif child.tag == 'ref':
             ident = child.attrib['identifier']
             (tr, f) = search(ident)
@@ -102,7 +90,6 @@ def textify(e, coder=tex):
                 if child0.tag == 'spell':
                     notation = coder.bold(child0.text) + coder.superscript(num)
             total += notation
-            beforehand = False
         total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
     return total.strip()
 
