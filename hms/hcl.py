@@ -78,7 +78,7 @@ def textify(e, coder=tex):
         elif child.tag == 'bold':
             total +="\\textbf{{{}}}".format(textify(child))
         elif child.tag == 'cancel':
-            total +="\\underline{{{}}}".coder.cancel(textify(child))
+            total +="\\cancel{{{}}}".format(textify(child))
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'ref':
