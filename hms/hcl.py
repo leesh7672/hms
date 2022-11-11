@@ -62,7 +62,10 @@ def xp(e, default_mode="auto"):
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
     return category, text, formula
 def textify(e):
-    total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
+    if e.text is not None:
+        total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
+    else:
+        total = ""
     for child in e:
         if child.tag == 'xp':
             total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
