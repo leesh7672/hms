@@ -25,7 +25,7 @@ def xp(e):
             children += [xp(child)]
         if child.tag == "xp-text":
             xp_text = textify(child)
-            children += [(child.attrib['category'], xp_text, f"[{categories[category]}組 [{xp_text}, roof]]")]
+            children += [(child.attrib['category'], xp_text, f"[{categories[child.attrib[category]]}組 [{xp_text}, roof]]")]
         elif child.tag == "xbar":
             grandchildren = []
             xbar_text = ""
@@ -35,13 +35,13 @@ def xp(e):
                     grandchildren += [xp(grandchild)]
                 elif grandchild.tag == "xp-text":
                     xp_text = textify(grandchild)
-                    grandchildren += [(grandchild.attrib['category'], xp_text, f"[{categories[category]}組 [{xp_text}, roof]]")]
+                    grandchildren += [(grandchild.attrib['category'], xp_text, f"[{categories[grandchild.attrib[category]]}組 [{xp_text}, roof]]")]
                 elif grandchild.tag == "x-text":
                     spell = textify(grandchild)
-                    grandchildren += [(category, spell, f"[{categories[category]} [{spell}]]")]
+                    grandchildren += [(category, spell, f"[{categories[grandchild.attrib[category]]} [{spell}]]")]
                 elif grandchild.tag == "x-zero":
                     spell = "∅"
-                    grandchildren += [(category, spell, f"[{categories[category]} [{spell}]]")]
+                    grandchildren += [(category, spell, f"[{categories[grandchild.attrib[category]]} [{spell}]]")]
             for grandchild in grandchildren:
                 (_, x_spell, x_formula) = grandchild
                 xbar_text += x_spell
