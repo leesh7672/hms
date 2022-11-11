@@ -169,11 +169,6 @@ class entry:
         self.values =values
     def index_spell(self):
         return _spell(self.values)
-def _work(q, p):
-        try:
-            q.put(result)
-        except Exception as e:
-            print('An error has been occurred in {}'.format(p))
 def collect_entries(code=tex):
         results = []
         for (path, dir, files) in os.walk('entries'):
