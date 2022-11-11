@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-from lxml import etree
-import os, uuid
-from operator import methodcaller, itemgetter, mul
+import os
+import uuid
+from operator import itemgetter, methodcaller, mul
+
 from cihai.core import Cihai
+from lxml import etree
+
 c = Cihai()
 
-import hms.tex as tex
 import hms.html as html
+import hms.tex as tex
 
 parser = etree.XMLParser(remove_blank_text=False)
 
