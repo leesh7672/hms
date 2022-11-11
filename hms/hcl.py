@@ -25,7 +25,7 @@ def xp(e):
             children += [xp(child)]
         if child.tag == "xp-text":
             xp_text = textify(child)
-            children += [(child.attr['category'], xp_text, f"[{categories[category]}組 [{xp_text}]]")]
+            children += [(child.attr['category'], xp_text, f"[{categories[category]}組 [{xp_text}, roof]]")]
         elif child.tag == "xbar":
             grandchildren = []
             xbar_text = ""
@@ -35,9 +35,12 @@ def xp(e):
                     grandchildren += [xp(grandchild)]
                 elif grandchild.tag == "xp-text":
                     xp_text = textify(child)
-                    children += [(grandchild.attr['category'], xp_text, f"[{categories[category]}組 [{xp_text}]]")]
-                elif grandchild.tag == "x":
+                    children += [(grandchild.attr['category'], xp_text, f"[{categories[category]}組 [{xp_text}, roof]]")]
+                elif grandchild.tag == "x-text":
                     spell = textify(grandchild)
+                    grandchildren += [(category, spell, f"[{category} [{spell}]]")]
+                elif grandchild.tag == "x-zero":
+                    spell = "∅"
                     grandchildren += [(category, spell, f"[{category} [{spell}]]")]
             for grandchild in grandchildren:
                 (_, x_spell, x_formula) = grandchild
@@ -86,11 +89,11 @@ def textify(e, coder=tex):
             elif level >= 2:
                 total += '‘{}’'.format(temp)
             beforehand = False
-        elif child.tag == 'b':
+        elif child.tag == 'bold':
             total +=coder.bold(textify(child, coder))
             beforehand = False
-        elif child.tag == 'self':
-            total +=coder.bold()
+        elif child.tag == 'cancel':
+            total +=coder.cancel(textify(child, coder))
             beforehand = False
         elif child.tag == 'ref':
             ident = child.attrib['identifier']

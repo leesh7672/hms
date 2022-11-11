@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+def cancel(txt):
+    return "\\cancel{{{}}}".format(txt)
+
 def bold(txt):
     return "\\textcolor{{deepgold}}{{{}}}".format(txt)
 
