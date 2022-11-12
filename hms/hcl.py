@@ -94,7 +94,7 @@ def textify(e):
                 num = int(root.attrib['index'])
             if 'ispell' in root.attrib.keys():
                 spell = int(root.attrib['spell'])
-            notation = "\\textbf{{{}}}\\textsuperscript{{\\rotatebox{{90}}{{{}}}}}".format(spell, num)
+            notation = "\\textbf{{{}}}\\textsuperscript{{{}}}".format(spell, num)
             total += notation
         if child.tail is not None:
             total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
