@@ -169,22 +169,18 @@ def scanxml(tree):
         spell = root.attrib["spell"]
         definitions = [scandef(root, spell, ident)]
     return (root, num, spell, ident, notation, definitions, cites)
-def _spell(x, num):
+def _spell(x):
     global c
     skip = False
     respell = ''
     for ch in x:
-        if ch == '（':
-            skip = True
         if not skip:
             respell  = respell + x
-        if ch == '）':
-            skip = False
-    total = [0]
+    total = []
     for ch in respell:
         kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
         total += [int(kangxi[0]), int(kangxi[1])]
-    return total + [0, 0, int(num)]
+    return total + [0, 0]
 def update():
     for (path, dir, files) in os.walk('./'):
         for filename in files:
@@ -206,7 +202,7 @@ def collect_entries(code=tex):
                 if ext == '.xml':
                     print(p)
                     results += [scanxml(etree.parse(p))]
-        return sorted(results, key=lambda x: _spell(x[4], x[1]))
+        return sorted(results, key=lambda x: _spell(x[4]) + [x[1]])
 
 def build():
     results = collect_entries(tex)
