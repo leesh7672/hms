@@ -101,7 +101,7 @@ def textify(e):
             if 'index' in root.attrib.keys():
                 num = int(root.attrib['index'])
             if 'spell' in root.attrib.keys():
-                spell = int(root.attrib['spell'])
+                spell = root.attrib['spell']
             notation = "\\textbf{{{}}}\\textsuperscript{{{}}}".format(spell, num)
             total += notation
         if child.tail is not None:
