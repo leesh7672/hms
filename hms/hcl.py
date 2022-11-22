@@ -70,7 +70,7 @@ def textify(e):
         if child.tag == 'break':
             total += "\\linebreak"
         elif child.tag == 'xp':
-            total += "\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
+            total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
             temp = textify(child)
             level = 1
