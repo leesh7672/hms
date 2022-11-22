@@ -61,14 +61,19 @@ def xp(e, default_mode="auto"):
         if mode == "autoroof":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
     return category, text, formula
+fullpunct = replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e):
     if e.text is not None:
-        total = e.text.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
+        total = e.text.fullpunct
     else:
         total = ""
     for child in e:
-        if child.tag == 'break':
-            total += "\\linebreak"
+        if child.tag == 'samp':
+            if 'source' in child.attrib:
+                source = child.attrib['source']
+            else:
+                source = "例"
+            total += "\\linebreak{{}}{{{1}曰『{2}』}}".format(source, textify(child))
         elif child.tag == 'xp':
             total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
@@ -99,7 +104,7 @@ def textify(e):
             notation = "\\textbf{{{}}}\\textsuperscript{{{}}}".format(spell, num)
             total += notation
         if child.tail is not None:
-            total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '，').replace('(', '（').replace(')', '）')
+            total += child.tail.fullpunct
     return total.strip()
 
 def scandef(e, spell, ident, coder=tex):
