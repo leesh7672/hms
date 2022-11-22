@@ -149,7 +149,7 @@ def updatexml(path):
         if child.tag == 'usage' and not ('index' in child.attrib.keys()):
             child.set('index', '1')
     ident = root.attrib['identifier']
-    etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
+    etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='big5')
 def scanxml(tree):
     root = tree.getroot()
     num = root.attrib['index']
