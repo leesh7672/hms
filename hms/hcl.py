@@ -61,10 +61,11 @@ def xp(e, default_mode="auto"):
         if mode == "autoroof":
             formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
     return category, text, formula
-fullpunct = replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
+def fullpunct(half: str):
+    return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e):
     if e.text is not None:
-        total = e.text.fullpunct
+        total = fullpunct(e.text)
     else:
         total = ""
     for child in e:
@@ -104,7 +105,7 @@ def textify(e):
             notation = "\\textbf{{{}}}\\textsuperscript{{{}}}".format(spell, num)
             total += notation
         if child.tail is not None:
-            total += child.tail.fullpunct
+            total += fullpunct(child.tail)
     return total.strip()
 
 def scandef(e, spell, ident, coder=tex):
