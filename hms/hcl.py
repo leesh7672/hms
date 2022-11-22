@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'v': "外動字", 'verb': "動字", 'a': "形字", 'coverb': "介字", 'det': "指字", 'noun':"名字", 'cl': "量字", 'num':"數字"}
+categories = {'comp':"成字", 'infl':"助字", 'adv':"副字", 'v': "外動字", 'verb': "動字", 'adj': "形字", 'coverb': "介字", 'det': "指字", 'noun':"名字", 'cl': "量字", 'num':"數字"}
 
 def xp(e, default_mode="auto"):
     category = e.attrib['category']
