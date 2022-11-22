@@ -100,7 +100,7 @@ def textify(e):
             notation = ''
             if 'index' in root.attrib.keys():
                 num = int(root.attrib['index'])
-            if 'ispell' in root.attrib.keys():
+            if 'spell' in root.attrib.keys():
                 spell = int(root.attrib['spell'])
             notation = "\\textbf{{{}}}\\textsuperscript{{{}}}".format(spell, num)
             total += notation
