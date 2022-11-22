@@ -178,7 +178,7 @@ def _spell(x):
             respell  = respell + x
     total = []
     for ch in respell:
-        kangxi =  c.unihan.lookup_char(ch).first().kKangXi.split('.')
+        kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
         total += [int(kangxi[0]), int(kangxi[1])]
     return total + [0, 0]
 def update():
@@ -202,7 +202,7 @@ def collect_entries(code=tex):
                 if ext == '.xml':
                     print(p)
                     results += [scanxml(etree.parse(p))]
-        return sorted(results, key=lambda x: _spell(x[4]) + [x[1]])
+        return sorted(results, key=lambda x: _spell(x[2]) + [x[1]])
 
 def build():
     results = collect_entries(tex)
