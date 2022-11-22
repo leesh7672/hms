@@ -178,7 +178,7 @@ def _spell(x):
             respell  = respell + x
     total = []
     for ch in respell:
-        kangxi =  c.unihan.lookup_char(ch).first().kRSKangXi.split('.')
+        kangxi =  c.unihan.lookup_char(ch).first().kKangXi.split('.')
         total += [int(kangxi[0]), int(kangxi[1])]
     return total + [0, 0]
 def update():
