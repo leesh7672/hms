@@ -97,7 +97,7 @@ def textify(e):
             notation = "\\textbf{{{}}}\\textsuperscript{{{}}}".format(spell, num)
             total += notation
         if child.tail is not None:
-            total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）')
+            total += child.tail.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '，').replace('(', '（').replace(')', '）')
     return total.strip()
 
 def scandef(e, spell, ident, coder=tex):
