@@ -71,10 +71,10 @@ def textify(e):
     for child in e:
         if child.tag == 'sample':
             category = child.attrib['category']
-            total += "例曰：\\textbf{{〔\\textsubscript{{{}}}}}{}\\textbf{{〕}}。".format(categories[category]+ "組", textify(child))
+            total += "例曰：\\textbf{{［\\textsubscript{{{}}}}}{}\\textbf{{］}}。".format(categories[category]+ "組", textify(child))
         elif child.tag == 'bracket':
             category = child.attrib['category']
-            total += "\\textbf{{〔\\textsubscript{{{}}}}}{}\\textbf{{〕}}".format(categories[category]+ "組", textify(child))
+            total += "\\textbf{{［\\textsubscript{{{}}}}}{}\\textbf{{］}}".format(categories[category]+ "組", textify(child))
         elif child.tag == 'xp':
             total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
