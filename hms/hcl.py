@@ -69,12 +69,9 @@ def textify(e):
     else:
         total = ""
     for child in e:
-        if child.tag == 'samp':
-            if 'source' in child.attrib:
-                source = child.attrib['source']
-            else:
-                source = "例"
-            total += "\\linebreak{{}}{{{1}曰『{2}』}}".format(source, textify(child))
+        if child.tag == 'sample':
+            category = child.attrib['category']
+            total += "\\linebreak{{}}{{{1}曰『{2}』}}".format(categories[category]+ "組", textify(child))
         elif child.tag == 'xp':
             total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
         elif child.tag == 'quote':
