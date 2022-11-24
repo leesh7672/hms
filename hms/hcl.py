@@ -35,7 +35,7 @@ def textify(e):
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '『{}』”'.format(temp)
+                total += '『{}』'.format(temp)
             elif level >= 2:
                 total += '「{}」'.format(temp)
         elif child.tag == 'bold':
