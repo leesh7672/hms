@@ -41,7 +41,7 @@ def textify(e):
         elif child.tag == 'bold':
             total +="\\textbf{{{}}}".format(textify(child))
         elif child.tag == 'cancel':
-            total +="\\sout{{{}}}".format(textify(child))
+            total +="\\xout{{{}}}".format(textify(child))
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'ref':
