@@ -17,50 +17,6 @@ def generateIdent():
 
 categories = {'c':"成字", 'att':"", 't':"助字", 'adv':"定字", 'lv': "動字", 'v': "靜字", 'cov': "介字", 'd': "指字", 'n':"名字", 'q': "量字", 'acq':"數字"}
 
-def xp(e, default_mode="auto"):
-    category = e.attrib['category']
-    children = []
-    if "mode" in e.attrib:
-        mode = e.attrib["mode"]
-    else:
-        mode = default_mode
-    if mode == "roof":
-        text = textify(e)
-        if text == "":
-            text = "…"
-        formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
-    elif mode == "auto" or mode=="autoroof":
-        for child in e:
-            if child.tag == "xp":
-                children += [xp(child, "roof")]
-            elif child.tag == "xbar":
-                grandchildren = []
-                xbar_text = ""
-                xbar_formula = f"[{categories[category]}片組 "
-                for grandchild in child:
-                    if grandchild.tag == "xp":
-                        grandchildren += [xp(grandchild, "roof")]
-                    elif grandchild.tag == "x":
-                        spell = textify(grandchild)
-                        grandchildren += [(category, spell, f"[{categories[category]} [{spell}]]")]
-                for grandchild in grandchildren:
-                    (_, x_spell, x_formula) = grandchild
-                    xbar_text += x_spell
-                    xbar_formula += " " + x_formula
-                children += [(category, xbar_text, xbar_formula+"]")]
-        text = ""
-        formula =  f"[{categories[category]}組"
-        for child in children:
-            (_, child_text, child_formula) = child
-            text += child_text
-            formula += child_formula
-        formula += "]"
-        if text == "":
-            text  = "…"
-            mode = "autoroof"
-        if mode == "autoroof":
-            formula = "[{} [{}, roof]]".format(categories[category] + "組", text)
-    return category, text, formula
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e):
@@ -70,12 +26,9 @@ def textify(e):
         total = ""
     for child in e:
         if child.tag == 'sample':
-            category = child.attrib['category']
-            total += "例曰：\\textbf{{「\\textsubscript{{{}}}}}{}\\textbf{{」}}。".format(categories[category]+ "組", textify(child))
+            total += "例曰：「{}」。".format(textify(child))
         elif child.tag == 'bracket':
-            total += textify(child)
-        elif child.tag == 'xp':
-            total += "\\linebreak\\begin{{forest}}{}\\end{{forest}}".format(xp(child)[2])
+            total += "〔{}〕".textify(child)
         elif child.tag == 'quote':
             temp = textify(child)
             level = 1
@@ -88,7 +41,7 @@ def textify(e):
         elif child.tag == 'bold':
             total +="\\textbf{{{}}}".format(textify(child))
         elif child.tag == 'cancel':
-            total +="\\cancel{{{}}}".format(textify(child))
+            total +="\\sout{{{}}}".format(textify(child))
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'ref':
