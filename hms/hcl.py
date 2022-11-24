@@ -28,7 +28,7 @@ def textify(e):
         if child.tag == 'sample':
             total += "例曰：「{}」。".format(textify(child))
         elif child.tag == 'bracket':
-            total += "〔{}〕".textify(child)
+            total += "〔{}〕".format(textify(child))
         elif child.tag == 'quote':
             temp = textify(child)
             level = 1
