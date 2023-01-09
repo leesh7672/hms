@@ -77,7 +77,14 @@ def scandef(e, spell, ident, coder=tex):
         category =""
         sp = ""
     if 'argument' in e.attrib.keys():
-        argument = "{}冠以{}組".format(sp, categories[e.attrib['argument']])
+        if 'a-movement' in e.attrib.keys():
+            if e.attrib['a-movement'] == "yes":
+                oim = "補部之內"
+            else:
+                oim = ""
+        else:
+            oim = ""
+        argument = "{}冠以{}{}組".format(sp, oim, categories[e.attrib['argument']])
         sp = "，"
     else:
         argument = ""
