@@ -78,7 +78,7 @@ def scandef(e, spell, ident, coder=tex):
         sp = ""
     if 'argument' in e.attrib.keys():
         if 'a-movement' in e.attrib.keys():
-            if e.attrib['a-movement'] == "yes":
+            if e.attrib['a-movement'] == "Yes":
                 oim = "補部之內"
             else:
                 oim = ""
