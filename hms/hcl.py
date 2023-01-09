@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'c':"成詞", 'att':"副助詞", 't':"助詞", 'adv':"副述詞", 'lv': "述詞", 'v': "動詞", 'cov': "介詞", 'd': "指詞", 'n':"名詞", 'q': "量詞", 'acq':"數詞"}
+categories = {'Comp':"成詞", 'Infl':"助詞", 'Adv':"副詞", 'Lv': "輕動詞", 'V': "動詞", 'Cov': "介詞", 'Det': "指詞", 'N':"名詞", 'Cl': "量詞", 'Num':"副量詞"}
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
@@ -65,19 +65,29 @@ def scandef(e, spell, ident, coder=tex):
     antonyms = []
     samples = []
     explanation = ''
+    argument = ''
     if not('index' in e.attrib.keys()):
         num = 1
     else:
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-        sp = '・'
+        sp = "，"
     else:
-        category = ''
-        sp = ''
+        category =""
+        sp = ""
+    if 'argument' in e.attrib.keys():
+        argument = "{}冠以{}組".format(sp, categories[e.attrib['argument']])
+        sp = "，"
+    else:
+        argument = ""
+    if 'complement' in e.attrib.keys():
+        complement = "{}補以{}組".format(sp, categories[e.attrib['complement']])
+    else:
+        complement = ""
     counter = 0
     explanation=textify(e)
-    return (num, category.replace("PRIM", ''), synonyms, antonyms, samples, explanation)
+    return (num, category + argument + complement, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
         for filename in files:
