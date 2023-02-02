@@ -65,36 +65,17 @@ def scandef(e, spell, ident, coder=tex):
     antonyms = []
     samples = []
     explanation = ''
-    argument = ''
     if not('index' in e.attrib.keys()):
         num = 1
     else:
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
         category = categories[e.attrib['category']]
-        sp = "，"
     else:
         category =""
-        sp = ""
-    if 'argument' in e.attrib.keys():
-        if 'a-movement' in e.attrib.keys():
-            if e.attrib['a-movement'] == "Yes":
-                oim = "補部之內"
-            else:
-                oim = ""
-        else:
-            oim = ""
-        argument = "{}冠以{}{}組".format(sp, oim, categories[e.attrib['argument']])
-        sp = "，"
-    else:
-        argument = ""
-    if 'complement' in e.attrib.keys():
-        complement = "{}補以{}組".format(sp, categories[e.attrib['complement']])
-    else:
-        complement = ""
     counter = 0
     explanation=textify(e)
-    return (num, category + argument + complement, synonyms, antonyms, samples, explanation)
+    return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
         for filename in files:
