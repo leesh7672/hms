@@ -26,7 +26,7 @@ def textify(e):
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰：『{}』。".format(textify(child))
+            total += "例曰：「{}」。".format(textify(child))
         elif child.tag == 'bracket':
             total += "〔{}〕".format(textify(child))
         elif child.tag == 'quote':
@@ -35,9 +35,9 @@ def textify(e):
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '『{}』'.format(temp)
-            elif level >= 2:
                 total += '「{}」'.format(temp)
+            elif level >= 2:
+                total += '『{}』'.format(temp)
         elif child.tag == 'bold':
             total +="\\textbf{{{}}}".format(textify(child))
         elif child.tag == 'cancel':
