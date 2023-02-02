@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'Comp':"成詞", 'Infl':"助詞", 'Adv':"副詞", 'V': "動詞", 'Cov': "介詞", 'Det': "指詞", 'N':"名詞", 'Cl': "量詞", 'Num':"數詞"}
+categories = {'Comp':"成詞", 'Infl':"助詞", 'Adj':"定詞", 'Adv':"狀詞", 'V': "謂詞", 'P': "介詞", 'Det': "指詞", 'N':"名詞", 'Cl': "量詞", 'Num':"數詞"}
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
@@ -26,7 +26,7 @@ def textify(e):
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰：「{}」。".format(textify(child))
+            total += "例曰：『{}』。".format(textify(child))
         elif child.tag == 'bracket':
             total += "〔{}〕".format(textify(child))
         elif child.tag == 'quote':
