@@ -15,7 +15,15 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'C':"熟", 'I':"助", 'A':"副", 'V': "謂", 'P': "介", 'D': "指", 'N':"名", 'Q': "量", 'Num':"數", 'Co': "連"}
+categories = {'C':"熟", 'T':"助", 'A':"副", 'v': "謂", 'V': "述", 'P': "介", 'D': "指", 'N':"名", 'Q': "量", 'Num':"數"}
+
+def scancategory(expr):
+    if expr[0] == "*":
+        strength = "重"
+        expr = expr[1:]
+    else:
+        strength = ""
+    return strength, "{}詞".format(expr)
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
@@ -70,12 +78,21 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
-        category = categories[e.attrib['category']]
+        category = "〔{}詞〕".format(categories[e.attrib['category']])
     else:
         category =""
-    counter = 0
+    if 'complement' in e.attrib.keys():
+        if 'argument' in e.attrib.keys():
+            mstrength, mcategory = scancategory(e.attrib['argument'])
+            argument = "、然後{}組{}與{}竝合".format(mcategory, mstrength)
+        else:
+            argument = ""
+        mstrength, mcategory = scancategory(e.attrib['argument'])
+        formula = "（應與{}組{}竝合{}）".format(mcategory, mstrength, argument)
+    else:
+        formula = ""
     explanation=textify(e)
-    return (num, category, synonyms, antonyms, samples, explanation)
+    return (num, category+formula, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
         for filename in files:
