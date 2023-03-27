@@ -87,7 +87,7 @@ def scandef(e, spell, ident, coder=tex):
             argument = "，然後與{}組{}竝合".format(mcategory, mstrength)
         else:
             argument = ""
-        (mstrength, mcategory) = scancategory(e.attrib['argument'])
+        (mstrength, mcategory) = scancategory(e.attrib['complement'])
         formula = "（應與{}組{}竝合{}）".format(mcategory, mstrength, argument)
     else:
         formula = ""
