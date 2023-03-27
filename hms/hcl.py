@@ -84,7 +84,7 @@ def scandef(e, spell, ident, coder=tex):
     if 'complement' in e.attrib.keys():
         if 'argument' in e.attrib.keys():
             mstrength, mcategory = scancategory(e.attrib['argument'])
-            argument = "、然後{}組{}與{}竝合".format(mcategory, mstrength)
+            argument = "，然後{}組{}與{}竝合".format(mcategory, mstrength)
         else:
             argument = ""
         mstrength, mcategory = scancategory(e.attrib['argument'])
