@@ -21,7 +21,7 @@ def scancategory(expr):
         expr = expr[1:]
     else:
         strength = ""
-    return strength, "{}詞".format(expr)
+    return (strength, "{}詞".format(expr))
 
 categories = {'C': "成", 'I': "助", 'A': "副", 'V': "述", 'v': "謂", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
 
