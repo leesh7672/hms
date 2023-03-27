@@ -17,7 +17,7 @@ def generateIdent():
 
 def scancategory(expr):
     if expr[0] == "*":
-        strength = "重"
+        strength = "遷移"
         expr = expr[1:]
     else:
         strength = ""
@@ -83,11 +83,11 @@ def scandef(e, spell, ident, coder=tex):
         category =""
     if 'complement' in e.attrib.keys():
         if 'argument' in e.attrib.keys():
-            mstrength, mcategory = scancategory(e.attrib['argument'])
-            argument = "，然後{}組{}與{}竝合".format(mcategory, mstrength)
+            (mstrength, mcategory) = scancategory(e.attrib['argument'])
+            argument = "，然後與{}組{}竝合".format(mcategory, mstrength)
         else:
             argument = ""
-        mstrength, mcategory = scancategory(e.attrib['argument'])
+        (mstrength, mcategory) = scancategory(e.attrib['argument'])
         formula = "（應與{}組{}竝合{}）".format(mcategory, mstrength, argument)
     else:
         formula = ""
