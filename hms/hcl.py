@@ -84,11 +84,18 @@ def scandef(e, spell, ident, coder=tex):
     if 'complement' in e.attrib.keys():
         if 'argument' in e.attrib.keys():
             (mstrength, mcategory) = scancategory(e.attrib['argument'])
-            argument = "，然後與{}組{}竝合".format(mcategory, mstrength)
+            if e.attrib['category'] == "T":
+                opt = "俱"
+            else:
+                opt = ""
+            argument = "，{}在{}組{}下".format(opt, mcategory, mstrength)
         else:
             argument = ""
         (mstrength, mcategory) = scancategory(e.attrib['complement'])
-        formula = "（應與{}組{}竝合{}）".format(mcategory, mstrength, argument)
+        if e.attrib['category'] == "T":
+            formula = "（應{}組{}下{}）".format(mcategory, mstrength, argument)
+        else:
+            formula = "（應{}組{}上{}）".format(mcategory, mstrength, argument)
     else:
         formula = ""
     explanation=textify(e)
