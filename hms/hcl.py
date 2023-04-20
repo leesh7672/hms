@@ -38,7 +38,7 @@ def textify(e, en):
         elif child.tag == 'bracket':
             total += "〔{}〕".format(textify(child, en))
         elif child.tag == 'self':
-            total += en.attr['spell']
+            total += en.attrib['spell']
         elif child.tag == 'quote':
             temp = textify(child, en)
             level = 1
@@ -101,7 +101,7 @@ def scandef(e, spell, ident, coder=tex):
             formula = "（應{}{}組上{}）".format(mstrength, mcategory, argument)
     else:
         formula = ""
-    explanation=textify(e)
+    explanation=textify(e, e)
     return (num, category+formula, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
