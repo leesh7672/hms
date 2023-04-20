@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'C': "成", 'I': "助", 'A': "副", 'V': "述", 'v': "謂", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
+categories = {'C': "成", 'I': "助", 'Adv': "副", 'V': "述", 'v': "謂", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
 
 def scancategory(expr):
     if expr[0] == "*":
@@ -27,18 +27,20 @@ def scancategory(expr):
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
-def textify(e):
+def textify(e, en):
     if e.text is not None:
         total = fullpunct(e.text)
     else:
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰：「{}」。".format(textify(child))
+            total += "例曰：「{}」。".format(textify(child, en))
         elif child.tag == 'bracket':
-            total += "〔{}〕".format(textify(child))
+            total += "〔{}〕".format(textify(child, en))
+        elif child.tag == 'self':
+            total += en.attr['spell']
         elif child.tag == 'quote':
-            temp = textify(child)
+            temp = textify(child, en)
             level = 1
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
@@ -47,9 +49,9 @@ def textify(e):
             elif level >= 2:
                 total += '『{}』'.format(temp)
         elif child.tag == 'bold':
-            total +="\\textbf{{{}}}".format(textify(child))
+            total +="\\textbf{{{}}}".format(textify(child, en))
         elif child.tag == 'cancel':
-            total +="\\cancel{{{}}}".format(textify(child))
+            total +="\\cancel{{{}}}".format(textify(child, en))
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'ref':
@@ -78,7 +80,8 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
-        category = "〔{}詞〕".format(categories[e.attrib['category']])
+        (mstrength, mcategory) = scancategory(e.attrib['category'])
+        category = "〔{}{}詞〕".format(mstrength, mcategory)
     else:
         category =""
     if 'complement' in e.attrib.keys():
@@ -93,9 +96,9 @@ def scandef(e, spell, ident, coder=tex):
             argument = ""
         (mstrength, mcategory) = scancategory(e.attrib['complement'])
         if e.attrib['category'] == "T":
-            formula = "（應{}組{}下{}）".format(mcategory, mstrength, argument)
+            formula = "（應{}{}組下{}）".format(mstrength, mcategory, argument)
         else:
-            formula = "（應{}組{}上{}）".format(mcategory, mstrength, argument)
+            formula = "（應{}{}組上{}）".format(mstrength, mcategory, argument)
     else:
         formula = ""
     explanation=textify(e)
