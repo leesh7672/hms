@@ -81,7 +81,7 @@ def scandef(e, spell, ident, coder=tex):
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
         (mstrength, mcategory) = scancategory(e.attrib['category'])
-        category = "〔{}{}詞〕".format(mstrength, mcategory)
+        category = "〔{}{}〕".format(mstrength, mcategory)
     else:
         category =""
     if 'complement' in e.attrib.keys():
