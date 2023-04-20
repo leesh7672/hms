@@ -38,7 +38,7 @@ def textify(e, en):
         elif child.tag == 'bracket':
             total += "〔{}〕".format(textify(child, en))
         elif child.tag == 'self':
-            total += en.attrib['spell']
+            total += "\\textbf{{{}}}".format(en.attrib['spell'])
         elif child.tag == 'quote':
             temp = textify(child, en)
             level = 1
