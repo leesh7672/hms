@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'C': "成", 'I': "助", 'Adv': "副", 'V': "述", 'v': "謂", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
+categories = {'C': "成", 'I': "助", 'Adv': "副", 'V': "述", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
 
 def scancategory(expr):
     if expr[0] == "*":
