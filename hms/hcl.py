@@ -15,7 +15,7 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'C': "成", 'I': "助", 'Adv': "副", 'V': "述", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
+categories = {'C': "熟", 'T': "候", 'Adv': "副", 'V': "述", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
 
 def scancategory(expr):
     if expr[0] == "*":
@@ -34,11 +34,7 @@ def textify(e, en):
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰：「{}」。".format(textify(child, en))
-        elif child.tag == 'bracket':
-            total += "〔{}〕".format(textify(child, en))
-        elif child.tag == 'self':
-            total += "\\textcolor{{sg}}{{\\textbf{{{}}}}}".format(en.attrib['spell'])
+            total += "例曰：「{}」".format(textify(child, en))
         elif child.tag == 'quote':
             temp = textify(child, en)
             level = 1
@@ -84,23 +80,6 @@ def scandef(e, spell, ident, coder=tex):
         category = "〔{}{}〕".format(mstrength, mcategory)
     else:
         category =""
-    if 'complement' in e.attrib.keys():
-        if 'argument' in e.attrib.keys():
-            (mstrength, mcategory) = scancategory(e.attrib['argument'])
-            if e.attrib['category'] == "T":
-                opt = "俱"
-            else:
-                opt = ""
-            argument = "，{}在{}組{}下".format(opt, mcategory, mstrength)
-        else:
-            argument = ""
-        (mstrength, mcategory) = scancategory(e.attrib['complement'])
-        if e.attrib['category'] == "T":
-            formula = "（應{}{}組下{}）".format(mstrength, mcategory, argument)
-        else:
-            formula = "（應{}{}組上{}）".format(mstrength, mcategory, argument)
-    else:
-        formula = ""
     explanation=textify(e, e)
     return (num, category+formula, synonyms, antonyms, samples, explanation)
 def search(ident):
