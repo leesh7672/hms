@@ -81,7 +81,7 @@ def scandef(e, spell, ident, coder=tex):
     else:
         category =""
     explanation=textify(e, e)
-    return (num, category+formula, synonyms, antonyms, samples, explanation)
+    return (num, category, synonyms, antonyms, samples, explanation)
 def search(ident):
     for (path, dir, files) in os.walk('entries'):
         for filename in files:
