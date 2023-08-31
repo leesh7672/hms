@@ -23,7 +23,7 @@ def scancategory(expr):
         expr = expr[1:]
     else:
         strength = ""
-    return (strength, "{}詞".format(categories[expr]))
+    return (strength, "{}字".format(categories[expr]))
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
