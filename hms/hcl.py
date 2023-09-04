@@ -51,7 +51,7 @@ def textify(e, en):
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'self':
-            total += "\\textcolor{{c2}}{{\\textbf{{{}}}}}".format(e.attrib['spell'])
+            total += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(e.attrib['spell'])
         elif child.tag == 'ref':
             ident = child.attrib['identifier']
             (tr, f) = search(ident)
