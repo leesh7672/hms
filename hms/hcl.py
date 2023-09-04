@@ -50,6 +50,8 @@ def textify(e, en):
             total +="\\cancel{{{}}}".format(textify(child, en))
         elif child.tag == 'zero':
             total += "∅"
+        elif child.tag == 'self':
+            total += "".format(e.attrib['spell'])
         elif child.tag == 'ref':
             ident = child.attrib['identifier']
             (tr, f) = search(ident)
