@@ -62,7 +62,7 @@ def textify(e, en):
                 num = int(root.attrib['index'])
             if 'spell' in root.attrib.keys():
                 spell = root.attrib['spell']
-            notation = "\\textbf{{{}}}\\textsuperscript{{\\Rensuji{{{}}}}}".format(spell, num)
+            notation = "\\textcolor{{c3}}{{\\textbf{{{}}}}}\\textsuperscript{{\\Rensuji{{{}}}}}".format(spell, num)
             total += notation
         if child.tail is not None:
             total += fullpunct(child.tail)
