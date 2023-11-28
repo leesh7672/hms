@@ -16,19 +16,36 @@ def generateIdent():
     return str(uuid.uuid4())
 
 categories = {
-    'N':"人物",
-    'Cl':"單位",
-    'D':"指稱",
-    'Q':"分量",
-    'P':"方面",
-    'V':"動靜",
-    'Vo':"事案",
-    'T':"時候",
-    'C':"語氣"}
+    'ADV':"副詞",
+    'A':"性詞",
+    'N':"名詞",
+    'CL':"量詞",
+    'D':"代詞",
+    'P':"介詞",
+    'V':"動詞",
+    'LV':"小動詞",
+    'T':"候詞",
+    'C':"氣詞"}
 
 def scancategory(expr):
     return categories[expr]
 
+def scanrule(e, spell):
+    r = ""
+    for child in e:
+        if child.tag == 'move-argument':
+            if r != '':
+                r += '＋'
+            r += "遷移{}組".format(scancategory(child.attrib[category]))
+        elif child.tag == 'argument':
+            if r != '':
+                r += '＋'
+            r += "{}組".format(scancategory(child.attrib[category]))
+        elif child.tag == 'self':
+            if r != '':
+                r += '＋'
+            r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
+    return "（{}）".format(r)
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e, en):
@@ -52,10 +69,12 @@ def textify(e, en):
             total +="\\textbf{{{}}}".format(textify(child, en))
         elif child.tag == 'cancel':
             total +="\\cancel{{{}}}".format(textify(child, en))
+        elif child.tag == 'format':
+            totla += scanrule(e, en.attrib['spell'])
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'self':
-            total += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(e.attrib['spell'])
+            total += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(en.attrib['spell'])
         elif child.tag == 'ref':
             ident = child.attrib['identifier']
             (tr, f) = search(ident)
