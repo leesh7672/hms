@@ -27,17 +27,17 @@ categories = {
     'v':"事案詞",
     'T':"時候詞",
     'C':"法式詞",
-    'QP':"分量詞詞組",
-    'AP':"性質詞詞組",
-    'NP':"號名詞詞組",
-    'NumP':"多少詞詞組",
-    'ClP':"品類詞詞組",
-    'DP':"指稱詞詞組",
-    'PP':"方面詞詞組",
-    'VP':"動靜詞詞組",
-    'vP':"事案詞詞組",
-    'TP':"時候詞詞組",
-    'CP':"法式詞詞組"
+    'QP':"分量詞組",
+    'AP':"性質詞組",
+    'NP':"號名詞組",
+    'NumP':"多少詞組",
+    'ClP':"品類詞組",
+    'DP':"指稱詞組",
+    'PP':"方面詞組",
+    'VP':"動靜詞組",
+    'vP':"事案詞組",
+    'TP':"時候詞組",
+    'CP':"法式詞組"
 }
 
 def scancategory(expr):
@@ -55,11 +55,6 @@ def scanrule(e, spell):
             if plus:
                 r += '＋'
             r += scanrule(child, spell)
-            plus = True
-        elif child.tag == "a-move":
-            if plus:
-                r += '＋'
-            r += "流離{}".format(scancategory(child.attrib["category"]))
             plus = True
         elif child.tag == "h":
             if plus:
