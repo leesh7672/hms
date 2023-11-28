@@ -33,16 +33,16 @@ def scancategory(expr):
 def scanrule(e, spell):
     r = ""
     for child in e:
-        if child.tag == 'move-argument':
-            if r != '':
+        if child.tag == "move-argument":
+            if r != "":
                 r += '＋'
-            r += "遷移{}組".format(scancategory(child.attrib[category]))
-        elif child.tag == 'argument':
-            if r != '':
+            r += "遷移{}組".format(scancategory(child.attrib["category"]))
+        elif child.tag == "argument":
+            if r != "":
                 r += '＋'
-            r += "{}組".format(scancategory(child.attrib[category]))
-        elif child.tag == 'self':
-            if r != '':
+            r += "{}組".format(scancategory(child.attrib["category"]))
+        elif child.tag == "self":
+            if r != "":
                 r += '＋'
             r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
     return "（{}）".format(r)
