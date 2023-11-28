@@ -32,19 +32,23 @@ def scancategory(expr):
 
 def scanrule(e, spell):
     r = ""
+    plus = False
     for child in e:
         if child.tag == "move-argument":
-            if r != "":
+            if plus:
                 r += '＋'
             r += "遷移{}組".format(scancategory(child.attrib["category"]))
+            plus = True
         elif child.tag == "argument":
-            if r != "":
+            if plus:
                 r += '＋'
             r += "{}組".format(scancategory(child.attrib["category"]))
+            plus = True
         elif child.tag == "self":
-            if r != "":
+            if plus:
                 r += '＋'
             r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
+            plus = True
     return "（{}）".format(r)
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
@@ -70,7 +74,7 @@ def textify(e, en):
         elif child.tag == 'cancel':
             total +="\\cancel{{{}}}".format(textify(child, en))
         elif child.tag == 'format':
-            total += scanrule(e, en.attrib['spell'])
+            total += scanrule(child, en.attrib['spell'])
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'self':
