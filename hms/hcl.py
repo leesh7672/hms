@@ -16,16 +16,27 @@ def generateIdent():
     return str(uuid.uuid4())
 
 categories = {
-    'ADV':"副詞",
-    'A':"性詞",
+    'Adv':"副詞",
+    'A':"形容詞",
     'N':"名詞",
-    'CL':"量詞",
+    'Cl':"量詞",
     'D':"指詞",
     'P':"介詞",
     'V':"動詞",
-    'LV':"小動詞",
-    'T':"候詞",
-    'C':"氣詞"}
+    'v':"外動詞",
+    'T':"時候詞",
+    'C':"語氣詞",
+    'AdvP':"副詞組",
+    'AP':"形容詞組",
+    'NP':"名詞組",
+    'ClP':"量詞組",
+    'DP':"指詞組",
+    'PP':"介詞組",
+    'VP':"動詞組",
+    'vP':"外動詞組",
+    'TP':"時候詞組",
+    'CP':"語氣詞組",
+}
 
 def scancategory(expr):
     return categories[expr]
@@ -34,22 +45,20 @@ def scanrule(e, spell):
     r = ""
     plus = False
     for child in e:
-        if child.tag == "move-argument":
+        if child.tag == "there":
             if plus:
                 r += '＋'
-            r += "遷移{}組".format(scancategory(child.attrib["category"]))
+            r += "{}".format(scancategory(child.attrib["category"]))
             plus = True
-        elif child.tag == "argument":
-            if plus:
-                r += '＋'
-            r += "{}組".format(scancategory(child.attrib["category"]))
-            plus = True
-        elif child.tag == "self":
+        elif child.tag == "here":
             if plus:
                 r += '＋'
             r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
             plus = True
-    return "（{}）".format(r)
+    if plus:
+        return "［{}：{}］".format(scancategory(child.attrib["category"]), r)
+    else:
+        return scancategory(child.attrib["category"])
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e, en):
