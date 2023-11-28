@@ -51,7 +51,7 @@ def scanrule(e, spell):
         if child.tag == "a":
             if plus:
                 r += '＋'
-            r += "{}".format(scancategory(child.attrib["category"]))
+            r += scanrule(child, spell)
             plus = True
         elif child.tag == "a-move":
             if plus:
