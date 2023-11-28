@@ -70,7 +70,7 @@ def textify(e, en):
         elif child.tag == 'cancel':
             total +="\\cancel{{{}}}".format(textify(child, en))
         elif child.tag == 'format':
-            totla += scanrule(e, en.attrib['spell'])
+            total += scanrule(e, en.attrib['spell'])
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'self':
