@@ -42,6 +42,9 @@ def scancategory(expr):
     return categories[expr]
 
 def scanrule(e, spell):
+    lab = ""
+    if "category" in e.attrib:
+        lab= "\\textsubscript{{{}}}".format(scancategory(child.attrib["category"]))
     r = ""
     plus = False
     for child in e:
@@ -61,7 +64,7 @@ def scanrule(e, spell):
             r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
             plus = True
     if plus:
-        return "［{}：{}］".format(scancategory(child.attrib["category"]), r)
+        return "［{}{}］".format(lab, r)
     else:
         return scancategory(child.attrib["category"])
 def fullpunct(half: str):
@@ -73,7 +76,7 @@ def textify(e, en):
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰：「{}」".format(textify(child, en))
+            total += "例曰，「{}」。".format(textify(child, en))
         elif child.tag == 'quote':
             temp = textify(child, en)
             level = 1
