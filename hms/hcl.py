@@ -16,26 +16,28 @@ def generateIdent():
     return str(uuid.uuid4())
 
 categories = {
-    'Adv':"副詞",
-    'A':"形容詞",
-    'N':"名詞",
-    'Cl':"量詞",
-    'D':"指詞",
-    'P':"介詞",
-    'V':"動詞",
-    'v':"外動詞",
+    'Q':"分量詞",
+    'A':"性質詞",
+    'N':"號名詞",
+    'Num':"多少詞",
+    'Cl':"品類詞",
+    'D':"指稱詞",
+    'P':"方面詞",
+    'V':"動靜詞",
+    'v':"事案詞",
     'T':"時候詞",
-    'C':"語氣詞",
-    'AdvP':"副詞組",
-    'AP':"形容詞組",
-    'NP':"名詞組",
-    'ClP':"量詞組",
-    'DP':"指詞組",
-    'PP':"介詞組",
-    'VP':"動詞組",
-    'vP':"外動詞組",
-    'TP':"時候詞組",
-    'CP':"語氣詞組",
+    'C':"法式詞",
+    'QP':"分量詞詞組",
+    'AP':"性質詞詞組",
+    'NP':"號名詞詞組",
+    'NumP':"多少詞詞組",
+    'ClP':"品類詞詞組",
+    'DP':"指稱詞詞組",
+    'PP':"方面詞詞組",
+    'VP':"動靜詞詞組",
+    'vP':"事案詞詞組",
+    'TP':"時候詞詞組",
+    'CP':"法式詞詞組"
 }
 
 def scancategory(expr):
@@ -57,7 +59,7 @@ def scanrule(e, spell):
         elif child.tag == "a-move":
             if plus:
                 r += '＋'
-            r += "遷移{}".format(scancategory(child.attrib["category"]))
+            r += "流離{}".format(scancategory(child.attrib["category"]))
             plus = True
         elif child.tag == "h":
             if plus:
