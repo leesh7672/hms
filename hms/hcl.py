@@ -43,7 +43,7 @@ def scancategory(expr):
 
 def scanrule(e, spell):
     if "category" in e.attrib:
-        lab= "\\textsubscript{{{}}}".format(scancategory(e.attrib["category"]))
+        lab= (scancategory(e.attrib["category"]))
     else:
         lab = ""
     r = ""
@@ -64,7 +64,10 @@ def scanrule(e, spell):
                 r += '＋'
             r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
             plus = True
-    return "［{}{}］".format(lab, r)
+    if plus:
+        return "［\\textsubscript{{{}}}{}］".format(lab, r)
+    else:
+        return lab
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e, en):
