@@ -15,8 +15,19 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
+categories = {
+    'N':"人物",
+    'Cl':"單位",
+    'D':"指稱",
+    'Q':"分量",
+    'P':"方面",
+    'V':"動靜",
+    'Vo':"事案",
+    'T':"時候",
+    'C':"語氣"}
+
 def scancategory(expr):
-    return expr
+    return categories[expr]
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
