@@ -45,12 +45,12 @@ def scanrule(e, spell):
     r = ""
     plus = False
     for child in e:
-        if child.tag == "there":
+        if child.tag == "a":
             if plus:
                 r += '＋'
             r += "{}".format(scancategory(child.attrib["category"]))
             plus = True
-        elif child.tag == "here":
+        elif child.tag == "h":
             if plus:
                 r += '＋'
             r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
