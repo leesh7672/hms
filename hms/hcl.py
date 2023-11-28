@@ -50,6 +50,11 @@ def scanrule(e, spell):
                 r += '＋'
             r += "{}".format(scancategory(child.attrib["category"]))
             plus = True
+        elif child.tag == "a-move":
+            if plus:
+                r += '＋'
+            r += "遷移{}".format(scancategory(child.attrib["category"]))
+            plus = True
         elif child.tag == "h":
             if plus:
                 r += '＋'
@@ -89,7 +94,7 @@ def textify(e, en):
         elif child.tag == 'self':
             total += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(en.attrib['spell'])
         elif child.tag == 'ref':
-            ident = child.attrib['identifier']
+            ident = child.attrib['id']
             (tr, f) = search(ident)
             root = tr.getroot()
             num = 1
@@ -129,8 +134,8 @@ def search(ident):
                 if ext == '.xml':
                     tree = etree.parse(p, parser)
                     root = tree.getroot()
-                    if  'identifier' in root.attrib:
-                        if root.attrib['identifier'] == ident:
+                    if  'id' in root.attrib:
+                        if root.attrib['id'] == ident:
                             if root.tag == 'entry':
                                 return (tree, p)
     return None
@@ -139,8 +144,8 @@ def updatexml(path):
     print(path)
     tree = etree.parse(path, parser)
     root = tree.getroot()
-    if not('identifier' in root.attrib.keys()):
-        root.set('identifier', '{}'.format(generateIdent()))
+    if not('id' in root.attrib.keys()):
+        root.set('id', '{}'.format(generateIdent()))
         tree.write(path)
     if not('index' in root.attrib.keys()):
         root.set('index', '1')
@@ -150,12 +155,12 @@ def updatexml(path):
     for child in root:
         if child.tag == 'usage' and not ('index' in child.attrib.keys()):
             child.set('index', '1')
-    ident = root.attrib['identifier']
+    ident = root.attrib['id']
     etree.ElementTree(tree.getroot()).write(path, pretty_print=True, encoding='utf-8')
 def scanxml(tree):
     root = tree.getroot()
     num = root.attrib['index']
-    ident = root.attrib['identifier']
+    ident = root.attrib['id']
     notation = []
     spell = ''
     cites = ''
