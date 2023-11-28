@@ -15,15 +15,10 @@ parser = etree.XMLParser(remove_blank_text=False)
 def generateIdent():
     return str(uuid.uuid4())
 
-categories = {'C': "氣", 'T': "候", 'Adv': "狀", 'Ne':"否", 'V': "動", 'A':"性", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數", 'Co': "連"}
+categories = {'C': "氣", 'T': "候", 'v': "態", 'V':"動", 'P': "介", 'D': "指", 'N': "名", 'Cl': "量", 'Num': "數"}
 
 def scancategory(expr):
-    if expr[0] == "*":
-        strength = "遷移"
-        expr = expr[1:]
-    else:
-        strength = ""
-    return (strength, "{}字".format(categories[expr]))
+    return expr
 
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
@@ -78,8 +73,8 @@ def scandef(e, spell, ident, coder=tex):
     else:
         num = e.attrib['index']
     if 'category' in e.attrib.keys():
-        (mstrength, mcategory) = scancategory(e.attrib['category'])
-        category = "〔{}{}〕".format(mstrength, mcategory)
+        mcategory = scancategory(e.attrib['category'])
+        category = "〔{}〕".format(mcategory)
     else:
         category =""
     explanation=textify(e, e)
