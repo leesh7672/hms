@@ -42,9 +42,10 @@ def scancategory(expr):
     return categories[expr]
 
 def scanrule(e, spell):
-    lab = ""
     if "category" in e.attrib:
-        lab= "\\textsubscript{{{}}}".format(scancategory(child.attrib["category"]))
+        lab= "\\textsubscript{{{}}}".format(scancategory(e.attrib["category"]))
+    else:
+        lab = ""
     r = ""
     plus = False
     for child in e:
