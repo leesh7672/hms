@@ -16,26 +16,26 @@ def generateIdent():
     return str(uuid.uuid4())
 
 categories = {
-    'Q':"分量詞",
-    'A':"性質詞",
-    'N':"號名詞",
-    'Num':"多少詞",
-    'Cl':"品類詞",
-    'D':"指稱詞",
-    'P':"方面詞",
-    'V':"事案詞",
-    'T':"時候詞",
-    'C':"法式詞",
-    'QP':"分量詞組",
-    'AP':"性質詞組",
-    'NP':"號名詞組",
-    'NumP':"多少詞組",
-    'ClP':"品類詞組",
-    'DP':"指稱詞組",
-    'PP':"方面詞組",
-    'VP':"事案詞組",
-    'TP':"時候詞組",
-    'CP':"法式詞組"
+    'Q':"量詞",
+    'A':"性詞",
+    'N':"名詞",
+    'Num':"數詞",
+    'Cl':"類詞",
+    'D':"指詞",
+    'P':"介詞",
+    'V':"案詞",
+    'T':"候詞",
+    'C':"氣詞",
+    'QP':"量詞組",
+    'AP':"性詞組",
+    'NP':"名詞組",
+    'NumP':"數詞組",
+    'ClP':"類詞組",
+    'DP':"指詞組",
+    'PP':"介詞組",
+    'VP':"案詞組",
+    'TP':"候詞組",
+    'CP':"氣詞組",
 }
 
 def scancategory(expr):
@@ -65,23 +65,22 @@ def scanrule(e, spell):
         return lab
 def fullpunct(half: str):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
-def textify(e, en):
+def textify(e, en, level = 1):
     if e.text is not None:
         total = fullpunct(e.text)
     else:
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰，「{}」。".format(textify(child, en))
+            total += "例曰『{}』。".format(textify(child, en))
         elif child.tag == 'quote':
-            temp = textify(child, en)
-            level = 1
+            temp = textify(child, en, 2)
             if 'level' in child.attrib:
                 level = int(child.attrib['level'])
             if level == 1:
-                total += '「{}」'.format(temp)
-            elif level >= 2:
                 total += '『{}』'.format(temp)
+            elif level >= 2:
+                total += '「{}」'.format(temp)
         elif child.tag == 'bold':
             total +="\\textbf{{{}}}".format(textify(child, en))
         elif child.tag == 'cancel':
