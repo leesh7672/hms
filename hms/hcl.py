@@ -62,7 +62,7 @@ def scanrule(e, spell):
     else:
         return lab
 def fullpunct(half: str):
-    return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('.', '。').replace(',', '、').replace('(', '（').replace(')', '）').replace(':', '：')
+    return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('、', '・').replace('，', '、').replace('(', '（').replace(')', '）').replace(':', '：')
 def textify(e, en, level = 1):
     if e.text is not None:
         total = fullpunct(e.text)
@@ -70,7 +70,7 @@ def textify(e, en, level = 1):
         total = ""
     for child in e:
         if child.tag == 'sample':
-            total += "例曰『{}』。".format(textify(child, en))
+            total += "例曰、『{}。』".format(textify(child, en))
         elif child.tag == 'quote':
             temp = textify(child, en, 2)
             if 'level' in child.attrib:
