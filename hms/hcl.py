@@ -153,13 +153,11 @@ def scan_xml(tree):
     root = tree.getroot()
     num = root.attrib['index']
     ident = root.attrib['id']
-    notation = []
     spell = ''
-    cites = ''
     if root.tag == 'entry':
         spell = root.attrib["spell"]
-        definitions = [scan_def(root, spell, ident)]
-    return (root, num, spell, ident, notation, definitions, cites)
+        definitions = scan_def(root, spell, ident)
+    return (root, num, spell, ident, definitions)
 
 def updatexml(path):
     print(path)
@@ -170,6 +168,9 @@ def updatexml(path):
         tree.write(path)
     if not('index' in root.attrib.keys()):
         root.set('index', '1')
+        num = '1'
+    if not('selected' in root.attrib.keys()):
+        root.set('selected', 'true')
         num = '1'
     else:
         num = root.attrib['index']
@@ -216,9 +217,11 @@ def build():
     results = collect_entries()
     txt = ''
     for result in results:
-        (root, num, spell, ident, alternative_spells, definitions, cites) = result
-        definition_txt = ''.join(definitions)
-        txt += "\\entry{{{}}}{{{}}}{{}}{{{}}}{{{}}}".format(spell.replace('（', "").replace('）', ''), num, definition_txt, cites)
+        (root, num, spell, _, definitions) = result
+        if 'selected' in root.attrib:
+            if root.attrib['selected'] == 'true':
+                definition_txt = definitions
+                txt += "\\entry{{{}}}{{{}}}{{{}}}".format(spell.replace('（', "").replace('）', ''), num, definition_txt)
     return txt
 
 def initialize():
