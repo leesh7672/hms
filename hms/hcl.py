@@ -8,15 +8,13 @@ from lxml import etree
 
 c = Cihai()
 
-import hms.tex as tex
-
 parser = etree.XMLParser(remove_blank_text=False)
 
 def generateIdent():
     return str(uuid.uuid4())
 
 categories = {
-    'Q':"計詞",
+    'Adv':"狀詞",
     'A':"性詞",
     'N':"名詞",
     'Num':"數詞",
@@ -26,7 +24,7 @@ categories = {
     'V':"動詞",
     'T':"候詞",
     'C':"氣詞",
-    'QP':"計詞詞組",
+    'AdvP':"狀詞詞組",
     'AP':"性詞詞組",
     'NP':"名詞詞組",
     'NumP':"數詞詞組",
@@ -107,7 +105,7 @@ def textify(e, en, level = 1):
             total += fullpunct(child.tail)
     return total.strip()
 
-def scandef(e, spell, ident, coder=tex):
+def scandef(e, spell, ident):
     synonyms = []
     antonyms = []
     samples = []
@@ -190,7 +188,7 @@ class entry:
         self.values =values
     def index_spell(self):
         return _spell(self.values)
-def collect_entries(code=tex):
+def collect_entries():
         results = []
         for (path, dir, files) in os.walk('entries'):
             for filename in files:
@@ -202,7 +200,7 @@ def collect_entries(code=tex):
         return sorted(results, key=lambda x: _spell(x[2]) + [x[1]])
 
 def build():
-    results = collect_entries(tex)
+    results = collect_entries()
     txt = ''
     for result in results:
         (root, num, spell, ident, alternative_spells, definitions, cites) = result
