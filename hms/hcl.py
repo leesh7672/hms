@@ -4,30 +4,6 @@ from operator import itemgetter
 from lxml import etree
 from cihai.core import Cihai
 
-# Global Variables
-categories = {
-    'Adv': "狀詞",
-    'A': "性詞",
-    'N': "名詞",
-    'Num': "數詞",
-    'Cl': "量詞",
-    'D': "指詞",
-    'P': "介詞",
-    'V': "動詞",
-    'T': "候詞",
-    'C': "氣詞",
-    'AdvP': "狀詞詞組",
-    'AP': "性詞詞組",
-    'NP': "名詞詞組",
-    'NumP': "數詞詞組",
-    'ClP': "量詞詞組",
-    'DP': "指詞詞組",
-    'PP': "介詞詞組",
-    'VP': "動詞詞組",
-    'TP': "候詞詞組",
-    'CP': "氣詞詞組",
-}
-
 # Initialize Cihai
 c = Cihai()
 if not c.unihan.is_bootstrapped:
@@ -42,33 +18,6 @@ def generate_ident():
 
 def full_punct(half):
     return half.replace('\n', '').replace('\t', '').replace(' ', '').replace('、', '・').replace('，', '、').replace('(', '（').replace(')', '）').replace(':', '：')
-
-def scan_category(expr):
-    return categories[expr]
-
-# Parsing Functions
-def scan_rule(e, spell):
-    if "category" in e.attrib:
-        lab = (scan_category(e.attrib["category"]))
-    else:
-        lab = ""
-    r = ""
-    plus = False
-    for child in e:
-        if child.tag == "a":
-            if plus:
-                r += '＋'
-            r += scan_rule(child, spell)
-            plus = True
-        elif child.tag == "h":
-            if plus:
-                r += '＋'
-            r += "\\textcolor{{c3}}{{\\textbf{{{}}}}}".format(spell)
-            plus = True
-    if plus:
-        return "［\\textsubscript{{{}}}{}］".format(lab, r)
-    else:
-        return lab
 
 def textify(e, en, level=1):
     if e.text is not None:
@@ -90,8 +39,6 @@ def textify(e, en, level=1):
             total += "\\textbf{{{}}}".format(textify(child, en))
         elif child.tag == 'cancel':
             total += "\\cancel{{{}}}".format(textify(child, en))
-        elif child.tag == 'format':
-            total += scan_rule(child, en.attrib['spell'])
         elif child.tag == 'zero':
             total += "∅"
         elif child.tag == 'self':
@@ -157,7 +104,10 @@ def scan_xml(tree):
     if root.tag == 'entry':
         spell = root.attrib["spell"]
         definitions = scan_def(root, spell, ident)
-    return (root, num, spell, ident, definitions)
+    if root.attrib['selected'] == 'true':
+        return [(root, num, spell, ident, definitions)]
+    else:
+        return []
 
 def updatexml(path):
     print(path)
@@ -209,8 +159,7 @@ def collect_entries():
                 p = '{}/{}'.format(path, filename)
                 ext = os.path.splitext(filename)[-1]
                 if ext == '.xml':
-                    print(p)
-                    results += [scan_xml(etree.parse(p))]
+                    results += scan_xml(etree.parse(p))
         return sorted(results, key=lambda x: entry(x[2]).index_spell() + [x[1]])
 
 def build():
