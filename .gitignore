@@ -2,4 +2,5 @@ build
 build/*
 dist
 hms.egg-info
+*.pyc
 .DS_Store
