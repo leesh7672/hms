@@ -1,4 +1,5 @@
 build
+build/*
 dist
 hms.egg-info
 .DS_Store
